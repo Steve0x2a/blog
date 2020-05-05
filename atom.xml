@@ -1,19 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
 <feed xmlns="http://www.w3.org/2005/Atom">
-    <id>https://blog.0x2a.in</id>
+    <id>https://0x2a.in/blog/</id>
     <title>0X2A</title>
-    <updated>2020-05-05T06:09:49.505Z</updated>
+    <updated>2020-05-05T06:11:15.794Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
-    <link rel="alternate" href="https://blog.0x2a.in"/>
-    <link rel="self" href="https://blog.0x2a.in/atom.xml"/>
+    <link rel="alternate" href="https://0x2a.in/blog/"/>
+    <link rel="self" href="https://0x2a.in/blog/atom.xml"/>
     <subtitle>Don&apos;t Panic.</subtitle>
-    <logo>https://blog.0x2a.in/images/avatar.png</logo>
-    <icon>https://blog.0x2a.in/favicon.ico</icon>
+    <logo>https://0x2a.in/blog/images/avatar.png</logo>
+    <icon>https://0x2a.in/blog/favicon.ico</icon>
     <rights>All rights reserved 2020, 0X2A</rights>
     <entry>
         <title type="html"><![CDATA[Hello Gridea]]></title>
-        <id>https://blog.0x2a.in/post/hello-gridea/</id>
-        <link href="https://blog.0x2a.in/post/hello-gridea/">
+        <id>https://0x2a.in/blog/post/hello-gridea/</id>
+        <link href="https://0x2a.in/blog/post/hello-gridea/">
         </link>
         <updated>2018-12-11T16:00:00.000Z</updated>
         <summary type="html"><![CDATA[<p>👏  欢迎使用 <strong>Gridea</strong> ！<br>
@@ -47,8 +47,8 @@
     </entry>
     <entry>
         <title type="html"><![CDATA[Python实现广州大学教务系统模拟登陆]]></title>
-        <id>https://blog.0x2a.in/post/Python-GZHU-jwlogin/</id>
-        <link href="https://blog.0x2a.in/post/Python-GZHU-jwlogin/">
+        <id>https://0x2a.in/blog/post/Python-GZHU-jwlogin/</id>
+        <link href="https://0x2a.in/blog/post/Python-GZHU-jwlogin/">
         </link>
         <updated>2017-12-13T05:58:18.000Z</updated>
         <summary type="html"><![CDATA[<h1 id="前言">前言</h1>
@@ -165,8 +165,8 @@ if __name__ == '__main__':
     </entry>
     <entry>
         <title type="html"><![CDATA[Python实现广州大学图书馆进馆人数爬取]]></title>
-        <id>https://blog.0x2a.in/post/Python-GZHU-library-spider/</id>
-        <link href="https://blog.0x2a.in/post/Python-GZHU-library-spider/">
+        <id>https://0x2a.in/blog/post/Python-GZHU-library-spider/</id>
+        <link href="https://0x2a.in/blog/post/Python-GZHU-library-spider/">
         </link>
         <updated>2017-12-07T13:36:54.000Z</updated>
         <content type="html"><![CDATA[<h1 id="前言">前言</h1>
