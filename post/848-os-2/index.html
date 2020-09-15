@@ -4,49 +4,121 @@
   <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta http-equiv="X-UA-Compatible" content="ie=edge">
-<title>Hello Gridea - 0X2A</title>
+<title>848操作系统(二) 进程管理 - 0X2A</title>
 <link rel="shortcut icon" href="https://0x2a.in/blog//favicon.ico">
 <link href="https://cdn.jsdelivr.net/npm/remixicon@2.2.0/fonts/remixicon.css" rel="stylesheet">
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@3.7.2/animate.min.css">
 <link rel="stylesheet" href="https://0x2a.in/blog//media/css/tailwind.css">
 <link rel="stylesheet" href="https://0x2a.in/blog//styles/main.css">
-<link rel="alternate" type="application/atom+xml" title="Hello Gridea - 0X2A - Atom Feed" href="https://0x2a.in/blog//atom.xml">
+<link rel="alternate" type="application/atom+xml" title="848操作系统(二) 进程管理 - 0X2A - Atom Feed" href="https://0x2a.in/blog//atom.xml">
 
     
 
-  <meta name="description" content="👏  欢迎使用 Gridea ！
-✍️  Gridea 一个静态博客写作客户端。你可以用它来记录你的生活、心情、知识、笔记、创意... ...
+  <meta name="description" content="
+进程管理
 
-Github
-Gridea 主页
-示例网站
-特性👇
-📝  你可以使用最酷的 Markdo..." />
-  <meta property="og:title" content="Hello Gridea - 0X2A">
-  <meta property="og:description" content="👏  欢迎使用 Gridea ！
-✍️  Gridea 一个静态博客写作客户端。你可以用它来记录你的生活、心情、知识、笔记、创意... ...
+进程与线程
 
-Github
-Gridea 主页
-示例网站
-特性👇
-📝  你可以使用最酷的 Markdo..." />
+进程概念
+进程的状态与转换
+进程控制
+
+进程的创建
+进程的终止
+进程阻塞和唤醒
+进程的切换
+
+
+进程的组织
+
+PCB
+程序段
+数据段
+
+
+
+
+
+
+
+
+进程管理
+进程与线程
+进程概念
+进程概念的引入是为了实现程序的..." />
+  <meta property="og:title" content="848操作系统(二) 进程管理 - 0X2A">
+  <meta property="og:description" content="
+进程管理
+
+进程与线程
+
+进程概念
+进程的状态与转换
+进程控制
+
+进程的创建
+进程的终止
+进程阻塞和唤醒
+进程的切换
+
+
+进程的组织
+
+PCB
+程序段
+数据段
+
+
+
+
+
+
+
+
+进程管理
+进程与线程
+进程概念
+进程概念的引入是为了实现程序的..." />
   <meta property="og:type" content="articles">
-  <meta property="og:url" content="https://0x2a.in/blog/post/hello-gridea/" />
-  <meta property="og:image" content="https://0x2a.in/blog//post-images/hello-gridea.png">
+  <meta property="og:url" content="https://0x2a.in/blog/post/848-os-2/" />
+  <meta property="og:image" content="https://0x2a.in/blog//images/avatar.png">
   <meta property="og:image:height" content="630">
   <meta property="og:image:width" content="1200">
-  <meta name="twitter:title" content="Hello Gridea - 0X2A">
-  <meta name="twitter:description" content="👏  欢迎使用 Gridea ！
-✍️  Gridea 一个静态博客写作客户端。你可以用它来记录你的生活、心情、知识、笔记、创意... ...
+  <meta name="twitter:title" content="848操作系统(二) 进程管理 - 0X2A">
+  <meta name="twitter:description" content="
+进程管理
 
-Github
-Gridea 主页
-示例网站
-特性👇
-📝  你可以使用最酷的 Markdo...">
+进程与线程
+
+进程概念
+进程的状态与转换
+进程控制
+
+进程的创建
+进程的终止
+进程阻塞和唤醒
+进程的切换
+
+
+进程的组织
+
+PCB
+程序段
+数据段
+
+
+
+
+
+
+
+
+进程管理
+进程与线程
+进程概念
+进程概念的引入是为了实现程序的...">
   <meta name="twitter:card" content="summary_large_image">
-  <link rel="canonical" href="https://0x2a.in/blog/post/hello-gridea/">
+  <link rel="canonical" href="https://0x2a.in/blog/post/848-os-2/">
 
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.css">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/default-skin/default-skin.css">
@@ -68,45 +140,104 @@ Gridea 主页
     <div class="max-w-4xl w-full mx-auto">
       <div class="shadow-box bg-white dark:bg-gray-600 rounded-lg pt-32 md:pt-64 px-4 md:px-8 pb-8 animated fadeIn mb-8">
         <h1 class="text-5xl font-semibold leading-normal pb-8 mb-8 border-b-8 border-gray-700">
-          Hello Gridea
+          848操作系统(二) 进程管理
         </h1>
         
-          <img src="https://0x2a.in/blog//post-images/hello-gridea.png" alt="Hello Gridea" class="block w-full mb-8">
-        
         <div class="mb-8 flex flex-wrap">
-          <div class="text-gray-400 text-sm mr-4">2018-12-12 · 2 min read</div>
-          
-            <a href="https://0x2a.in/blog/tag/H0QyMu8no/" class="text-gray-700 text-sm border-b-2 border-dotted border-gray-200 hover:border-gray-600 transition-all duration-100 inline-flex mr-2">
-              <i class="ri-hashtag"></i>
-              Gridea
-            </a>
+          <div class="text-gray-400 text-sm mr-4">2020-09-15 · 4 min read</div>
           
         </div>
         <div class="markdown mb-8" v-pre>
-          <p>👏  欢迎使用 <strong>Gridea</strong> ！<br>
-✍️  <strong>Gridea</strong> 一个静态博客写作客户端。你可以用它来记录你的生活、心情、知识、笔记、创意... ...</p>
-<!-- more -->
-<p><a href="https://github.com/getgridea/gridea">Github</a><br>
-<a href="https://gridea.dev/">Gridea 主页</a><br>
-<a href="http://fehey.com/">示例网站</a></p>
-<h2 id="特性">特性👇</h2>
-<p>📝  你可以使用最酷的 <strong>Markdown</strong> 语法，进行快速创作</p>
-<p><span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>a</mi><mo>=</mo><mi>b</mi><mo>+</mo><mi>c</mi></mrow><annotation encoding="application/x-tex">a=b+c</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.43056em;vertical-align:0em;"></span><span class="mord mathdefault">a</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:0.77777em;vertical-align:-0.08333em;"></span><span class="mord mathdefault">b</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">+</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:0.43056em;vertical-align:0em;"></span><span class="mord mathdefault">c</span></span></span></span>行内公式测试</p>
-<p class='katex-block'><span class="katex-display"><span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>a</mi><mo>=</mo><mi>a</mi><mo>+</mo><mi>b</mi></mrow><annotation encoding="application/x-tex">a=a+b
-</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.43056em;vertical-align:0em;"></span><span class="mord mathdefault">a</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:0.66666em;vertical-align:-0.08333em;"></span><span class="mord mathdefault">a</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">+</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:0.69444em;vertical-align:0em;"></span><span class="mord mathdefault">b</span></span></span></span></span></p>
-<p>🌉  你可以给文章配上精美的封面图和在文章任意位置插入图片</p>
-<p>🏷️  你可以对文章进行标签分组</p>
-<p>📋  你可以自定义菜单，甚至可以创建外部链接菜单</p>
-<p>💻  你可以在 <strong>Windows</strong>，<strong>MacOS</strong> 或 <strong>Linux</strong> 设备上使用此客户端</p>
-<p>🌎  你可以使用 <strong>𝖦𝗂𝗍𝗁𝗎𝖻 𝖯𝖺𝗀𝖾𝗌</strong> 或 <strong>Coding Pages</strong> 向世界展示，未来将支持更多平台</p>
-<p>💬  你可以进行简单的配置，接入 <a href="https://github.com/gitalk/gitalk">Gitalk</a> 或 <a href="https://github.com/SukkaW/DisqusJS">DisqusJS</a> 评论系统</p>
-<p>🇬🇧  你可以使用<strong>中文简体</strong>或<strong>英语</strong></p>
-<p>🌁  你可以任意使用应用内默认主题或任意第三方主题，强大的主题自定义能力</p>
-<p>🖥  你可以自定义源文件夹，利用 OneDrive、百度网盘、iCloud、Dropbox 等进行多设备同步</p>
-<p>🌱 当然 <strong>Gridea</strong> 还很年轻，有很多不足，但请相信，它会不停向前 🏃</p>
-<p>未来，它一定会成为你离不开的伙伴</p>
-<p>尽情发挥你的才华吧！</p>
-<p>😘 Enjoy~</p>
+          <p><ul class="markdownIt-TOC">
+<li><a href="#%E8%BF%9B%E7%A8%8B%E7%AE%A1%E7%90%86">进程管理</a>
+<ul>
+<li><a href="#%E8%BF%9B%E7%A8%8B%E4%B8%8E%E7%BA%BF%E7%A8%8B">进程与线程</a>
+<ul>
+<li><a href="#%E8%BF%9B%E7%A8%8B%E6%A6%82%E5%BF%B5">进程概念</a></li>
+<li><a href="#%E8%BF%9B%E7%A8%8B%E7%9A%84%E7%8A%B6%E6%80%81%E4%B8%8E%E8%BD%AC%E6%8D%A2">进程的状态与转换</a></li>
+<li><a href="#%E8%BF%9B%E7%A8%8B%E6%8E%A7%E5%88%B6">进程控制</a>
+<ul>
+<li><a href="#%E8%BF%9B%E7%A8%8B%E7%9A%84%E5%88%9B%E5%BB%BA">进程的创建</a></li>
+<li><a href="#%E8%BF%9B%E7%A8%8B%E7%9A%84%E7%BB%88%E6%AD%A2">进程的终止</a></li>
+<li><a href="#%E8%BF%9B%E7%A8%8B%E9%98%BB%E5%A1%9E%E5%92%8C%E5%94%A4%E9%86%92">进程阻塞和唤醒</a></li>
+<li><a href="#%E8%BF%9B%E7%A8%8B%E7%9A%84%E5%88%87%E6%8D%A2">进程的切换</a></li>
+</ul>
+</li>
+<li><a href="#%E8%BF%9B%E7%A8%8B%E7%9A%84%E7%BB%84%E7%BB%87">进程的组织</a>
+<ul>
+<li><a href="#pcb">PCB</a></li>
+<li><a href="#%E7%A8%8B%E5%BA%8F%E6%AE%B5">程序段</a></li>
+<li><a href="#%E6%95%B0%E6%8D%AE%E6%AE%B5">数据段</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</p>
+<h1 id="进程管理">进程管理</h1>
+<h2 id="进程与线程">进程与线程</h2>
+<h3 id="进程概念">进程概念</h3>
+<p>进程概念的引入是为了实现程序的并发执行，并对并发执行的程序加以描述和控制。<br>
+为了使参与并发执行的程序都可以独立运行，操作系统会为每一个进程都配备一个<strong>进程控制块</strong>（PCB）。一个进程实体主要包括主要包括程序段、相关数据段、PCB。<br>
+PCB是进程存在的唯一标志，也就是说，系统根据PCB来判断系统内部目前有多少个进程。<br>
+相对于程序，进程更像是一个动态过程。一个不恰当的比喻，如果人作为一个生物体有一个大体类似的基因（程序），那具体的每一个人的一生，就是进程了。</p>
+<h3 id="进程的状态与转换">进程的状态与转换</h3>
+<p>程序一般拥有五个状态：创建、就绪、阻塞、执行、终止。一般理解什么情况下会从什么态转换到什么态即可。有些操作系统还会引入一个挂起态（会将进程信息移除内存）</p>
+<h3 id="进程控制">进程控制</h3>
+<h4 id="进程的创建">进程的创建</h4>
+<p>在操作系统中，允许一个进程创建另外一个进程。通常把创建进程的进程成为父进程。在UNIX系统中，用树状图的结构来表示进程之间的父子关系，在PCB中有专门的族谱（家族关系表项）记录相关信息。而在Windows系统中不存在进程层次，而是用句柄来替代一个操作的权限。句柄是可以传递的，获得句柄就可以获得拥有控制其他进程的权力，因此 进程之间的关系不再是层级，而是线性的，是否获得句柄的关系。<br>
+引起进程创建的事件有几种：用户登录、作业调度、提供服务、应用请求。<br>
+进程的创建一般有以下几个步骤：</p>
+<ol>
+<li>申请PCB</li>
+<li>分配资源（如果资源不足不会直接创建失败，而是进入阻塞态）</li>
+<li>初始化PCB</li>
+<li>如果就绪队列有空位，则放入就绪队列</li>
+</ol>
+<h4 id="进程的终止">进程的终止</h4>
+<p>引起进程结束的事件一般有：正常结束、异常结束、外部干预。<br>
+进程结束的过程一般有以下步骤：</p>
+<ol>
+<li>根据要终止的标识符，从PCB集合中找到需要终止的进程PCB，读取进程状态</li>
+<li>若处于正在执行，则立即停止执行</li>
+<li>若还有子孙进程，则将子孙们也kill了</li>
+<li>进程原持有资源返还给父进程或操作系统</li>
+<li>将PCB移出所在队列</li>
+</ol>
+<h4 id="进程阻塞和唤醒">进程阻塞和唤醒</h4>
+<h4 id="进程的切换">进程的切换</h4>
+<p>步骤如下：</p>
+<ol>
+<li>保存处理机上下文，包括程序计数器和其他寄存器</li>
+<li>更新PCB</li>
+<li>将PCB移入相应队列</li>
+<li>选择另一个进程执行 并更新PCB</li>
+<li>更新内存管理数据结构</li>
+<li>回复处理机上下文</li>
+</ol>
+<p>要注意调度和切换的区别。调度是决定系统资源如何分配，属于<strong>决策</strong>，而切换属于实际分配行为，也就是<strong>执行</strong>。先有调度后有切换。</p>
+<h3 id="进程的组织">进程的组织</h3>
+<p>这一部分主要是了解进程实体所包含的内容</p>
+<h4 id="pcb">PCB</h4>
+<p>主要包括</p>
+<ol>
+<li>进程描述信息</li>
+<li>进程控制和管理信息</li>
+<li>资源分配清单</li>
+<li>处理机相关信息（主要是处理机寄存器的值）</li>
+</ol>
+<h4 id="程序段">程序段</h4>
+<p>代码段</p>
+<h4 id="数据段">数据段</h4>
+<p>数据段，有的会细分为数据堆段和数据栈段</p>
+<p>一般来说，C语言编写程序使用内存一般分喂三个段</p>
+<ol>
+<li>正文段：代码和已赋值数据段，存放二进制代码和常量</li>
+<li>数据堆段：动态内存分配在数据堆段</li>
+<li>数据栈段：未赋初值的局部变量、临时使用的变量 实参传递等在栈段</li>
+</ol>
 
         </div>
         <!-- Share to Twitter, Weibo, Telegram -->
@@ -150,9 +281,29 @@ Gridea 主页
       </div>
       <div class="post-toc-container">
         <ul class="markdownIt-TOC">
-<li>
+<li><a href="#%E8%BF%9B%E7%A8%8B%E7%AE%A1%E7%90%86">进程管理</a>
 <ul>
-<li><a href="#%E7%89%B9%E6%80%A7">特性👇</a></li>
+<li><a href="#%E8%BF%9B%E7%A8%8B%E4%B8%8E%E7%BA%BF%E7%A8%8B">进程与线程</a>
+<ul>
+<li><a href="#%E8%BF%9B%E7%A8%8B%E6%A6%82%E5%BF%B5">进程概念</a></li>
+<li><a href="#%E8%BF%9B%E7%A8%8B%E7%9A%84%E7%8A%B6%E6%80%81%E4%B8%8E%E8%BD%AC%E6%8D%A2">进程的状态与转换</a></li>
+<li><a href="#%E8%BF%9B%E7%A8%8B%E6%8E%A7%E5%88%B6">进程控制</a>
+<ul>
+<li><a href="#%E8%BF%9B%E7%A8%8B%E7%9A%84%E5%88%9B%E5%BB%BA">进程的创建</a></li>
+<li><a href="#%E8%BF%9B%E7%A8%8B%E7%9A%84%E7%BB%88%E6%AD%A2">进程的终止</a></li>
+<li><a href="#%E8%BF%9B%E7%A8%8B%E9%98%BB%E5%A1%9E%E5%92%8C%E5%94%A4%E9%86%92">进程阻塞和唤醒</a></li>
+<li><a href="#%E8%BF%9B%E7%A8%8B%E7%9A%84%E5%88%87%E6%8D%A2">进程的切换</a></li>
+</ul>
+</li>
+<li><a href="#%E8%BF%9B%E7%A8%8B%E7%9A%84%E7%BB%84%E7%BB%87">进程的组织</a>
+<ul>
+<li><a href="#pcb">PCB</a></li>
+<li><a href="#%E7%A8%8B%E5%BA%8F%E6%AE%B5">程序段</a></li>
+<li><a href="#%E6%95%B0%E6%8D%AE%E6%AE%B5">数据段</a></li>
+</ul>
+</li>
+</ul>
+</li>
 </ul>
 </li>
 </ul>

@@ -25,6 +25,7 @@
 
 双链表
 循环链表
+静态链表
 
 
 
@@ -37,7 +38,7 @@
 线性表
 线性表的定义和基本操作
 这里没什么好说的, 主要注意几点.
-线性表是逻辑结构, 表示元素之间 是一对一关系,..." />
+线性表是逻辑结构, 表示元素之间 是一..." />
   <meta property="og:title" content="848数据结构(二) 线性表 - 0X2A">
   <meta property="og:description" content="
 线性表
@@ -50,6 +51,7 @@
 
 双链表
 循环链表
+静态链表
 
 
 
@@ -62,7 +64,7 @@
 线性表
 线性表的定义和基本操作
 这里没什么好说的, 主要注意几点.
-线性表是逻辑结构, 表示元素之间 是一对一关系,..." />
+线性表是逻辑结构, 表示元素之间 是一..." />
   <meta property="og:type" content="articles">
   <meta property="og:url" content="https://0x2a.in/blog/post/848-ds-2/" />
   <meta property="og:image" content="https://0x2a.in/blog//images/avatar.png">
@@ -80,6 +82,7 @@
 
 双链表
 循环链表
+静态链表
 
 
 
@@ -92,7 +95,7 @@
 线性表
 线性表的定义和基本操作
 这里没什么好说的, 主要注意几点.
-线性表是逻辑结构, 表示元素之间 是一对一关系,...">
+线性表是逻辑结构, 表示元素之间 是一...">
   <meta name="twitter:card" content="summary_large_image">
   <link rel="canonical" href="https://0x2a.in/blog/post/848-ds-2/">
 
@@ -135,6 +138,7 @@
 <ul>
 <li><a href="#%E5%8F%8C%E9%93%BE%E8%A1%A8">双链表</a></li>
 <li><a href="#%E5%BE%AA%E7%8E%AF%E9%93%BE%E8%A1%A8">循环链表</a></li>
+<li><a href="#%E9%9D%99%E6%80%81%E9%93%BE%E8%A1%A8">静态链表</a></li>
 </ul>
 </li>
 </ul>
@@ -174,6 +178,10 @@
 <p>没啥好说的, 双链表的插入删除操作时间复杂度O(1),</p>
 <h4 id="循环链表">循环链表</h4>
 <p>略</p>
+<h4 id="静态链表">静态链表</h4>
+<p>静态链表是<strong>链式存储结构</strong>, 在实现上可以用结构体数组来实现.</p>
+<p>静态链表的插入删除和动态链表相同, 只需要修改指针, 不需要移动元素.</p>
+<p>静态链表的指针指的是节点的相对地址(数组下标), 也称游标(cur)</p>
 <h2 id="易错点">易错点</h2>
 <ol>
 <li>线性表的顺序存储结构是一种<strong>随机读取</strong> 的的存储结构. 不要看到顺序就选顺序.</li>
@@ -233,6 +241,7 @@
 <ul>
 <li><a href="#%E5%8F%8C%E9%93%BE%E8%A1%A8">双链表</a></li>
 <li><a href="#%E5%BE%AA%E7%8E%AF%E9%93%BE%E8%A1%A8">循环链表</a></li>
+<li><a href="#%E9%9D%99%E6%80%81%E9%93%BE%E8%A1%A8">静态链表</a></li>
 </ul>
 </li>
 </ul>
@@ -413,7 +422,7 @@
     avatar: 'mp',
     verify: true,
     placeholder: '来都来了，不妨评论一下',
-    visitor: false,
+    visitor: true,
     highlight: true,
     recordIP: true,
   })
