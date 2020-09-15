@@ -2,7 +2,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://0x2a.in/blog/</id>
     <title>0X2A</title>
-    <updated>2020-09-15T12:24:37.400Z</updated>
+    <updated>2020-09-15T12:25:20.418Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://0x2a.in/blog/"/>
     <link rel="self" href="https://0x2a.in/blog/atom.xml"/>
@@ -10,104 +10,6 @@
     <logo>https://0x2a.in/blog/images/avatar.png</logo>
     <icon>https://0x2a.in/blog/favicon.ico</icon>
     <rights>All rights reserved 2020, 0X2A</rights>
-    <entry>
-        <title type="html"><![CDATA[848操作系统(二) 进程管理]]></title>
-        <id>https://0x2a.in/blog/post/848-os-2/</id>
-        <link href="https://0x2a.in/blog/post/848-os-2/">
-        </link>
-        <updated>2020-09-15T11:17:07.000Z</updated>
-        <content type="html"><![CDATA[<p><ul class="markdownIt-TOC">
-<li><a href="#%E8%BF%9B%E7%A8%8B%E7%AE%A1%E7%90%86">进程管理</a>
-<ul>
-<li><a href="#%E8%BF%9B%E7%A8%8B%E4%B8%8E%E7%BA%BF%E7%A8%8B">进程与线程</a>
-<ul>
-<li><a href="#%E8%BF%9B%E7%A8%8B%E6%A6%82%E5%BF%B5">进程概念</a></li>
-<li><a href="#%E8%BF%9B%E7%A8%8B%E7%9A%84%E7%8A%B6%E6%80%81%E4%B8%8E%E8%BD%AC%E6%8D%A2">进程的状态与转换</a></li>
-<li><a href="#%E8%BF%9B%E7%A8%8B%E6%8E%A7%E5%88%B6">进程控制</a>
-<ul>
-<li><a href="#%E8%BF%9B%E7%A8%8B%E7%9A%84%E5%88%9B%E5%BB%BA">进程的创建</a></li>
-<li><a href="#%E8%BF%9B%E7%A8%8B%E7%9A%84%E7%BB%88%E6%AD%A2">进程的终止</a></li>
-<li><a href="#%E8%BF%9B%E7%A8%8B%E9%98%BB%E5%A1%9E%E5%92%8C%E5%94%A4%E9%86%92">进程阻塞和唤醒</a></li>
-<li><a href="#%E8%BF%9B%E7%A8%8B%E7%9A%84%E5%88%87%E6%8D%A2">进程的切换</a></li>
-</ul>
-</li>
-<li><a href="#%E8%BF%9B%E7%A8%8B%E7%9A%84%E7%BB%84%E7%BB%87">进程的组织</a>
-<ul>
-<li><a href="#pcb">PCB</a></li>
-<li><a href="#%E7%A8%8B%E5%BA%8F%E6%AE%B5">程序段</a></li>
-<li><a href="#%E6%95%B0%E6%8D%AE%E6%AE%B5">数据段</a></li>
-</ul>
-</li>
-</ul>
-</li>
-</ul>
-</li>
-</ul>
-</p>
-<h1 id="进程管理">进程管理</h1>
-<h2 id="进程与线程">进程与线程</h2>
-<h3 id="进程概念">进程概念</h3>
-<p>进程概念的引入是为了实现程序的并发执行，并对并发执行的程序加以描述和控制。<br>
-为了使参与并发执行的程序都可以独立运行，操作系统会为每一个进程都配备一个<strong>进程控制块</strong>（PCB）。一个进程实体主要包括主要包括程序段、相关数据段、PCB。<br>
-PCB是进程存在的唯一标志，也就是说，系统根据PCB来判断系统内部目前有多少个进程。<br>
-相对于程序，进程更像是一个动态过程。一个不恰当的比喻，如果人作为一个生物体有一个大体类似的基因（程序），那具体的每一个人的一生，就是进程了。</p>
-<h3 id="进程的状态与转换">进程的状态与转换</h3>
-<p>程序一般拥有五个状态：创建、就绪、阻塞、执行、终止。一般理解什么情况下会从什么态转换到什么态即可。有些操作系统还会引入一个挂起态（会将进程信息移除内存）</p>
-<h3 id="进程控制">进程控制</h3>
-<h4 id="进程的创建">进程的创建</h4>
-<p>在操作系统中，允许一个进程创建另外一个进程。通常把创建进程的进程成为父进程。在UNIX系统中，用树状图的结构来表示进程之间的父子关系，在PCB中有专门的族谱（家族关系表项）记录相关信息。而在Windows系统中不存在进程层次，而是用句柄来替代一个操作的权限。句柄是可以传递的，获得句柄就可以获得拥有控制其他进程的权力，因此 进程之间的关系不再是层级，而是线性的，是否获得句柄的关系。<br>
-引起进程创建的事件有几种：用户登录、作业调度、提供服务、应用请求。<br>
-进程的创建一般有以下几个步骤：</p>
-<ol>
-<li>申请PCB</li>
-<li>分配资源（如果资源不足不会直接创建失败，而是进入阻塞态）</li>
-<li>初始化PCB</li>
-<li>如果就绪队列有空位，则放入就绪队列</li>
-</ol>
-<h4 id="进程的终止">进程的终止</h4>
-<p>引起进程结束的事件一般有：正常结束、异常结束、外部干预。<br>
-进程结束的过程一般有以下步骤：</p>
-<ol>
-<li>根据要终止的标识符，从PCB集合中找到需要终止的进程PCB，读取进程状态</li>
-<li>若处于正在执行，则立即停止执行</li>
-<li>若还有子孙进程，则将子孙们也kill了</li>
-<li>进程原持有资源返还给父进程或操作系统</li>
-<li>将PCB移出所在队列</li>
-</ol>
-<h4 id="进程阻塞和唤醒">进程阻塞和唤醒</h4>
-<h4 id="进程的切换">进程的切换</h4>
-<p>步骤如下：</p>
-<ol>
-<li>保存处理机上下文，包括程序计数器和其他寄存器</li>
-<li>更新PCB</li>
-<li>将PCB移入相应队列</li>
-<li>选择另一个进程执行 并更新PCB</li>
-<li>更新内存管理数据结构</li>
-<li>回复处理机上下文</li>
-</ol>
-<p>要注意调度和切换的区别。调度是决定系统资源如何分配，属于<strong>决策</strong>，而切换属于实际分配行为，也就是<strong>执行</strong>。先有调度后有切换。</p>
-<h3 id="进程的组织">进程的组织</h3>
-<p>这一部分主要是了解进程实体所包含的内容</p>
-<h4 id="pcb">PCB</h4>
-<p>主要包括</p>
-<ol>
-<li>进程描述信息</li>
-<li>进程控制和管理信息</li>
-<li>资源分配清单</li>
-<li>处理机相关信息（主要是处理机寄存器的值）</li>
-</ol>
-<h4 id="程序段">程序段</h4>
-<p>代码段</p>
-<h4 id="数据段">数据段</h4>
-<p>数据段，有的会细分为数据堆段和数据栈段</p>
-<p>一般来说，C语言编写程序使用内存一般分喂三个段</p>
-<ol>
-<li>正文段：代码和已赋值数据段，存放二进制代码和常量</li>
-<li>数据堆段：动态内存分配在数据堆段</li>
-<li>数据栈段：未赋初值的局部变量、临时使用的变量 实参传递等在栈段</li>
-</ol>
-]]></content>
-    </entry>
     <entry>
         <title type="html"><![CDATA[2021暨南大学848知识点总结]]></title>
         <id>https://0x2a.in/blog/post/2021-848/</id>
