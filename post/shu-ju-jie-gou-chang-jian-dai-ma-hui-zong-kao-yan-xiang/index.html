@@ -20,21 +20,19 @@
 线性表
 
 顺序表
-
-顺序表定义
-顺序表基本操作
-
-
 单链表
-
-单链表中结点类型的描述
-单链表基本操作
-
-
 双链表
+静态链表
 
-双链表的定义
-双链表的基本..." />
+
+
+
+线性表
+顺序表
+顺序表定义
+静态分配
+#define Maxsize 50 
+typede..." />
   <meta property="og:title" content="数据结构常见代码汇总（考研向） - 0X2A">
   <meta property="og:description" content="数据结构考验中常用操作的伪代码，大部分参考王道书上代码。另有部分经典算法题代码（持续更新）。
 
@@ -42,21 +40,19 @@
 线性表
 
 顺序表
-
-顺序表定义
-顺序表基本操作
-
-
 单链表
-
-单链表中结点类型的描述
-单链表基本操作
-
-
 双链表
+静态链表
 
-双链表的定义
-双链表的基本..." />
+
+
+
+线性表
+顺序表
+顺序表定义
+静态分配
+#define Maxsize 50 
+typede..." />
   <meta property="og:type" content="articles">
   <meta property="og:url" content="https://0x2a.in/blog/post/shu-ju-jie-gou-chang-jian-dai-ma-hui-zong-kao-yan-xiang/" />
   <meta property="og:image" content="https://0x2a.in/blog//images/avatar.png">
@@ -69,21 +65,19 @@
 线性表
 
 顺序表
-
-顺序表定义
-顺序表基本操作
-
-
 单链表
-
-单链表中结点类型的描述
-单链表基本操作
-
-
 双链表
+静态链表
 
-双链表的定义
-双链表的基本...">
+
+
+
+线性表
+顺序表
+顺序表定义
+静态分配
+#define Maxsize 50 
+typede...">
   <meta name="twitter:card" content="summary_large_image">
   <link rel="canonical" href="https://0x2a.in/blog/post/shu-ju-jie-gou-chang-jian-dai-ma-hui-zong-kao-yan-xiang/">
 
@@ -120,37 +114,18 @@
 <p><ul class="markdownIt-TOC">
 <li><a href="#%E7%BA%BF%E6%80%A7%E8%A1%A8">线性表</a>
 <ul>
-<li><a href="#%E9%A1%BA%E5%BA%8F%E8%A1%A8">顺序表</a>
-<ul>
-<li><a href="#%E9%A1%BA%E5%BA%8F%E8%A1%A8%E5%AE%9A%E4%B9%89">顺序表定义</a></li>
-<li><a href="#%E9%A1%BA%E5%BA%8F%E8%A1%A8%E5%9F%BA%E6%9C%AC%E6%93%8D%E4%BD%9C">顺序表基本操作</a></li>
-</ul>
-</li>
-<li><a href="#%E5%8D%95%E9%93%BE%E8%A1%A8">单链表</a>
-<ul>
-<li><a href="#%E5%8D%95%E9%93%BE%E8%A1%A8%E4%B8%AD%E7%BB%93%E7%82%B9%E7%B1%BB%E5%9E%8B%E7%9A%84%E6%8F%8F%E8%BF%B0">单链表中结点类型的描述</a></li>
-<li><a href="#%E5%8D%95%E9%93%BE%E8%A1%A8%E5%9F%BA%E6%9C%AC%E6%93%8D%E4%BD%9C">单链表基本操作</a></li>
-</ul>
-</li>
-<li><a href="#%E5%8F%8C%E9%93%BE%E8%A1%A8">双链表</a>
-<ul>
-<li><a href="#%E5%8F%8C%E9%93%BE%E8%A1%A8%E7%9A%84%E5%AE%9A%E4%B9%89">双链表的定义</a></li>
-<li><a href="#%E5%8F%8C%E9%93%BE%E8%A1%A8%E7%9A%84%E5%9F%BA%E6%9C%AC%E6%93%8D%E4%BD%9C">双链表的基本操作</a></li>
-</ul>
-</li>
-<li><a href="#%E9%9D%99%E6%80%81%E9%93%BE%E8%A1%A8">静态链表</a>
-<ul>
-<li><a href="#%E9%9D%99%E6%80%81%E9%93%BE%E8%A1%A8%E7%9A%84%E5%AE%9A%E4%B9%89">静态链表的定义</a></li>
-</ul>
-</li>
+<li><a href="#%E9%A1%BA%E5%BA%8F%E8%A1%A8">顺序表</a></li>
+<li><a href="#%E5%8D%95%E9%93%BE%E8%A1%A8">单链表</a></li>
+<li><a href="#%E5%8F%8C%E9%93%BE%E8%A1%A8">双链表</a></li>
+<li><a href="#%E9%9D%99%E6%80%81%E9%93%BE%E8%A1%A8">静态链表</a></li>
 </ul>
 </li>
 </ul>
 </p>
 <h1 id="线性表">线性表</h1>
 <h2 id="顺序表">顺序表</h2>
-<h3 id="顺序表定义">顺序表定义</h3>
-<p>静态分配</p>
+<p><strong>顺序表定义</strong><br>
+静态分配</p>
 <pre><code class="language-C">#define Maxsize 50 
 typedef struct{
     ElemType data[MaxSize];
@@ -164,8 +139,8 @@ typedef struct {            //动态分配数组顺序表的定义
     int MaxSize, length;    //数组的最大容量和当前个数
 } SeqList;                    //动态分配数组顺序表的类型定义
 </code></pre>
-<h3 id="顺序表基本操作">顺序表基本操作</h3>
-<p>插入</p>
+<p><strong>顺序表基本操作</strong><br>
+插入</p>
 <pre><code class="language-C">bool ListInsert(SqList &amp;L,int i,ElemType e){
 //本算法实现将元素e插入到顺序表L中第i个位置
     if(i&lt;1||i&gt;L.length+1)        //判断i的范围是否有效
@@ -202,14 +177,14 @@ typedef struct {            //动态分配数组顺序表的定义
 }
 </code></pre>
 <h2 id="单链表">单链表</h2>
-<h3 id="单链表中结点类型的描述">单链表中结点类型的描述</h3>
+<p><strong>单链表中结点类型的描述</strong></p>
 <pre><code class="language-C">typedef struct LNode{            //定义单链表结点类型
     ElemType data;                //数据域
     struct LNode *next;            //指针域
 }LNode,*LinkList;
 </code></pre>
-<h3 id="单链表基本操作">单链表基本操作</h3>
-<p>头插法</p>
+<p><strong>单链表基本操作</strong><br>
+头插法</p>
 <pre><code class="language-C">LinkList CreateList1(LinkList &amp;L){
 //从表尾到表头逆向建立单链表L，每次均在头结点之后插入元素
     LNode *s;int x;
@@ -294,14 +269,14 @@ p-&gt;next=q-&gt;next;        //将*q结点从链中“断开”
 free(q);                //释放后继结点的存储空间
 </code></pre>
 <h2 id="双链表">双链表</h2>
-<h3 id="双链表的定义">双链表的定义</h3>
+<p><strong>双链表的定义</strong></p>
 <pre><code class="language-C">typedef struct DNode{           //定义双链表结点类型
     ElemType data;                //数据域
     struct DNode *prior,*next;    //前驱和后继指针
 }DNode,*DLinkList;
 </code></pre>
-<h3 id="双链表的基本操作">双链表的基本操作</h3>
-<p>双链表的插入操作</p>
+<p><strong>双链表的基本操作</strong><br>
+双链表的插入操作</p>
 <pre><code class="language-C">s-&gt;next=p-&gt;next;                //将结点*s插入到结点*p之后
 p-&gt;next-&gt;prior=s;
 s-&gt;prior=p;
@@ -313,7 +288,7 @@ q-&gt;next-&gt;prior=p;                //图2-11中步骤2
 free(q);        
 </code></pre>
 <h2 id="静态链表">静态链表</h2>
-<h3 id="静态链表的定义">静态链表的定义</h3>
+<p><strong>静态链表的定义</strong></p>
 <pre><code class="language-C">#define MaxSize 50                //静态链表的最大长度
 typedef struct{                    //静态链表结构类型的定义
     ElemType data;                //存储数据元素
@@ -365,29 +340,10 @@ typedef struct{                    //静态链表结构类型的定义
         <ul class="markdownIt-TOC">
 <li><a href="#%E7%BA%BF%E6%80%A7%E8%A1%A8">线性表</a>
 <ul>
-<li><a href="#%E9%A1%BA%E5%BA%8F%E8%A1%A8">顺序表</a>
-<ul>
-<li><a href="#%E9%A1%BA%E5%BA%8F%E8%A1%A8%E5%AE%9A%E4%B9%89">顺序表定义</a></li>
-<li><a href="#%E9%A1%BA%E5%BA%8F%E8%A1%A8%E5%9F%BA%E6%9C%AC%E6%93%8D%E4%BD%9C">顺序表基本操作</a></li>
-</ul>
-</li>
-<li><a href="#%E5%8D%95%E9%93%BE%E8%A1%A8">单链表</a>
-<ul>
-<li><a href="#%E5%8D%95%E9%93%BE%E8%A1%A8%E4%B8%AD%E7%BB%93%E7%82%B9%E7%B1%BB%E5%9E%8B%E7%9A%84%E6%8F%8F%E8%BF%B0">单链表中结点类型的描述</a></li>
-<li><a href="#%E5%8D%95%E9%93%BE%E8%A1%A8%E5%9F%BA%E6%9C%AC%E6%93%8D%E4%BD%9C">单链表基本操作</a></li>
-</ul>
-</li>
-<li><a href="#%E5%8F%8C%E9%93%BE%E8%A1%A8">双链表</a>
-<ul>
-<li><a href="#%E5%8F%8C%E9%93%BE%E8%A1%A8%E7%9A%84%E5%AE%9A%E4%B9%89">双链表的定义</a></li>
-<li><a href="#%E5%8F%8C%E9%93%BE%E8%A1%A8%E7%9A%84%E5%9F%BA%E6%9C%AC%E6%93%8D%E4%BD%9C">双链表的基本操作</a></li>
-</ul>
-</li>
-<li><a href="#%E9%9D%99%E6%80%81%E9%93%BE%E8%A1%A8">静态链表</a>
-<ul>
-<li><a href="#%E9%9D%99%E6%80%81%E9%93%BE%E8%A1%A8%E7%9A%84%E5%AE%9A%E4%B9%89">静态链表的定义</a></li>
-</ul>
-</li>
+<li><a href="#%E9%A1%BA%E5%BA%8F%E8%A1%A8">顺序表</a></li>
+<li><a href="#%E5%8D%95%E9%93%BE%E8%A1%A8">单链表</a></li>
+<li><a href="#%E5%8F%8C%E9%93%BE%E8%A1%A8">双链表</a></li>
+<li><a href="#%E9%9D%99%E6%80%81%E9%93%BE%E8%A1%A8">静态链表</a></li>
 </ul>
 </li>
 </ul>
