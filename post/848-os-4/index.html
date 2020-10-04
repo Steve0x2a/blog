@@ -1,0 +1,599 @@
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta http-equiv="X-UA-Compatible" content="ie=edge">
+<title>848操作系统(四) 文件管理 - 0X2A</title>
+<link rel="shortcut icon" href="https://0x2a.in/blog//favicon.ico">
+<link href="https://cdn.jsdelivr.net/npm/remixicon@2.2.0/fonts/remixicon.css" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@3.7.2/animate.min.css">
+<link rel="stylesheet" href="https://0x2a.in/blog//media/css/tailwind.css">
+<link rel="stylesheet" href="https://0x2a.in/blog//styles/main.css">
+<link rel="alternate" type="application/atom+xml" title="848操作系统(四) 文件管理 - 0X2A - Atom Feed" href="https://0x2a.in/blog//atom.xml">
+
+    
+
+  <meta name="description" content="
+
+
+文件系统概念
+文件系统实现
+
+文件系统层次结构
+目录实现
+
+线性列表
+哈希表
+
+
+文件实现
+
+文件分配方式
+
+连续分配
+链接分配
+索引分配
+
+
+文件存储空间管理
+
+空闲表法
+空闲链表法
+位示图法
+成组链接法
+
+
+
+
+
+
+磁盘组织与管理..." />
+  <meta property="og:title" content="848操作系统(四) 文件管理 - 0X2A">
+  <meta property="og:description" content="
+
+
+文件系统概念
+文件系统实现
+
+文件系统层次结构
+目录实现
+
+线性列表
+哈希表
+
+
+文件实现
+
+文件分配方式
+
+连续分配
+链接分配
+索引分配
+
+
+文件存储空间管理
+
+空闲表法
+空闲链表法
+位示图法
+成组链接法
+
+
+
+
+
+
+磁盘组织与管理..." />
+  <meta property="og:type" content="articles">
+  <meta property="og:url" content="https://0x2a.in/blog/post/848-os-4/" />
+  <meta property="og:image" content="https://0x2a.in/blog//images/avatar.png">
+  <meta property="og:image:height" content="630">
+  <meta property="og:image:width" content="1200">
+  <meta name="twitter:title" content="848操作系统(四) 文件管理 - 0X2A">
+  <meta name="twitter:description" content="
+
+
+文件系统概念
+文件系统实现
+
+文件系统层次结构
+目录实现
+
+线性列表
+哈希表
+
+
+文件实现
+
+文件分配方式
+
+连续分配
+链接分配
+索引分配
+
+
+文件存储空间管理
+
+空闲表法
+空闲链表法
+位示图法
+成组链接法
+
+
+
+
+
+
+磁盘组织与管理...">
+  <meta name="twitter:card" content="summary_large_image">
+  <link rel="canonical" href="https://0x2a.in/blog/post/848-os-4/">
+
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/default-skin/default-skin.css">
+ 
+  
+    <link rel="stylesheet" href="https://0x2a.in/blog//media/css/prism-synthwave84.css">
+  
+
+  
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css">
+  
+</head>
+
+<body>
+  <div class="antialiased flex flex-col min-h-screen" id="app">
+    <a href="https://0x2a.in/blog/" class="fixed top-0 left-0 mt-4 bg-black text-white dark:text-gray-700 dark:bg-yellow-50 dark:hover:bg-black dark:hover:text-white inline-flex p-2 pl-8 hover:text-gray-700 hover:bg-yellow-50 font-bold z-10 transition-fast animated fadeInLeft">
+      0X2A
+    </a>
+    <div class="max-w-4xl w-full mx-auto">
+      <div class="shadow-box bg-white dark:bg-gray-600 rounded-lg pt-32 md:pt-64 px-4 md:px-8 pb-8 animated fadeIn mb-8">
+        <h1 class="text-5xl font-semibold leading-normal pb-8 mb-8 border-b-8 border-gray-700">
+          848操作系统(四) 文件管理
+        </h1>
+        
+        <div class="mb-8 flex flex-wrap">
+          <div class="text-gray-400 text-sm mr-4">2020-10-04 · 7 min read</div>
+          
+        </div>
+        <div class="markdown mb-8" v-pre>
+          <p><ul class="markdownIt-TOC">
+<li>
+<ul>
+<li><a href="#%E6%96%87%E4%BB%B6%E7%B3%BB%E7%BB%9F%E6%A6%82%E5%BF%B5">文件系统概念</a></li>
+<li><a href="#%E6%96%87%E4%BB%B6%E7%B3%BB%E7%BB%9F%E5%AE%9E%E7%8E%B0">文件系统实现</a>
+<ul>
+<li><a href="#%E6%96%87%E4%BB%B6%E7%B3%BB%E7%BB%9F%E5%B1%82%E6%AC%A1%E7%BB%93%E6%9E%84">文件系统层次结构</a></li>
+<li><a href="#%E7%9B%AE%E5%BD%95%E5%AE%9E%E7%8E%B0">目录实现</a>
+<ul>
+<li><a href="#%E7%BA%BF%E6%80%A7%E5%88%97%E8%A1%A8">线性列表</a></li>
+<li><a href="#%E5%93%88%E5%B8%8C%E8%A1%A8">哈希表</a></li>
+</ul>
+</li>
+<li><a href="#%E6%96%87%E4%BB%B6%E5%AE%9E%E7%8E%B0">文件实现</a>
+<ul>
+<li><a href="#%E6%96%87%E4%BB%B6%E5%88%86%E9%85%8D%E6%96%B9%E5%BC%8F">文件分配方式</a>
+<ul>
+<li><a href="#%E8%BF%9E%E7%BB%AD%E5%88%86%E9%85%8D">连续分配</a></li>
+<li><a href="#%E9%93%BE%E6%8E%A5%E5%88%86%E9%85%8D">链接分配</a></li>
+<li><a href="#%E7%B4%A2%E5%BC%95%E5%88%86%E9%85%8D">索引分配</a></li>
+</ul>
+</li>
+<li><a href="#%E6%96%87%E4%BB%B6%E5%AD%98%E5%82%A8%E7%A9%BA%E9%97%B4%E7%AE%A1%E7%90%86">文件存储空间管理</a>
+<ul>
+<li><a href="#%E7%A9%BA%E9%97%B2%E8%A1%A8%E6%B3%95">空闲表法</a></li>
+<li><a href="#%E7%A9%BA%E9%97%B2%E9%93%BE%E8%A1%A8%E6%B3%95">空闲链表法</a></li>
+<li><a href="#%E4%BD%8D%E7%A4%BA%E5%9B%BE%E6%B3%95">位示图法</a></li>
+<li><a href="#%E6%88%90%E7%BB%84%E9%93%BE%E6%8E%A5%E6%B3%95">成组链接法</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a href="#%E7%A3%81%E7%9B%98%E7%BB%84%E7%BB%87%E4%B8%8E%E7%AE%A1%E7%90%86">磁盘组织与管理</a>
+<ul>
+<li><a href="#%E7%A3%81%E7%9B%98%E7%9A%84%E7%BB%93%E6%9E%84">磁盘的结构</a></li>
+<li><a href="#%E7%A3%81%E7%9B%98%E8%B0%83%E5%BA%A6%E7%AE%97%E6%B3%95">磁盘调度算法</a>
+<ul>
+<li><a href="#%E5%85%88%E6%9D%A5%E5%85%88%E6%9C%8D%E5%8A%A1">先来先服务</a></li>
+<li><a href="#%E6%9C%80%E7%9F%AD%E5%AF%BB%E6%89%BE%E6%97%B6%E9%97%B4">最短寻找时间</a></li>
+<li><a href="#scan%E7%AE%97%E6%B3%95">SCAN算法</a></li>
+<li><a href="#c-scan">C-SCAN</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a href="#%E7%A3%81%E7%9B%98%E7%9A%84%E7%AE%A1%E7%90%86">磁盘的管理</a>
+<ul>
+<li><a href="#%E7%A3%81%E7%9B%98%E5%88%9D%E5%A7%8B%E5%8C%96">磁盘初始化</a></li>
+<li><a href="#%E5%BC%95%E5%AF%BC%E5%BF%AB">引导快</a></li>
+<li><a href="#%E5%9D%8F%E5%9D%97">坏块</a></li>
+</ul>
+</li>
+<li><a href="#%E6%98%93%E9%94%99%E7%82%B9">易错点</a></li>
+</ul>
+</li>
+</ul>
+<br>
+#文件管理</p>
+<h2 id="文件系统概念">文件系统概念</h2>
+<p>心态崩了，一大节笔记没保存。不写这节了。</p>
+<h2 id="文件系统实现">文件系统实现</h2>
+<p>上一节内容讨论的是逻辑结构的话，这节内容主要是在讨论存储结构</p>
+<h3 id="文件系统层次结构">文件系统层次结构</h3>
+<p>一般可以分成：“用户调用接口-文件目录系统-存取控制验证模块（软件验证合法性）- 逻辑文件系统与文件信息缓冲区（逻辑记录转逻辑块号）- 物理文件系统（逻辑块转物理地址）- 辅助分配模块（管理空闲空间和回收辅存） - 设备管理程序模块（分配设备等）”</p>
+<h3 id="目录实现">目录实现</h3>
+<p>目录的实现就是为了查找，因此可分为两种目录实现方式：线性列表和哈希表，分别对应线性查找和散列查找。</p>
+<h4 id="线性列表">线性列表</h4>
+<p>使用存储文件名和数据块的线性表。<br>
+优点：实现简单<br>
+缺点：查找费时</p>
+<h4 id="哈希表">哈希表</h4>
+<p>根据文件名得到一个值，并返回指向相信列表中元素的指针。<br>
+优点：查找快速，插入删除简单。<br>
+缺点：哈希表长度固定，拓展性差</p>
+<h3 id="文件实现">文件实现</h3>
+<h4 id="文件分配方式">文件分配方式</h4>
+<p>注意和逻辑结构区分</p>
+<h5 id="连续分配">连续分配</h5>
+<p>连续分配要求每个文件在磁盘上占有一组连续的块。这种方式访问磁盘时所需要的寻道数和寻道时间最小。<br>
+优点：简单，存取速度快<br>
+缺点：文件长度不易拓展，容易产生<strong>外部碎片</strong></p>
+<h5 id="链接分配">链接分配</h5>
+<p>采取离散分配的方式，显著提高了磁盘利用率。除了最后一个盘块，每个盘块都有指向下一个盘块的指针，这些指针对于用户透明，目录中包括了第一块的指针和最后一块的指针。<br>
+优点：<strong>无外部碎片</strong>，磁盘利用率高<br>
+缺点：只能顺序访问，并且稳定性不高，指针也会消耗空间。</p>
+<p>上述是隐式链接分配法，为了解决上述问题，使用显示链接分配法。显示存放各物理块指针，将他们都放到了一个叫做FAT的表中，每个表项存放下一块的指针。FAT表不仅记录了各块的先后关系，还记录了空闲的块位置。FAT表系统启动时会<strong>读入内存</strong>，这样也同时减少了访问磁盘的次数。</p>
+<h5 id="索引分配">索引分配</h5>
+<p>索引分配主要提供了直接访问的功能。他把所有的盘块号都放在了一个索引块中。<strong>每个文件都有索引块</strong>，索引块的第i个条目对应文件第i个块的指针。索引分配<strong>无外部碎片</strong>。<br>
+索引块的大小适应个严重的问题，太小的索引块无法存放文件所有块指针，但过大会浪费空间。因此可以采用以下机制解决：</p>
+<ol>
+<li>链接方案  一个索引块为一个硬盘块，为了处理大文件，可以把多个索引块链接起来。</li>
+<li>多层索引  学习多级页表好榜样。</li>
+<li>混合索引  把多种索引分配方法结合，比如系统采用直接地址，又采用单级索引或两级索引。（多重套娃）</li>
+</ol>
+<h4 id="文件存储空间管理">文件存储空间管理</h4>
+<h5 id="空闲表法">空闲表法</h5>
+<p>类似于内存管理中的动态分配方式，同样也有最佳适应算法、循环首次适应算法等。</p>
+<h5 id="空闲链表法">空闲链表法</h5>
+<p>把所有空闲盘曲拉成一条空闲链。<br>
+优点：分配回收简单<br>
+缺点：分配需要多次</p>
+<h5 id="位示图法">位示图法</h5>
+<p>用一个二位图来表示表示磁盘中每一块的使用情况。<br>
+标号从1开始，i行，j列，n表示一行的数量，b表示块号<br>
+盘块分配公式：<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>b</mi><mo>=</mo><mi>n</mi><mo>(</mo><mi>i</mi><mo>−</mo><mn>1</mn><mo>)</mo><mo>+</mo><mi>j</mi></mrow><annotation encoding="application/x-tex">b=n(i-1)+j</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.69444em;vertical-align:0em;"></span><span class="mord mathdefault">b</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathdefault">n</span><span class="mopen">(</span><span class="mord mathdefault">i</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">−</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord">1</span><span class="mclose">)</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">+</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:0.85396em;vertical-align:-0.19444em;"></span><span class="mord mathdefault" style="margin-right:0.05724em;">j</span></span></span></span><br>
+盘块回收公式：<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>i</mi><mo>=</mo><mo>(</mo><mi>b</mi><mo>−</mo><mn>1</mn><mo>)</mo><mi>D</mi><mi>I</mi><mi>V</mi><mi>n</mi><mo>+</mo><mn>1</mn><mspace width="1em"/><mi>j</mi><mo>=</mo><mo>(</mo><mi>b</mi><mo>−</mo><mn>1</mn><mo>)</mo><mi>M</mi><mi>O</mi><mi>D</mi><mi>n</mi><mo>+</mo><mn>1</mn></mrow><annotation encoding="application/x-tex">i = (b-1)DIV n+1\quad j=(b-1)MOD n +1</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.65952em;vertical-align:0em;"></span><span class="mord mathdefault">i</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mopen">(</span><span class="mord mathdefault">b</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">−</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord">1</span><span class="mclose">)</span><span class="mord mathdefault" style="margin-right:0.02778em;">D</span><span class="mord mathdefault" style="margin-right:0.07847em;">I</span><span class="mord mathdefault" style="margin-right:0.22222em;">V</span><span class="mord mathdefault">n</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">+</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:0.85396em;vertical-align:-0.19444em;"></span><span class="mord">1</span><span class="mspace" style="margin-right:1em;"></span><span class="mord mathdefault" style="margin-right:0.05724em;">j</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mopen">(</span><span class="mord mathdefault">b</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">−</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord">1</span><span class="mclose">)</span><span class="mord mathdefault" style="margin-right:0.10903em;">M</span><span class="mord mathdefault" style="margin-right:0.02778em;">O</span><span class="mord mathdefault" style="margin-right:0.02778em;">D</span><span class="mord mathdefault">n</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">+</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:0.64444em;vertical-align:0em;"></span><span class="mord">1</span></span></span></span></p>
+<p>标号从0开始<br>
+盘块分配：<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>b</mi><mo>=</mo><mi>n</mi><mo>∗</mo><mi>i</mi><mo>+</mo><mi>j</mi></mrow><annotation encoding="application/x-tex">b=n*i+j</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.69444em;vertical-align:0em;"></span><span class="mord mathdefault">b</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:0.46528em;vertical-align:0em;"></span><span class="mord mathdefault">n</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">∗</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:0.74285em;vertical-align:-0.08333em;"></span><span class="mord mathdefault">i</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">+</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:0.85396em;vertical-align:-0.19444em;"></span><span class="mord mathdefault" style="margin-right:0.05724em;">j</span></span></span></span><br>
+盘块回收：<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>i</mi><mo>=</mo><mi>b</mi><mi>D</mi><mi>I</mi><mi>V</mi><mi>n</mi><mspace width="1em"/><mi>j</mi><mo>=</mo><mi>b</mi><mi>M</mi><mi>O</mi><mi>D</mi><mi>n</mi></mrow><annotation encoding="application/x-tex">i=b DIV n \quad j = b MOD n</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.65952em;vertical-align:0em;"></span><span class="mord mathdefault">i</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:0.8888799999999999em;vertical-align:-0.19444em;"></span><span class="mord mathdefault">b</span><span class="mord mathdefault" style="margin-right:0.02778em;">D</span><span class="mord mathdefault" style="margin-right:0.07847em;">I</span><span class="mord mathdefault" style="margin-right:0.22222em;">V</span><span class="mord mathdefault">n</span><span class="mspace" style="margin-right:1em;"></span><span class="mord mathdefault" style="margin-right:0.05724em;">j</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:0.69444em;vertical-align:0em;"></span><span class="mord mathdefault">b</span><span class="mord mathdefault" style="margin-right:0.10903em;">M</span><span class="mord mathdefault" style="margin-right:0.02778em;">O</span><span class="mord mathdefault" style="margin-right:0.02778em;">D</span><span class="mord mathdefault">n</span></span></span></span></p>
+<h5 id="成组链接法">成组链接法</h5>
+<p>前两者不适合用于大文件系统，因此unix使用成组链接法。大概方法就是一个扇区大部分空间都用作与存储数据，留一个存储另一个扇区的地址，如此循环 套娃。</p>
+<p>Linux虚拟文件系统四大对象：</p>
+<ol>
+<li>超级块(super block)</li>
+<li>索引节点(inode)</li>
+<li>目录项(dentry)</li>
+<li>文件对象(file)</li>
+</ol>
+<p>一个超级块对于一个独立的文件系统。保存文件系统的类型、大小、状态等等。</p>
+<h2 id="磁盘组织与管理">磁盘组织与管理</h2>
+<h3 id="磁盘的结构">磁盘的结构</h3>
+<p>多个<strong>扇区</strong>围成一个圆，形成<strong>磁道</strong>，多个磁道和成一个圆面，形成<strong>盘片</strong>，多个圆面形成一个柱体。每个横切面称为<strong>柱面</strong>。</p>
+<h3 id="磁盘调度算法">磁盘调度算法</h3>
+<ul>
+<li>寻找时间<span class="katex"><span class="katex-mathml"><math><semantics><mrow><msub><mi>T</mi><mi>S</mi></msub></mrow><annotation encoding="application/x-tex">T_S</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.83333em;vertical-align:-0.15em;"></span><span class="mord"><span class="mord mathdefault" style="margin-right:0.13889em;">T</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.32833099999999993em;"><span style="top:-2.5500000000000003em;margin-left:-0.13889em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathdefault mtight" style="margin-right:0.05764em;">S</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span></span></span></span>，读写信息时移动到相应磁道所需时间。包括了跨越n条磁道时间外，还包括启动磁臂时间s。后者耗时较长。</li>
+<li>延迟时间<span class="katex"><span class="katex-mathml"><math><semantics><mrow><msub><mi>T</mi><mi>r</mi></msub></mrow><annotation encoding="application/x-tex">T_r</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.83333em;vertical-align:-0.15em;"></span><span class="mord"><span class="mord mathdefault" style="margin-right:0.13889em;">T</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.151392em;"><span style="top:-2.5500000000000003em;margin-left:-0.13889em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathdefault mtight" style="margin-right:0.02778em;">r</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span></span></span></span>，磁头定位到某扇区所需要时间。旋转速度r，则<span class="katex"><span class="katex-mathml"><math><semantics><mrow><msub><mi>T</mi><mi>r</mi></msub><mo>=</mo><mfrac><mn>1</mn><mrow><mn>2</mn><mi>r</mi></mrow></mfrac></mrow><annotation encoding="application/x-tex">T_r=\frac{1}{2r}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.83333em;vertical-align:-0.15em;"></span><span class="mord"><span class="mord mathdefault" style="margin-right:0.13889em;">T</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.151392em;"><span style="top:-2.5500000000000003em;margin-left:-0.13889em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathdefault mtight" style="margin-right:0.02778em;">r</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:1.190108em;vertical-align:-0.345em;"></span><span class="mord"><span class="mopen nulldelimiter"></span><span class="mfrac"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.845108em;"><span style="top:-2.6550000000000002em;"><span class="pstrut" style="height:3em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mtight">2</span><span class="mord mathdefault mtight" style="margin-right:0.02778em;">r</span></span></span></span><span style="top:-3.23em;"><span class="pstrut" style="height:3em;"></span><span class="frac-line" style="border-bottom-width:0.04em;"></span></span><span style="top:-3.394em;"><span class="pstrut" style="height:3em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mtight">1</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.345em;"><span></span></span></span></span></span><span class="mclose nulldelimiter"></span></span></span></span></span>。</li>
+<li>传输时间<span class="katex"><span class="katex-mathml"><math><semantics><mrow><msub><mi>T</mi><mi>t</mi></msub></mrow><annotation encoding="application/x-tex">T_t</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.83333em;vertical-align:-0.15em;"></span><span class="mord"><span class="mord mathdefault" style="margin-right:0.13889em;">T</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.2805559999999999em;"><span style="top:-2.5500000000000003em;margin-left:-0.13889em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathdefault mtight">t</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span></span></span></span>，每次读写字数b，每秒转速r，磁道上字节数N <span class="katex"><span class="katex-mathml"><math><semantics><mrow><msub><mi>T</mi><mi>t</mi></msub><mo>=</mo><mfrac><mi>b</mi><mrow><mi>r</mi><mi>N</mi></mrow></mfrac></mrow><annotation encoding="application/x-tex">T_t=\frac{b}{rN}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.83333em;vertical-align:-0.15em;"></span><span class="mord"><span class="mord mathdefault" style="margin-right:0.13889em;">T</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.2805559999999999em;"><span style="top:-2.5500000000000003em;margin-left:-0.13889em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathdefault mtight">t</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:1.2251079999999999em;vertical-align:-0.345em;"></span><span class="mord"><span class="mopen nulldelimiter"></span><span class="mfrac"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.8801079999999999em;"><span style="top:-2.6550000000000002em;"><span class="pstrut" style="height:3em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathdefault mtight" style="margin-right:0.02778em;">r</span><span class="mord mathdefault mtight" style="margin-right:0.10903em;">N</span></span></span></span><span style="top:-3.23em;"><span class="pstrut" style="height:3em;"></span><span class="frac-line" style="border-bottom-width:0.04em;"></span></span><span style="top:-3.394em;"><span class="pstrut" style="height:3em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathdefault mtight">b</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.345em;"><span></span></span></span></span></span><span class="mclose nulldelimiter"></span></span></span></span></span></li>
+</ul>
+<p>常见的算法有以下几种：</p>
+<h4 id="先来先服务">先来先服务</h4>
+<p>具有公平性。若有大量进程竞争使用，效率近似于随即调度。</p>
+<h4 id="最短寻找时间">最短寻找时间</h4>
+<p>优先处理与当前所在磁道最近的磁道。<strong>会产生饥饿现象</strong></p>
+<h4 id="scan算法">SCAN算法</h4>
+<p>电梯调度，循环进行。局部性性能不如前两者。</p>
+<h4 id="c-scan">C-SCAN</h4>
+<p>到尾部后回到首部重新开始，不像scan算法还是从尾部循环到首部。避免了偏向于处理最里或最外的请求。</p>
+<p>两种scan算法都可以用look算法优化，即如果前方没有要处理的请求，则立马回头是岸。</p>
+<p>为了减少寻道时间，可以采用交替编号的方法。</p>
+<h2 id="磁盘的管理">磁盘的管理</h2>
+<h3 id="磁盘初始化">磁盘初始化</h3>
+<ul>
+<li>低级格式化（物理分区） 也就是分磁道 扇区啥的</li>
+<li>分区 也就是分我们所谓的cde盘</li>
+<li>逻辑格式化 创建文件系统</li>
+</ul>
+<h3 id="引导快">引导快</h3>
+<p>计算机启动需要初始化程序，一般存在ROM中，为了避免代码需要修改，所以rom只存放很小的程序，完整功能程序放在了启动块上。</p>
+<h3 id="坏块">坏块</h3>
+<p>系统可以标记坏块，不再使用，但不能修复坏块。</p>
+<h2 id="易错点">易错点</h2>
+<ol>
+<li>读取数据时间中，影响最大的时<strong>寻找时间</strong></li>
+<li>校验码的确定是低级格式化完成的</li>
+<li>磁臂黏着：总是访问某个磁道而不响应其他磁道请求 FCFS不会导致这种现象</li>
+</ol>
+
+        </div>
+        <!-- Share to Twitter, Weibo, Telegram -->
+        <div class="flex items-center">
+          <div class="mr-4 flex items-center">
+            <i class="ri-share-forward-line text-gray-500"></i>
+          </div>
+          <div class="px-4 cursor-pointer text-blue-500 hover:bg-blue-100 dark:hover:bg-gray-600 inline-flex" @click="shareToTwitter">
+            <i class="ri-twitter-line"></i>
+          </div>
+          <div class="px-4 cursor-pointer text-red-500 hover:bg-red-100 dark:hover:bg-gray-600 inline-flex" @click="shareToWeibo">
+            <i class="ri-weibo-line"></i>
+          </div>
+          <div class="px-4 cursor-pointer text-indigo-500 hover:bg-indigo-100 dark:hover:bg-gray-600 inline-flex" @click="shareToTelegram">
+            <i class="ri-telegram-line"></i>
+          </div>
+        </div>
+      </div>
+
+      
+
+      
+        <div id="vlaine-comment"></div>
+      
+
+      <footer class="py-12 text-center px-4 md:px-0" v-pre>
+  Powered by <a href="https://github.com/getgridea/gridea" target="_blank">Gridea</a>
+</footer>
+    </div>
+
+    <!-- TOC Container -->
+    <div class="fixed right-0 bottom-0 mb-16 mr-4 shadow w-8 h-8 rounded-full flex justify-center items-center z-10 cursor-pointer bg-white dark:bg-gray-500 dark:text-gray-200 hover:shadow-lg transition-all animated fadeInRight" @click="showToc = true">
+      <i class="ri-file-list-line"></i>
+    </div>
+
+    <div class="fixed right-0 top-0 bottom-0 overflow-y-auto w-64 bg-white dark:bg-gray-800 p-4 border-l border-gray-100 dark:border-gray-600 z-10 transition-fast" :class="{ '-mr-64': !showToc }">
+      <div class="flex mb-4 justify-end">
+        <div class="w-8 h-8 inline-flex justify-center items-center rounded-full cursor-pointer hover:bg-gray-200 dark:hover:bg-gray-600 transition-fast" @click="showToc = false">
+          <i class="ri-close-line text-lg"></i>
+        </div>
+      </div>
+      <div class="post-toc-container">
+        <ul class="markdownIt-TOC">
+<li>
+<ul>
+<li><a href="#%E6%96%87%E4%BB%B6%E7%B3%BB%E7%BB%9F%E6%A6%82%E5%BF%B5">文件系统概念</a></li>
+<li><a href="#%E6%96%87%E4%BB%B6%E7%B3%BB%E7%BB%9F%E5%AE%9E%E7%8E%B0">文件系统实现</a>
+<ul>
+<li><a href="#%E6%96%87%E4%BB%B6%E7%B3%BB%E7%BB%9F%E5%B1%82%E6%AC%A1%E7%BB%93%E6%9E%84">文件系统层次结构</a></li>
+<li><a href="#%E7%9B%AE%E5%BD%95%E5%AE%9E%E7%8E%B0">目录实现</a>
+<ul>
+<li><a href="#%E7%BA%BF%E6%80%A7%E5%88%97%E8%A1%A8">线性列表</a></li>
+<li><a href="#%E5%93%88%E5%B8%8C%E8%A1%A8">哈希表</a></li>
+</ul>
+</li>
+<li><a href="#%E6%96%87%E4%BB%B6%E5%AE%9E%E7%8E%B0">文件实现</a>
+<ul>
+<li><a href="#%E6%96%87%E4%BB%B6%E5%88%86%E9%85%8D%E6%96%B9%E5%BC%8F">文件分配方式</a>
+<ul>
+<li><a href="#%E8%BF%9E%E7%BB%AD%E5%88%86%E9%85%8D">连续分配</a></li>
+<li><a href="#%E9%93%BE%E6%8E%A5%E5%88%86%E9%85%8D">链接分配</a></li>
+<li><a href="#%E7%B4%A2%E5%BC%95%E5%88%86%E9%85%8D">索引分配</a></li>
+</ul>
+</li>
+<li><a href="#%E6%96%87%E4%BB%B6%E5%AD%98%E5%82%A8%E7%A9%BA%E9%97%B4%E7%AE%A1%E7%90%86">文件存储空间管理</a>
+<ul>
+<li><a href="#%E7%A9%BA%E9%97%B2%E8%A1%A8%E6%B3%95">空闲表法</a></li>
+<li><a href="#%E7%A9%BA%E9%97%B2%E9%93%BE%E8%A1%A8%E6%B3%95">空闲链表法</a></li>
+<li><a href="#%E4%BD%8D%E7%A4%BA%E5%9B%BE%E6%B3%95">位示图法</a></li>
+<li><a href="#%E6%88%90%E7%BB%84%E9%93%BE%E6%8E%A5%E6%B3%95">成组链接法</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a href="#%E7%A3%81%E7%9B%98%E7%BB%84%E7%BB%87%E4%B8%8E%E7%AE%A1%E7%90%86">磁盘组织与管理</a>
+<ul>
+<li><a href="#%E7%A3%81%E7%9B%98%E7%9A%84%E7%BB%93%E6%9E%84">磁盘的结构</a></li>
+<li><a href="#%E7%A3%81%E7%9B%98%E8%B0%83%E5%BA%A6%E7%AE%97%E6%B3%95">磁盘调度算法</a>
+<ul>
+<li><a href="#%E5%85%88%E6%9D%A5%E5%85%88%E6%9C%8D%E5%8A%A1">先来先服务</a></li>
+<li><a href="#%E6%9C%80%E7%9F%AD%E5%AF%BB%E6%89%BE%E6%97%B6%E9%97%B4">最短寻找时间</a></li>
+<li><a href="#scan%E7%AE%97%E6%B3%95">SCAN算法</a></li>
+<li><a href="#c-scan">C-SCAN</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a href="#%E7%A3%81%E7%9B%98%E7%9A%84%E7%AE%A1%E7%90%86">磁盘的管理</a>
+<ul>
+<li><a href="#%E7%A3%81%E7%9B%98%E5%88%9D%E5%A7%8B%E5%8C%96">磁盘初始化</a></li>
+<li><a href="#%E5%BC%95%E5%AF%BC%E5%BF%AB">引导快</a></li>
+<li><a href="#%E5%9D%8F%E5%9D%97">坏块</a></li>
+</ul>
+</li>
+<li><a href="#%E6%98%93%E9%94%99%E7%82%B9">易错点</a></li>
+</ul>
+</li>
+</ul>
+
+      </div>
+    </div>
+
+    <!-- Back to top -->
+    <div class="fixed right-0 bottom-0 mb-4 mr-4 shadow w-8 h-8 rounded-full flex justify-center items-center z-10 cursor-pointer bg-white hover:shadow-lg transition-all dark:bg-gray-500 dark:text-gray-200" @click="backToUp" v-show="scrolled">
+      <i class="ri-arrow-up-line"></i>
+    </div>
+  </div>
+
+  <!-- Root element of PhotoSwipe. Must have class pswp. -->
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+  <!-- Background of PhotoSwipe. 
+        It's a separate element as animating opacity is faster than rgba(). -->
+  <div class="pswp__bg">
+  </div>
+  <!-- Slides wrapper with overflow:hidden. -->
+  <div class="pswp__scroll-wrap">
+    <!-- Container that holds slides. 
+            PhotoSwipe keeps only 3 of them in the DOM to save memory.
+            Don't modify these 3 pswp__item elements, data is added later on. -->
+    <div class="pswp__container">
+      <div class="pswp__item">
+      </div>
+      <div class="pswp__item">
+      </div>
+      <div class="pswp__item">
+      </div>
+    </div>
+    <!-- Default (PhotoSwipeUI_Default) interface on top of sliding area. Can be changed. -->
+    <div class="pswp__ui pswp__ui--hidden">
+      <div class="pswp__top-bar">
+        <!--  Controls are self-explanatory. Order can be changed. -->
+        <div class="pswp__counter">
+        </div>
+        <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+        <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+        <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+        <!-- Preloader demo http://codepen.io/dimsemenov/pen/yyBWoR -->
+        <!-- element will get class pswp__preloader--active when preloader is running -->
+        <div class="pswp__preloader">
+          <div class="pswp__preloader__icn">
+            <div class="pswp__preloader__cut">
+              <div class="pswp__preloader__donut">
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+        <div class="pswp__share-tooltip">
+        </div>
+      </div>
+      <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+      </button>
+      <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+      </button>
+      <div class="pswp__caption">
+        <div class="pswp__caption__center">
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+  <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+  <script src="https://0x2a.in/blog//media/scripts/main.js"></script>
+  
+  <!-- Code Highlight -->
+  
+    <script src="https://0x2a.in/blog//media/prism.js"></script>
+    <script>
+      Prism.highlightAll()
+    </script>
+  
+
+  <script src="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe-ui-default.min.js"></script>
+  <script>
+    //拿到预览框架，也就是上面的html代码
+    var pswpElement = document.querySelectorAll('.pswp')[0];
+    //定义图片数组变量
+    var imgitems;
+    /**
+    * 用于显示预览界面
+    * @param index 图片数组下标
+    */
+    function viewImg(index) {
+      //其它选项这里不做过多阐述，详情见官网
+      var pswpoptions = {
+        index: parseInt(index, 10), // 开始幻灯片索引。0是第一张幻灯片。必须是整数，而不是字符串。
+        bgOpacity: 0.7, // 背景透明度，0-1
+        maxSpreadZoom: 3, // 缩放级别，不要太大
+      };
+      //初始化并打开PhotoSwipe，pswpElement对应上面预览框架，PhotoSwipeUI_Default为皮肤，imgitems为图片数组，pswpoptions为选项
+      var gallery = new PhotoSwipe(pswpElement, PhotoSwipeUI_Default, imgitems, pswpoptions);
+      gallery.init()
+    }
+    /**
+    * 用于添加图片点击事件
+    * @param img 图片元素
+    * @param index 所属下标（在imgitems中的位置）
+    */
+    function addImgClick(img, index) {
+      img.onclick = function() {
+        viewImg(index)
+      }
+    }
+    /**
+    * 轮询所有图片，获取src、width、height等数据，加入imgitems，并给图片元素添加事件
+    * 最好在onload中执行该方法，本站因放在最底部，所以直接初始化
+    * 异步加载图片可在图片元素创建完成后调用此方法
+    */
+    function initImg() {
+      //重置图片数组
+      imgitems = [];
+      //查找class:markdown 下的所有img元素并遍历
+      var imgs = document.querySelectorAll('.markdown img');
+      for (var i = 0; i < imgs.length; i++) {
+        var img = imgs[i];
+        //本站相册初始为loading图片，真实图片放在data-src
+        var ds = img.getAttribute("data-src");
+        //创建image对象，用于获取图片宽高
+        var imgtemp = new Image();
+        //判断是否存在data-src
+        if (ds != null && ds.length > 0) {
+          imgtemp.src = ds
+        } else {
+          imgtemp.src = img.src
+        }
+        //判断是否存在缓存
+        if (imgtemp.complete) {
+          var imgobj = {
+            "src": imgtemp.src,
+            "w": imgtemp.width,
+            "h": imgtemp.height,
+          };
+          imgitems[i] = imgobj;
+          addImgClick(img, i);
+        } else {
+          console.log('进来了2')
+          imgtemp.index = i;
+          imgtemp.img = img;
+          imgtemp.onload = function() {
+            var imgobj = {
+              "src": this.src,
+              "w": this.width,
+              "h": this.height,
+            };
+            //不要使用push，因为onload前后顺序会不同
+            imgitems[this.index] = imgobj
+            //添加点击事件
+            addImgClick(this.img, this.index);
+          }
+        }
+      }
+    }
+    //初始化
+    initImg();
+  </script>
+  
+    <script type="application/javascript" src="https://unpkg.com/valine"></script>
+<script type="application/javascript">
+  new Valine({
+    el: '#vlaine-comment',
+    appId: 'V4MDFNfytHcoabcly1MENtAo-gzGzoHsz',
+    appKey: 'xyl895MDJ2Q6BRDKwyRPr6xL',
+    pageSize: 10,
+    notify: true,
+    avatar: 'mp',
+    verify: true,
+    placeholder: '来都来了，不妨评论一下',
+    visitor: true,
+    highlight: true,
+    recordIP: true,
+  })
+</script>
+  
+  
+</body>
+
+</html>
