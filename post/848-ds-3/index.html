@@ -203,7 +203,7 @@
 <p>采用顺序存储的栈称为顺序栈。</p>
 <p>还有一个概念叫共享栈，两个顺序栈共享一个数组空间，让他们的栈底分别设置在共享空间的两端，两个栈顶向共享空间中间延伸。</p>
 <p>0号栈top0=-1时0号栈为空，top1=MaxSize时1号栈为空。</p>
-<p>想改变栈顶指针，再赋值。出栈则相反。</p>
+<p>先改变栈顶指针，再赋值。出栈则相反。</p>
 <p>存取数据的时间复杂度均为<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>O</mi><mo>(</mo><mn>1</mn><mo>)</mo></mrow><annotation encoding="application/x-tex">O(1)</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathdefault" style="margin-right:0.02778em;">O</span><span class="mopen">(</span><span class="mord">1</span><span class="mclose">)</span></span></span></span></p>
 <h3 id="栈的链式存储结构">栈的链式存储结构</h3>
 <p>利用单链表实现，所有操作都是在单链表的<strong>表头</strong>实现。</p>
