@@ -10,10 +10,8 @@ enableEmoji = true
 googleAnalytics = ""                   # your google analytics id       # Google统计代码
 disqusShortname = ""                   # your discuss shortname         # Disqus评论系统代码
 
-pygmentsUseClasses = true
+pygmentsUseClasses = false
 pygmentCodeFences = true
-pygmentscodefencesguesssyntax = true
-
 [author]                               # essential                      # 必需
   name = "0x2a"
 
