@@ -1,65 +1,19 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-    <title>ZO ZO</title>
+    <title>0x2a</title>
     <link>https://0x2a.in/blog/</link>
-    <description>Recent content on ZO ZO</description>
+    <description>Recent content on 0x2a</description>
     <generator>Hugo -- gohugo.io</generator>
-    <language>en</language>
-    <lastBuildDate>Thu, 11 Apr 2019 14:26:00 +0800</lastBuildDate><atom:link href="https://0x2a.in/blog/index.xml" rel="self" type="application/rss+xml" />
+    <language>zh-cn</language>
+    <lastBuildDate>Mon, 21 Sep 2020 21:10:11 +0000</lastBuildDate><atom:link href="https://0x2a.in/blog/index.xml" rel="self" type="application/rss+xml" />
     <item>
-      <title>药师灌顶真言</title>
-      <link>https://0x2a.in/blog/posts/chinese-preview/</link>
-      <pubDate>Thu, 11 Apr 2019 14:26:00 +0800</pubDate>
+      <title>数据结构常见代码汇总（考研向）</title>
+      <link>https://0x2a.in/blog/posts/ds-ky-code/</link>
+      <pubDate>Mon, 21 Sep 2020 21:10:11 +0000</pubDate>
       
-      <guid>https://0x2a.in/blog/posts/chinese-preview/</guid>
-      <description>&lt;blockquote&gt;
-&lt;p&gt;修学药师灌顶真言是药师法门的一部分，读诵修持有着极大的功德利益&lt;/p&gt;
-&lt;/blockquote&gt;
-&lt;h1 id=&#34;内容&#34;&gt;内容&lt;/h1&gt;
-&lt;p&gt;南无薄伽伐帝鞞杀社&lt;/p&gt;
-&lt;p&gt;窭噜薜琉璃&lt;/p&gt;
-&lt;p&gt;跋喇婆&lt;/p&gt;
-&lt;p&gt;喝啰阇也&lt;/p&gt;</description>
-    </item>
-    
-    <item>
-      <title>日本語敬語体系</title>
-      <link>https://0x2a.in/blog/posts/japanese-preview/</link>
-      <pubDate>Wed, 10 Apr 2019 14:26:00 +0800</pubDate>
-      
-      <guid>https://0x2a.in/blog/posts/japanese-preview/</guid>
-      <description>&lt;blockquote&gt;
-&lt;p&gt;日本語の敬語体系は、一般に、大きく尊敬語・謙譲語・丁寧語に分類される。文化審議会国語分科会は、2007年2月に「敬語の指針」を答申し、これに丁重語および美化語を含めた5分類を示している。&lt;/p&gt;
-&lt;/blockquote&gt;
-&lt;h1 id=&#34;尊敬語&#34;&gt;尊敬語&lt;/h1&gt;
-&lt;p&gt;尊敬語は、動作の主体を高めることで、主体への敬意を表す言い方である。動詞に「お（ご）～になる」を付けた形、また、助動詞「（ら）れる」を付けた形などが用いられる。たとえば、動詞「取る」の尊敬形として、「（先生が）お取りになる」「（先生が）取られる」などが用いられる。&lt;/p&gt;</description>
-    </item>
-    
-    <item>
-      <title>Creating a New Theme</title>
-      <link>https://0x2a.in/blog/posts/english-preview/</link>
-      <pubDate>Mon, 01 Apr 2019 14:26:00 +0800</pubDate>
-      
-      <guid>https://0x2a.in/blog/posts/english-preview/</guid>
-      <description>&lt;h2 id=&#34;introduction&#34;&gt;Introduction&lt;/h2&gt;
-&lt;p&gt;This tutorial will show you how to create a simple theme in Hugo. I assume that you are familiar with HTML, the bash command line, and that you are comfortable using Markdown to format content. I&amp;rsquo;ll explain how Hugo uses templates and how you can organize your templates to create a theme. I won&amp;rsquo;t cover using CSS to style your theme.&lt;/p&gt;</description>
-    </item>
-    
-    <item>
-      <title>Theme Preview</title>
-      <link>https://0x2a.in/blog/posts/theme-preview/</link>
-      <pubDate>Sun, 31 Mar 2019 17:49:40 +0800</pubDate>
-      
-      <guid>https://0x2a.in/blog/posts/theme-preview/</guid>
-      <description>&lt;h1 id=&#34;headings&#34;&gt;Headings&lt;/h1&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-markdown&#34; data-lang=&#34;markdown&#34;&gt;&lt;span class=&#34;gh&#34;&gt;# H1
-&lt;/span&gt;&lt;span class=&#34;gh&#34;&gt;&lt;/span&gt;&lt;span class=&#34;gu&#34;&gt;## H2
-&lt;/span&gt;&lt;span class=&#34;gu&#34;&gt;### H3
-&lt;/span&gt;&lt;span class=&#34;gu&#34;&gt;#### H4
-&lt;/span&gt;&lt;span class=&#34;gu&#34;&gt;##### H5
-&lt;/span&gt;&lt;span class=&#34;gu&#34;&gt;###### H6
-&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;</description>
+      <guid>https://0x2a.in/blog/posts/ds-ky-code/</guid>
+      <description>数据结构考验中常用操作的伪代码，大部分参考王道书上代码。另有部分经典算法题代码（持续更新）。 啊 其实已经写好了, 但是懒得更新在博客了，有需要的自己去overleaf下。打印版代码 @[TOC] 线性表 顺序表 顺序表定义</description>
     </item>
     
     <item>
