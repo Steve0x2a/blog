@@ -8,7 +8,16 @@
     <language>en</language>
     <copyright>&amp;copy; 2021 &lt;a href=&#34;https://0x2a.in/blog&#34;&gt;0x2a&lt;/a&gt;
 </copyright>
-    <lastBuildDate>Wed, 21 Oct 2020 18:19:46 +0000</lastBuildDate><atom:link href="https://0x2a.in/blog/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Mon, 16 Aug 2021 17:36:24 +0800</lastBuildDate><atom:link href="https://0x2a.in/blog/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>JNU_Health_Crawler</title>
+      <link>https://0x2a.in/blog/posts/jnu_health_crawler/</link>
+      <pubDate>Mon, 16 Aug 2021 17:36:24 +0800</pubDate>
+      
+      <guid>https://0x2a.in/blog/posts/jnu_health_crawler/</guid>
+      <description>暨南大学健康打卡请求分析及脚本 前言 距离入学还有半个多月，就需要进行健康打卡十四天才能入学了。迫于想偷懒学习的心态，决定分析一下暨南大学打卡请求。 很悲催</description>
+    </item>
+    
     <item>
       <title>848数据结构 (七) 排序</title>
       <link>https://0x2a.in/blog/context/848-ds-7/</link>
