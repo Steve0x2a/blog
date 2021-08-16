@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>操作系统 on 0x2a&#39;s blog</title>
+    <link>https://0x2a.in/blog/tags/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/</link>
+    <description>Recent content in 操作系统 on 0x2a&#39;s blog</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en</language>
+    <copyright>&amp;copy; 2021 &lt;a href=&#34;https://0x2a.in/blog&#34;&gt;0x2a&lt;/a&gt;
+</copyright>
+    <lastBuildDate>Mon, 05 Oct 2020 18:12:18 +0000</lastBuildDate><atom:link href="https://0x2a.in/blog/tags/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>848操作系统(五) I/O管理</title>
+      <link>https://0x2a.in/blog/context/848-os-5/</link>
+      <pubDate>Mon, 05 Oct 2020 18:12:18 +0000</pubDate>
+      
+      <guid>https://0x2a.in/blog/context/848-os-5/</guid>
+      <description>I/O管理 I/O管理概述 I/O设备类型 根据IO设备的使用特性可以分为: 人机交互类外部设备 要和用户打交道的设备：打印机，键盘鼠标等。 存储设备 用于存储数据</description>
+    </item>
+    
+    <item>
+      <title>848操作系统(四) 文件管理</title>
+      <link>https://0x2a.in/blog/context/848-os-4/</link>
+      <pubDate>Sun, 04 Oct 2020 19:17:49 +0000</pubDate>
+      
+      <guid>https://0x2a.in/blog/context/848-os-4/</guid>
+      <description>#文件管理 文件系统概念 心态崩了，一大节笔记没保存。不写这节了。 文件系统实现 上一节内容讨论的是逻辑结构的话，这节内容主要是在讨论存储结构 文件系统层次结构</description>
+    </item>
+    
+    <item>
+      <title>848操作系统(三) 内存管理</title>
+      <link>https://0x2a.in/blog/context/848-os-3/</link>
+      <pubDate>Fri, 25 Sep 2020 20:39:15 +0000</pubDate>
+      
+      <guid>https://0x2a.in/blog/context/848-os-3/</guid>
+      <description>内存管理 内存管理基础 内存管理概念 内存管理功能: 内存空间分配和回收 地址转换 内存空间扩充 存储保护 程序装入与链接 用户程序要在系统中运行，必须先装入内存，一般</description>
+    </item>
+    
+    <item>
+      <title>848操作系统(二) 进程管理</title>
+      <link>https://0x2a.in/blog/context/848-os-2/</link>
+      <pubDate>Tue, 15 Sep 2020 19:17:07 +0000</pubDate>
+      
+      <guid>https://0x2a.in/blog/context/848-os-2/</guid>
+      <description>进程管理 进程与线程 进程概念 进程概念的引入是为了实现程序的并发执行，并对并发执行的程序加以描述和控制。 为了使参与并发执行的程序都可以独立运行，操作系统会</description>
+    </item>
+    
+    <item>
+      <title>848操作系统(一) 操作系统概述</title>
+      <link>https://0x2a.in/blog/context/848-os-1/</link>
+      <pubDate>Sat, 12 Sep 2020 18:30:59 +0000</pubDate>
+      
+      <guid>https://0x2a.in/blog/context/848-os-1/</guid>
+      <description>操作系统概述 操作系统的一些概念 操作系统的目标 方便些 有效性 可扩充性 操作系统的作用 提供用户与计算机硬件系统之间的接口、资源管理、资源抽象。 操作系统特征 并发</description>
+    </item>
+    
+  </channel>
+</rss>

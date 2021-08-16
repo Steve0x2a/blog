@@ -1,14 +1,14 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-    <title>0x2a&#39;s blog</title>
-    <link>https://0x2a.in/blog/</link>
-    <description>Recent content on 0x2a&#39;s blog</description>
+    <title>考研 on 0x2a&#39;s blog</title>
+    <link>https://0x2a.in/blog/tags/%E8%80%83%E7%A0%94/</link>
+    <description>Recent content in 考研 on 0x2a&#39;s blog</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en</language>
     <copyright>&amp;copy; 2021 &lt;a href=&#34;https://0x2a.in/blog&#34;&gt;0x2a&lt;/a&gt;
 </copyright>
-    <lastBuildDate>Wed, 21 Oct 2020 18:19:46 +0000</lastBuildDate><atom:link href="https://0x2a.in/blog/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Wed, 21 Oct 2020 18:19:46 +0000</lastBuildDate><atom:link href="https://0x2a.in/blog/tags/%E8%80%83%E7%A0%94/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>848数据结构 (七) 排序</title>
       <link>https://0x2a.in/blog/context/848-ds-7/</link>
@@ -82,15 +82,6 @@
     </item>
     
     <item>
-      <title>数据结构常见代码汇总（考研向）</title>
-      <link>https://0x2a.in/blog/posts/ds-ky-code/</link>
-      <pubDate>Mon, 21 Sep 2020 21:10:11 +0000</pubDate>
-      
-      <guid>https://0x2a.in/blog/posts/ds-ky-code/</guid>
-      <description>数据结构考验中常用操作的伪代码，大部分参考王道书上代码。另有部分经典算法题代码（持续更新）。 啊 其实已经写好了, 但是懒得更新在博客了，有需要的自己去ov</description>
-    </item>
-    
-    <item>
       <title>848操作系统(二) 进程管理</title>
       <link>https://0x2a.in/blog/context/848-os-2/</link>
       <pubDate>Tue, 15 Sep 2020 19:17:07 +0000</pubDate>
@@ -133,15 +124,6 @@
       
       <guid>https://0x2a.in/blog/posts/2021-848/</guid>
       <description>根据暨南大学848计算机基础综合大纲的顺序将数据结构以及操作系统梳理一次, 当作自己的二轮复习. 数据结构 一、基本概念和术语 二、线性表 三、栈、队列和数组 四</description>
-    </item>
-    
-    <item>
-      <title>关于</title>
-      <link>https://0x2a.in/blog/about/</link>
-      <pubDate>Sat, 29 Dec 2018 20:24:28 +0800</pubDate>
-      
-      <guid>https://0x2a.in/blog/about/</guid>
-      <description>Hugo 官方主页: https://gohugo.io/ Hugo的安装方式有两种，一种是直接下载编译好的Hugo二进制文件。如果只是使用Hugo推荐用这种方式。另一种方式是获取Hugo的源码，</description>
     </item>
     
   </channel>
