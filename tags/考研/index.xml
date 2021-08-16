@@ -2,127 +2,127 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>考研 on 0x2a&#39;s blog</title>
-    <link>/tags/%E8%80%83%E7%A0%94/</link>
+    <link>https://0x2a.in/blog/tags/%E8%80%83%E7%A0%94/</link>
     <description>Recent content in 考研 on 0x2a&#39;s blog</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en</language>
     <copyright>&amp;copy; 2021 &lt;a href=&#34;https://0x2a.in/blog&#34;&gt;0x2a&lt;/a&gt;
 </copyright>
-    <lastBuildDate>Wed, 21 Oct 2020 18:19:46 +0000</lastBuildDate><atom:link href="/tags/%E8%80%83%E7%A0%94/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Wed, 21 Oct 2020 18:19:46 +0000</lastBuildDate><atom:link href="https://0x2a.in/blog/tags/%E8%80%83%E7%A0%94/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>848数据结构 (七) 排序</title>
-      <link>/context/848-ds-7/</link>
+      <link>https://0x2a.in/blog/context/848-ds-7/</link>
       <pubDate>Wed, 21 Oct 2020 18:19:46 +0000</pubDate>
       
-      <guid>/context/848-ds-7/</guid>
+      <guid>https://0x2a.in/blog/context/848-ds-7/</guid>
       <description>排序 排序的基本概念 算法稳定性：简单可以理解为相同的数值，排序前后相对位置有没有变。 又根据是否在内存再进行分为内部排序和外部排序 基本类型有：插入排序，交</description>
     </item>
     
     <item>
       <title>848数据结构 (六) 查找</title>
-      <link>/context/848-ds-6/</link>
+      <link>https://0x2a.in/blog/context/848-ds-6/</link>
       <pubDate>Tue, 20 Oct 2020 18:02:37 +0000</pubDate>
       
-      <guid>/context/848-ds-6/</guid>
+      <guid>https://0x2a.in/blog/context/848-ds-6/</guid>
       <description>查找 顺序查找 又称线性查找，主要用于线性表查找，常常分为一般无序线性表顺序查找和对按关键字有序的顺序查找。 无序表顺序查找 平均查找长度： 成功查找：(n+1</description>
     </item>
     
     <item>
       <title>848数据结构 (五) 图</title>
-      <link>/context/848-ds-5/</link>
+      <link>https://0x2a.in/blog/context/848-ds-5/</link>
       <pubDate>Mon, 19 Oct 2020 18:43:48 +0000</pubDate>
       
-      <guid>/context/848-ds-5/</guid>
+      <guid>https://0x2a.in/blog/context/848-ds-5/</guid>
       <description>图 图的概念 图的存储结构 邻接矩阵 邻接矩阵表示法的空间复杂度为O(n^2),其中n为图的顶点数 无向图的邻接矩阵一定是一个对称矩阵(并且唯一)。因此在实际存</description>
     </item>
     
     <item>
       <title>848数据结构 (四) 树与二叉树</title>
-      <link>/context/848-ds-4/</link>
+      <link>https://0x2a.in/blog/context/848-ds-4/</link>
       <pubDate>Tue, 13 Oct 2020 20:00:33 +0000</pubDate>
       
-      <guid>/context/848-ds-4/</guid>
+      <guid>https://0x2a.in/blog/context/848-ds-4/</guid>
       <description>树与二叉树 树的概念 一些术语: 结点深度：从根节点开始算 结点高度：从叶节点往上算 有序树和无序树：节点子树是否有序来区分 一些性质： 树的结点数等于所有节点度数</description>
     </item>
     
     <item>
       <title>848数据结构(三) 栈与队列</title>
-      <link>/context/848-ds-3/</link>
+      <link>https://0x2a.in/blog/context/848-ds-3/</link>
       <pubDate>Fri, 09 Oct 2020 19:51:41 +0000</pubDate>
       
-      <guid>/context/848-ds-3/</guid>
+      <guid>https://0x2a.in/blog/context/848-ds-3/</guid>
       <description>栈与队列 栈 栈的基本概念 栈是一种只允许在一端进行插入或删除的线性表，先入先出。 卡罗兰数，即n个不同元素进栈，出栈元素不同排列的个数：$\frac{1}{</description>
     </item>
     
     <item>
       <title>848操作系统(五) I/O管理</title>
-      <link>/context/848-os-5/</link>
+      <link>https://0x2a.in/blog/context/848-os-5/</link>
       <pubDate>Mon, 05 Oct 2020 18:12:18 +0000</pubDate>
       
-      <guid>/context/848-os-5/</guid>
+      <guid>https://0x2a.in/blog/context/848-os-5/</guid>
       <description>I/O管理 I/O管理概述 I/O设备类型 根据IO设备的使用特性可以分为: 人机交互类外部设备 要和用户打交道的设备：打印机，键盘鼠标等。 存储设备 用于存储数据</description>
     </item>
     
     <item>
       <title>848操作系统(四) 文件管理</title>
-      <link>/context/848-os-4/</link>
+      <link>https://0x2a.in/blog/context/848-os-4/</link>
       <pubDate>Sun, 04 Oct 2020 19:17:49 +0000</pubDate>
       
-      <guid>/context/848-os-4/</guid>
+      <guid>https://0x2a.in/blog/context/848-os-4/</guid>
       <description>#文件管理 文件系统概念 心态崩了，一大节笔记没保存。不写这节了。 文件系统实现 上一节内容讨论的是逻辑结构的话，这节内容主要是在讨论存储结构 文件系统层次结构</description>
     </item>
     
     <item>
       <title>848操作系统(三) 内存管理</title>
-      <link>/context/848-os-3/</link>
+      <link>https://0x2a.in/blog/context/848-os-3/</link>
       <pubDate>Fri, 25 Sep 2020 20:39:15 +0000</pubDate>
       
-      <guid>/context/848-os-3/</guid>
+      <guid>https://0x2a.in/blog/context/848-os-3/</guid>
       <description>内存管理 内存管理基础 内存管理概念 内存管理功能: 内存空间分配和回收 地址转换 内存空间扩充 存储保护 程序装入与链接 用户程序要在系统中运行，必须先装入内存，一般</description>
     </item>
     
     <item>
       <title>848操作系统(二) 进程管理</title>
-      <link>/context/848-os-2/</link>
+      <link>https://0x2a.in/blog/context/848-os-2/</link>
       <pubDate>Tue, 15 Sep 2020 19:17:07 +0000</pubDate>
       
-      <guid>/context/848-os-2/</guid>
+      <guid>https://0x2a.in/blog/context/848-os-2/</guid>
       <description>进程管理 进程与线程 进程概念 进程概念的引入是为了实现程序的并发执行，并对并发执行的程序加以描述和控制。 为了使参与并发执行的程序都可以独立运行，操作系统会</description>
     </item>
     
     <item>
       <title>848操作系统(一) 操作系统概述</title>
-      <link>/context/848-os-1/</link>
+      <link>https://0x2a.in/blog/context/848-os-1/</link>
       <pubDate>Sat, 12 Sep 2020 18:30:59 +0000</pubDate>
       
-      <guid>/context/848-os-1/</guid>
+      <guid>https://0x2a.in/blog/context/848-os-1/</guid>
       <description>操作系统概述 操作系统的一些概念 操作系统的目标 方便些 有效性 可扩充性 操作系统的作用 提供用户与计算机硬件系统之间的接口、资源管理、资源抽象。 操作系统特征 并发</description>
     </item>
     
     <item>
       <title>848数据结构(二) 线性表</title>
-      <link>/context/848-ds-2/</link>
+      <link>https://0x2a.in/blog/context/848-ds-2/</link>
       <pubDate>Tue, 01 Sep 2020 19:39:39 +0000</pubDate>
       
-      <guid>/context/848-ds-2/</guid>
+      <guid>https://0x2a.in/blog/context/848-ds-2/</guid>
       <description>线性表 线性表的定义和基本操作 这里没什么好说的, 主要注意几点. 线性表是逻辑结构, 表示元素之间 是一对一关系, 而顺序表, 链表都是线性表的存储结构. 这里也呼应</description>
     </item>
     
     <item>
       <title>848数据结构(一) 基本概念和术语</title>
-      <link>/context/848-ds-1/</link>
+      <link>https://0x2a.in/blog/context/848-ds-1/</link>
       <pubDate>Tue, 01 Sep 2020 18:37:41 +0000</pubDate>
       
-      <guid>/context/848-ds-1/</guid>
+      <guid>https://0x2a.in/blog/context/848-ds-1/</guid>
       <description>基本概念和术语 一些概念 数据元素 数据元素是数据的基本单位. 这里需要注意的是, 数据元素可能包含多个数据项. 比如一本书作为一个数据元素, 它可以由书名, 作者名</description>
     </item>
     
     <item>
       <title>2021暨南大学848知识点总结</title>
-      <link>/posts/2021-848/</link>
+      <link>https://0x2a.in/blog/posts/2021-848/</link>
       <pubDate>Tue, 01 Sep 2020 18:14:12 +0000</pubDate>
       
-      <guid>/posts/2021-848/</guid>
+      <guid>https://0x2a.in/blog/posts/2021-848/</guid>
       <description>根据暨南大学848计算机基础综合大纲的顺序将数据结构以及操作系统梳理一次, 当作自己的二轮复习. 数据结构 一、基本概念和术语 二、线性表 三、栈、队列和数组 四</description>
     </item>
     

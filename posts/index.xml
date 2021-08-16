@@ -2,28 +2,28 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Posts on 0x2a&#39;s blog</title>
-    <link>/posts/</link>
+    <link>https://0x2a.in/blog/posts/</link>
     <description>Recent content in Posts on 0x2a&#39;s blog</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en</language>
     <copyright>&amp;copy; 2021 &lt;a href=&#34;https://0x2a.in/blog&#34;&gt;0x2a&lt;/a&gt;
 </copyright>
-    <lastBuildDate>Mon, 21 Sep 2020 21:10:11 +0000</lastBuildDate><atom:link href="/posts/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Mon, 21 Sep 2020 21:10:11 +0000</lastBuildDate><atom:link href="https://0x2a.in/blog/posts/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>数据结构常见代码汇总（考研向）</title>
-      <link>/posts/ds-ky-code/</link>
+      <link>https://0x2a.in/blog/posts/ds-ky-code/</link>
       <pubDate>Mon, 21 Sep 2020 21:10:11 +0000</pubDate>
       
-      <guid>/posts/ds-ky-code/</guid>
+      <guid>https://0x2a.in/blog/posts/ds-ky-code/</guid>
       <description>数据结构考验中常用操作的伪代码，大部分参考王道书上代码。另有部分经典算法题代码（持续更新）。 啊 其实已经写好了, 但是懒得更新在博客了，有需要的自己去ov</description>
     </item>
     
     <item>
       <title>2021暨南大学848知识点总结</title>
-      <link>/posts/2021-848/</link>
+      <link>https://0x2a.in/blog/posts/2021-848/</link>
       <pubDate>Tue, 01 Sep 2020 18:14:12 +0000</pubDate>
       
-      <guid>/posts/2021-848/</guid>
+      <guid>https://0x2a.in/blog/posts/2021-848/</guid>
       <description>根据暨南大学848计算机基础综合大纲的顺序将数据结构以及操作系统梳理一次, 当作自己的二轮复习. 数据结构 一、基本概念和术语 二、线性表 三、栈、队列和数组 四</description>
     </item>
     
