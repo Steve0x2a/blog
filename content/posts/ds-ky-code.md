@@ -2,10 +2,7 @@
 title: '数据结构常见代码汇总（考研向）'
 date: 2020-09-21 21:10:11
 tags: []
-published: true
-hideInList: false
-feature: 
-isTop: false
+toc: true
 ---
 数据结构考验中常用操作的伪代码，大部分参考王道书上代码。另有部分经典算法题代码（持续更新）。
 
@@ -13,7 +10,6 @@ isTop: false
 
 <!-- more -->
 
-@[TOC]
 # 线性表
 ## 顺序表
  **顺序表定义**
