@@ -1,0 +1,410 @@
+<!DOCTYPE html>
+<html lang='en' ><meta charset="utf-8">
+<meta name="viewport" content="width=device-width">
+
+
+<title>848数据结构(二) 线性表 | 0x2a&#39;s blog</title>
+
+<meta name="generator" content="Hugo Eureka 0.8.3-dev" />
+<link rel="stylesheet" href="/css/eureka.min.css">
+<script defer src="/js/eureka.min.js"></script>
+
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="preload"
+  href="https://fonts.googleapis.com/css2?family=Lora:wght@400;600;700&family=Noto+Serif+SC:wght@400;600;700&display=swap"
+  as="style" onload="this.onload=null;this.rel='stylesheet'">
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@10.1.0/build/styles/monokai.min.css"
+   media="print"
+  onload="this.media='all';this.onload=null" crossorigin>
+<script defer src="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@10.1.0/build/highlight.min.js"
+   crossorigin></script>
+
+  <script defer src="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@10.1.0/build/languages/[python%20c%20go%20c&#43;&#43;%20shell].min.js"
+     crossorigin></script>
+
+<script defer src="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.14.0/js/all.min.js"
+   integrity="sha256-uNYoXefWRqv&#43;PsIF/OflNmwtKM4lStn9yrz2gVl6ymo="  crossorigin></script>
+
+
+
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.css"
+   integrity="sha384-AfEj0r4/OFrOo5t7NnNe46zW/tFgW6x/bCJG8FqQCEo3&#43;Aro6EYUG4&#43;cU&#43;KJWu/X"  media="print"
+  onload="this.media='all';this.onload=null" crossorigin>
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.js" 
+  integrity="sha384-g7c&#43;Jr9ZivxKLnZTDUhnkOnsh30B4H0rpLUpJ4jAIKs4fnJI&#43;sEnkvrMWph2EDg4"  crossorigin></script>
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/contrib/auto-render.min.js"
+   integrity="sha384-mll67QQFJfxn0IYznZYonOWZ644AWYC&#43;Pt2cHqMaRhXVrursRwvLnLaebdGIlYNa"  crossorigin></script>
+<script>
+  document.addEventListener("DOMContentLoaded", function () {
+    renderMathInElement(document.body, {
+      delimiters: [
+        { left: "$$", right: "$$", display: true },
+        { left: "$", right: "$", display: false },
+        { left: "\\(", right: "\\)", display: false },
+        { left: "\\[", right: "\\]", display: true }
+      ],
+    });
+  });
+</script>
+
+
+<script defer src="https://cdn.jsdelivr.net/npm/mermaid@8.9.2/dist/mermaid.min.js" 
+  integrity="sha256-Zmpaaj&#43;GXFsPF5WdPArSrnW3b30dovldeKsW00xBVwE="  crossorigin></script>
+
+
+<link rel="icon" type="image/png" sizes="32x32" href="/images/icon_hudd51a6aca11f958e5ee26ffb845389b9_13185_32x32_fill_box_center_3.png">
+<link rel="apple-touch-icon" sizes="180x180" href="/images/icon_hudd51a6aca11f958e5ee26ffb845389b9_13185_180x180_fill_box_center_3.png">
+
+<meta name="description"
+  content="线性表 线性表的定义和基本操作 这里没什么好说的, 主要注意几点. 线性表是逻辑结构, 表示元素之间 是一对一关系, 而顺序表, 链表都是线性表的存储结构. 这里也呼应">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [{
+      "@type": "ListItem",
+      "position": 1 ,
+      "name":"Contexts",
+      "item":"/context/"},{
+      "@type": "ListItem",
+      "position": 2 ,
+      "name":"848数据结构(二) 线性表",
+      "item":"/context/848-ds-2/"}]
+}
+</script>
+
+
+
+<script type="application/ld+json">
+{
+    "@context": "https://schema.org",
+    "@type": "Article",
+    "mainEntityOfPage": {
+        "@type": "WebPage",
+        "@id": "/context/848-ds-2/"
+    },
+    "headline": "848数据结构(二) 线性表 | 0x2a\u0027s blog","datePublished": "2020-09-01T19:39:39+00:00",
+    "dateModified": "2020-09-01T19:39:39+00:00",
+    "wordCount":  823 ,
+    "publisher": {
+        "@type": "Person",
+        "name":  42 ,
+        "logo": {
+            "@type": "ImageObject",
+            "url": "/images/icon.png"
+        }
+        },
+    "description": "线性表 线性表的定义和基本操作 这里没什么好说的, 主要注意几点. 线性表是逻辑结构, 表示元素之间 是一对一关系, 而顺序表, 链表都是线性表的存储结构. 这里也呼应"
+}
+</script><meta property="og:title" content="848数据结构(二) 线性表 | 0x2a&#39;s blog" />
+<meta property="og:type" content="article" />
+
+
+<meta property="og:image" content="/images/icon.png">
+
+
+<meta property="og:url" content="/context/848-ds-2/" />
+
+
+
+
+<meta property="og:description" content="线性表 线性表的定义和基本操作 这里没什么好说的, 主要注意几点. 线性表是逻辑结构, 表示元素之间 是一对一关系, 而顺序表, 链表都是线性表的存储结构. 这里也呼应" />
+
+
+
+
+<meta property="og:locale" content="en" />
+
+
+
+
+<meta property="og:site_name" content="0x2a&#39;s blog" />
+
+
+
+
+
+
+<meta property="article:published_time" content="2020-09-01T19:39:39&#43;00:00" />
+
+
+<meta property="article:modified_time" content="2020-09-01T19:39:39&#43;00:00" />
+
+
+
+<meta property="article:section" content="context" />
+
+
+<meta property="article:tag" content="数据结构" />
+
+<meta property="article:tag" content="考研" />
+
+
+
+
+
+<meta property="og:see_also" content="/context/848-ds-1/" />
+
+<meta property="og:see_also" content="/posts/2021-848/" />
+
+
+
+<body class="flex flex-col min-h-screen">
+  <header class="fixed flex items-center w-full min-h-16 pl-scrollbar z-50 bg-secondary-bg shadow-sm">
+    <div class="w-full max-w-screen-xl mx-auto"><script>
+    let storageColorScheme = localStorage.getItem("lightDarkMode")
+    if (((storageColorScheme == 'Auto' || storageColorScheme == null) && window.matchMedia("(prefers-color-scheme: dark)").matches) || storageColorScheme == "Dark") {
+        document.getElementsByTagName('html')[0].classList.add('dark')
+    }
+</script>
+<nav class="flex items-center justify-between flex-wrap px-4 py-4 md:py-0">
+    <a href="/" class="mr-6 text-primary-text text-xl font-bold">0x2a&#39;s blog</a>
+    <button id="navbar-btn" class="md:hidden flex items-center px-3 py-2" aria-label="Open Navbar">
+        <i class="fas fa-bars"></i>
+    </button>
+
+    <div id="target"
+        class="hidden block md:flex md:flex-grow md:justify-between md:items-center w-full md:w-auto text-primary-text z-20">
+        <div class="md:flex md:h-16 text-sm md:flex-grow pb-4 md:pb-0 border-b md:border-b-0">
+            <a href="/about/" class="block mt-4 md:inline-block md:mt-0 md:h-(16-4px) md:leading-(16-4px) box-border md:border-t-2 md:border-b-2  border-transparent  mr-4">About</a>
+            <a href="/posts/" class="block mt-4 md:inline-block md:mt-0 md:h-(16-4px) md:leading-(16-4px) box-border md:border-t-2 md:border-b-2  border-transparent  mr-4">Posts</a>
+        </div>
+
+        <div class="flex">
+            <div class="relative pt-4 md:pt-0">
+                <div class="cursor-pointer hover:text-eureka" id="lightDarkMode">
+                    <i class="fas fa-adjust"></i>
+                </div>
+                <div class="fixed hidden inset-0 opacity-0 h-full w-full cursor-default z-30" id="is-open">
+                </div>
+                <div class="absolute flex flex-col left-0 md:left-auto right-auto md:right-0 hidden bg-secondary-bg w-48 rounded py-2 border border-tertiary-bg cursor-pointer z-40"
+                    id='lightDarkOptions'>
+                    <span class="px-4 py-1 hover:text-eureka" name="Light">Light</span>
+                    <span class="px-4 py-1 hover:text-eureka" name="Dark">Dark</span>
+                    <span class="px-4 py-1 hover:text-eureka" name="Auto">Auto</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="fixed hidden inset-0 opacity-0 h-full w-full cursor-default z-0" id="is-open-mobile">
+    </div>
+
+</nav>
+<script>
+    
+    let element = document.getElementById('lightDarkMode')
+    if (storageColorScheme == null || storageColorScheme == 'Auto') {
+        document.addEventListener('DOMContentLoaded', () => {
+            window.matchMedia("(prefers-color-scheme: dark)").addEventListener('change', switchDarkMode)
+        })
+    } else if (storageColorScheme == "Light") {
+        element.firstElementChild.classList.remove('fa-adjust')
+        element.firstElementChild.setAttribute("data-icon", 'sun')
+        element.firstElementChild.classList.add('fa-sun')
+    } else if (storageColorScheme == "Dark") {
+        element.firstElementChild.classList.remove('fa-adjust')
+        element.firstElementChild.setAttribute("data-icon", 'moon')
+        element.firstElementChild.classList.add('fa-moon')
+    }
+
+    document.addEventListener('DOMContentLoaded', () => {
+        getcolorscheme();
+        switchBurger();
+    });
+</script>
+</div>
+  </header>
+  <main class="flex-grow pt-16">
+    <div class="pl-scrollbar">
+      <div class="w-full max-w-screen-xl lg:px-4 xl:px-8 mx-auto">
+
+
+<div class="grid grid-cols-2 lg:grid-cols-8 gap-4 lg:pt-12">
+    <div
+        class="col-span-2  lg:col-span-6 bg-secondary-bg rounded px-6 py-8">
+        <h1 class="font-bold text-3xl text-primary-text">848数据结构(二) 线性表</h1>
+        <div class="flex flex-wrap flex-row items-center mt-2 text-tertiary-text">
+    <div class="mr-6 my-2">
+        <i class="fas fa-calendar mr-1"></i>
+        <span>2020-09-01</span>
+    </div>
+    <div class="mr-6 my-2">
+        <i class="fas fa-clock mr-1"></i>
+        <span>2 min read</span>
+    </div>
+    
+    
+
+    
+</div>
+        
+        
+        
+
+        <div class="content">
+            <h1 id="线性表">线性表</h1>
+<h2 id="线性表的定义和基本操作">线性表的定义和基本操作</h2>
+<p>这里没什么好说的, 主要注意几点.
+线性表是<strong>逻辑结构</strong>, 表示元素之间 是一对一关系, 而顺序表, 链表都是线性表的存储结构. 这里也呼应了上一章的逻辑结构可以独立存在, 而存储结构需要依托于逻辑结构. 有了线性表这个逻辑结构, 才可以谈及顺序表, 链表这样的存储结构.</p>
+<p>线性表的操作主要包括: 初始化, 求表长, 按值查找, 按位查找, 插入, 删除, 输出, 判空, 销毁. 涉及这些操作, 在考试伪码可以不去实现.</p>
+<p>以及, 线性表一定要有<strong>顺序</strong>关系, 也就是除了表头, 其他都要有一个直接前继. 由n个数字组成的集合不是线性表, 因为他们不带有顺序.</p>
+<h2 id="线性表的实现">线性表的实现</h2>
+<h3 id="顺序存储结构">顺序存储结构</h3>
+<p>线性表的顺序存储结构又称为<strong>顺序表</strong>. 其特点是表中元素逻辑顺序和物理顺序一致. 顺序表支持<strong>随机访问</strong>, 存储密度高, 每个节点只存储数据元素.</p>
+<p>需要注意的是, 线性表位序<strong>从1开始</strong>, 数组元素下标从0开始(C)</p>
+<p>顺序表的各种操作算法复杂度如下:</p>
+<ol>
+<li>插入: 时间复杂度O(n) (平均下来是 $\frac{n}{2}$ )</li>
+<li>删除: 时间复杂度O(n)(平均下来是$\frac{n-1}{2}$)</li>
+<li>按值查找: 时间复杂度:O(n))(平均下来是$\frac{n+1}{2}$)</li>
+</ol>
+<h3 id="链式存储结构">链式存储结构</h3>
+<p>线性表的链式存储又称<strong>单链表</strong>, 单链表元素离散分布在存储空间中, 因此单链表是<strong>非随机存储结构</strong>.
+单链表设置头节点是为了<strong>统一插入删除, 方便操作</strong>
+单链表的各种操作算法复杂度如下:</p>
+<ol>
+<li>建立链表: 头插法尾插法时间复杂度都是O(n)</li>
+<li>按序号查找:O(n)</li>
+<li>插入节点: 最低O(1)最高O(n)</li>
+<li>删除节点: 同上</li>
+<li>求表长:O(n)</li>
+</ol>
+<h4 id="双链表">双链表</h4>
+<p>没啥好说的, 双链表的插入删除操作时间复杂度O(1),</p>
+<h4 id="循环链表">循环链表</h4>
+<p>略</p>
+<h4 id="静态链表">静态链表</h4>
+<p>静态链表是<strong>链式存储结构</strong>, 在实现上可以用结构体数组来实现.</p>
+<p>静态链表的插入删除和动态链表相同, 只需要修改指针, 不需要移动元素.</p>
+<p>静态链表的指针指的是节点的相对地址(数组下标), 也称游标(cur)</p>
+<h2 id="易错点">易错点</h2>
+<ol>
+<li>线性表的顺序存储结构是一种<strong>随机读取</strong> 的的存储结构. 不要看到顺序就选顺序.</li>
+<li>线性表位序<strong>从1开始</strong></li>
+<li>交换两个节点的值, 顺序表比链表快</li>
+</ol>
+
+        </div>
+        
+        <div class="my-4">
+    
+    <a href="/tags/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/" class="inline-block bg-tertiary-bg text-sm rounded px-3 py-1 my-1 mr-2 hover:text-eureka">#数据结构</a>
+    
+    <a href="/tags/%E8%80%83%E7%A0%94/" class="inline-block bg-tertiary-bg text-sm rounded px-3 py-1 my-1 mr-2 hover:text-eureka">#考研</a>
+    
+</div>
+        
+        
+        
+
+
+        
+        
+        
+        
+<div class="flex flex-col md:flex-row md:justify-between -mx-2 mt-4 px-2 pt-4 border-t">
+    <div>
+        
+        <span class="block font-bold">Previous</span>
+        <a href="/context/848-os-1/" class="block">848操作系统(一) 操作系统概述</a>
+        
+    </div>
+    <div class="md:text-right mt-4 md:mt-0">
+        
+        <span class="block font-bold">Next</span>
+        <a href="/context/848-ds-1/" class="block">848数据结构(一) 基本概念和术语</a>
+        
+    </div>
+</div>
+
+        
+
+
+
+  <div id="valine-comments" class="mt-4"></div>
+<script defer src="https://cdn.jsdelivr.net/npm/valine@1.4.14/dist/Valine.min.js" 
+  integrity="sha256-fPqMAsW3FDt/rNyneSJ7HOpZNRs/O2rM016SU08JtCk="  crossorigin></script>
+<script>
+  document.addEventListener("DOMContentLoaded", function () {
+    new Valine({
+      el: "#valine-comments",appId:"V4MDFNfytHcoabcly1MENtAo-gzGzoHsz",appKey:"xyl895MDJ2Q6BRDKwyRPr6xL",visitor:"true",
+    })
+  });
+</script>
+
+    </div>
+    
+    <div class="col-span-2">
+        
+        
+        <div class="sticky top-16 z-10 hidden lg:block px-6 py-4  bg-primary-bg ">
+    <span class="text-lg font-semibold">On This Page</span>
+</div>
+<div class="sticky-toc hidden lg:block px-6 pb-6 ">
+    <nav id="TableOfContents">
+  <ul>
+    <li><a href="#线性表的定义和基本操作">线性表的定义和基本操作</a></li>
+    <li><a href="#线性表的实现">线性表的实现</a>
+      <ul>
+        <li><a href="#顺序存储结构">顺序存储结构</a></li>
+        <li><a href="#链式存储结构">链式存储结构</a>
+          <ul>
+            <li><a href="#双链表">双链表</a></li>
+            <li><a href="#循环链表">循环链表</a></li>
+            <li><a href="#静态链表">静态链表</a></li>
+          </ul>
+        </li>
+      </ul>
+    </li>
+    <li><a href="#易错点">易错点</a></li>
+  </ul>
+</nav>
+</div>
+<script>
+    window.addEventListener('DOMContentLoaded', () => {
+        enableStickyToc();
+    });
+</script>
+        
+    </div>
+    
+
+    
+    
+    <div
+        class="col-span-2  lg:col-span-6 bg-secondary-bg rounded p-6">
+        <h2 class="text-lg font-semibold mb-4">See Also</h2>
+        <div class="content">
+            
+            <a href="/context/848-ds-1/">848数据结构(一) 基本概念和术语</a>
+            <br />
+            
+            <a href="/posts/2021-848/">2021暨南大学848知识点总结</a>
+            <br />
+            
+        </div>
+    </div>
+    
+</div>
+<script>
+    document.addEventListener('DOMContentLoaded', ()=>{
+        hljs.initHighlightingOnLoad();
+    })
+</script>
+
+      </div>
+    </div>
+    
+  </main>
+  <footer class="pl-scrollbar">
+    <div class="w-full max-w-screen-xl mx-auto"><div class="text-center p-6 pin-b">
+    <p class="text-sm text-tertiary-text">&copy; 2021 <a href="https://0x2a.in/blog">0x2a</a>
+ &middot;  Powered by the <a href="https://github.com/wangchucheng/hugo-eureka" class="hover:text-eureka">Eureka</a> theme for <a href="https://gohugo.io" class="hover:text-eureka">Hugo</a></p>
+</div></div>
+  </footer>
+</body>
+
+</html>

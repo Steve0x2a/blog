@@ -1,0 +1,478 @@
+<!DOCTYPE html>
+<html lang='en' ><meta charset="utf-8">
+<meta name="viewport" content="width=device-width">
+
+
+<title>848操作系统(一) 操作系统概述 | 0x2a&#39;s blog</title>
+
+<meta name="generator" content="Hugo Eureka 0.8.3-dev" />
+<link rel="stylesheet" href="/css/eureka.min.css">
+<script defer src="/js/eureka.min.js"></script>
+
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="preload"
+  href="https://fonts.googleapis.com/css2?family=Lora:wght@400;600;700&family=Noto+Serif+SC:wght@400;600;700&display=swap"
+  as="style" onload="this.onload=null;this.rel='stylesheet'">
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@10.1.0/build/styles/monokai.min.css"
+   media="print"
+  onload="this.media='all';this.onload=null" crossorigin>
+<script defer src="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@10.1.0/build/highlight.min.js"
+   crossorigin></script>
+
+  <script defer src="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@10.1.0/build/languages/[python%20c%20go%20c&#43;&#43;%20shell].min.js"
+     crossorigin></script>
+
+<script defer src="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.14.0/js/all.min.js"
+   integrity="sha256-uNYoXefWRqv&#43;PsIF/OflNmwtKM4lStn9yrz2gVl6ymo="  crossorigin></script>
+
+
+
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.css"
+   integrity="sha384-AfEj0r4/OFrOo5t7NnNe46zW/tFgW6x/bCJG8FqQCEo3&#43;Aro6EYUG4&#43;cU&#43;KJWu/X"  media="print"
+  onload="this.media='all';this.onload=null" crossorigin>
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.js" 
+  integrity="sha384-g7c&#43;Jr9ZivxKLnZTDUhnkOnsh30B4H0rpLUpJ4jAIKs4fnJI&#43;sEnkvrMWph2EDg4"  crossorigin></script>
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/contrib/auto-render.min.js"
+   integrity="sha384-mll67QQFJfxn0IYznZYonOWZ644AWYC&#43;Pt2cHqMaRhXVrursRwvLnLaebdGIlYNa"  crossorigin></script>
+<script>
+  document.addEventListener("DOMContentLoaded", function () {
+    renderMathInElement(document.body, {
+      delimiters: [
+        { left: "$$", right: "$$", display: true },
+        { left: "$", right: "$", display: false },
+        { left: "\\(", right: "\\)", display: false },
+        { left: "\\[", right: "\\]", display: true }
+      ],
+    });
+  });
+</script>
+
+
+<script defer src="https://cdn.jsdelivr.net/npm/mermaid@8.9.2/dist/mermaid.min.js" 
+  integrity="sha256-Zmpaaj&#43;GXFsPF5WdPArSrnW3b30dovldeKsW00xBVwE="  crossorigin></script>
+
+
+<link rel="icon" type="image/png" sizes="32x32" href="/images/icon_hudd51a6aca11f958e5ee26ffb845389b9_13185_32x32_fill_box_center_3.png">
+<link rel="apple-touch-icon" sizes="180x180" href="/images/icon_hudd51a6aca11f958e5ee26ffb845389b9_13185_180x180_fill_box_center_3.png">
+
+<meta name="description"
+  content="操作系统概述 操作系统的一些概念 操作系统的目标 方便些 有效性 可扩充性 操作系统的作用 提供用户与计算机硬件系统之间的接口、资源管理、资源抽象。 操作系统特征 并发">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [{
+      "@type": "ListItem",
+      "position": 1 ,
+      "name":"Contexts",
+      "item":"/context/"},{
+      "@type": "ListItem",
+      "position": 2 ,
+      "name":"848操作系统(一) 操作系统概述",
+      "item":"/context/848-os-1/"}]
+}
+</script>
+
+
+
+<script type="application/ld+json">
+{
+    "@context": "https://schema.org",
+    "@type": "Article",
+    "mainEntityOfPage": {
+        "@type": "WebPage",
+        "@id": "/context/848-os-1/"
+    },
+    "headline": "848操作系统(一) 操作系统概述 | 0x2a\u0027s blog","datePublished": "2020-09-12T18:30:59+00:00",
+    "dateModified": "2020-09-12T18:30:59+00:00",
+    "wordCount":  1337 ,
+    "publisher": {
+        "@type": "Person",
+        "name":  42 ,
+        "logo": {
+            "@type": "ImageObject",
+            "url": "/images/icon.png"
+        }
+        },
+    "description": "操作系统概述 操作系统的一些概念 操作系统的目标 方便些 有效性 可扩充性 操作系统的作用 提供用户与计算机硬件系统之间的接口、资源管理、资源抽象。 操作系统特征 并发"
+}
+</script><meta property="og:title" content="848操作系统(一) 操作系统概述 | 0x2a&#39;s blog" />
+<meta property="og:type" content="article" />
+
+
+<meta property="og:image" content="/images/icon.png">
+
+
+<meta property="og:url" content="/context/848-os-1/" />
+
+
+
+
+<meta property="og:description" content="操作系统概述 操作系统的一些概念 操作系统的目标 方便些 有效性 可扩充性 操作系统的作用 提供用户与计算机硬件系统之间的接口、资源管理、资源抽象。 操作系统特征 并发" />
+
+
+
+
+<meta property="og:locale" content="en" />
+
+
+
+
+<meta property="og:site_name" content="0x2a&#39;s blog" />
+
+
+
+
+
+
+<meta property="article:published_time" content="2020-09-12T18:30:59&#43;00:00" />
+
+
+<meta property="article:modified_time" content="2020-09-12T18:30:59&#43;00:00" />
+
+
+
+<meta property="article:section" content="context" />
+
+
+<meta property="article:tag" content="操作系统" />
+
+<meta property="article:tag" content="考研" />
+
+
+
+
+
+<meta property="og:see_also" content="/context/848-ds-2/" />
+
+<meta property="og:see_also" content="/context/848-ds-1/" />
+
+<meta property="og:see_also" content="/posts/2021-848/" />
+
+
+
+<body class="flex flex-col min-h-screen">
+  <header class="fixed flex items-center w-full min-h-16 pl-scrollbar z-50 bg-secondary-bg shadow-sm">
+    <div class="w-full max-w-screen-xl mx-auto"><script>
+    let storageColorScheme = localStorage.getItem("lightDarkMode")
+    if (((storageColorScheme == 'Auto' || storageColorScheme == null) && window.matchMedia("(prefers-color-scheme: dark)").matches) || storageColorScheme == "Dark") {
+        document.getElementsByTagName('html')[0].classList.add('dark')
+    }
+</script>
+<nav class="flex items-center justify-between flex-wrap px-4 py-4 md:py-0">
+    <a href="/" class="mr-6 text-primary-text text-xl font-bold">0x2a&#39;s blog</a>
+    <button id="navbar-btn" class="md:hidden flex items-center px-3 py-2" aria-label="Open Navbar">
+        <i class="fas fa-bars"></i>
+    </button>
+
+    <div id="target"
+        class="hidden block md:flex md:flex-grow md:justify-between md:items-center w-full md:w-auto text-primary-text z-20">
+        <div class="md:flex md:h-16 text-sm md:flex-grow pb-4 md:pb-0 border-b md:border-b-0">
+            <a href="/about/" class="block mt-4 md:inline-block md:mt-0 md:h-(16-4px) md:leading-(16-4px) box-border md:border-t-2 md:border-b-2  border-transparent  mr-4">About</a>
+            <a href="/posts/" class="block mt-4 md:inline-block md:mt-0 md:h-(16-4px) md:leading-(16-4px) box-border md:border-t-2 md:border-b-2  border-transparent  mr-4">Posts</a>
+        </div>
+
+        <div class="flex">
+            <div class="relative pt-4 md:pt-0">
+                <div class="cursor-pointer hover:text-eureka" id="lightDarkMode">
+                    <i class="fas fa-adjust"></i>
+                </div>
+                <div class="fixed hidden inset-0 opacity-0 h-full w-full cursor-default z-30" id="is-open">
+                </div>
+                <div class="absolute flex flex-col left-0 md:left-auto right-auto md:right-0 hidden bg-secondary-bg w-48 rounded py-2 border border-tertiary-bg cursor-pointer z-40"
+                    id='lightDarkOptions'>
+                    <span class="px-4 py-1 hover:text-eureka" name="Light">Light</span>
+                    <span class="px-4 py-1 hover:text-eureka" name="Dark">Dark</span>
+                    <span class="px-4 py-1 hover:text-eureka" name="Auto">Auto</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="fixed hidden inset-0 opacity-0 h-full w-full cursor-default z-0" id="is-open-mobile">
+    </div>
+
+</nav>
+<script>
+    
+    let element = document.getElementById('lightDarkMode')
+    if (storageColorScheme == null || storageColorScheme == 'Auto') {
+        document.addEventListener('DOMContentLoaded', () => {
+            window.matchMedia("(prefers-color-scheme: dark)").addEventListener('change', switchDarkMode)
+        })
+    } else if (storageColorScheme == "Light") {
+        element.firstElementChild.classList.remove('fa-adjust')
+        element.firstElementChild.setAttribute("data-icon", 'sun')
+        element.firstElementChild.classList.add('fa-sun')
+    } else if (storageColorScheme == "Dark") {
+        element.firstElementChild.classList.remove('fa-adjust')
+        element.firstElementChild.setAttribute("data-icon", 'moon')
+        element.firstElementChild.classList.add('fa-moon')
+    }
+
+    document.addEventListener('DOMContentLoaded', () => {
+        getcolorscheme();
+        switchBurger();
+    });
+</script>
+</div>
+  </header>
+  <main class="flex-grow pt-16">
+    <div class="pl-scrollbar">
+      <div class="w-full max-w-screen-xl lg:px-4 xl:px-8 mx-auto">
+
+
+<div class="grid grid-cols-2 lg:grid-cols-8 gap-4 lg:pt-12">
+    <div
+        class="col-span-2  lg:col-span-6 bg-secondary-bg rounded px-6 py-8">
+        <h1 class="font-bold text-3xl text-primary-text">848操作系统(一) 操作系统概述</h1>
+        <div class="flex flex-wrap flex-row items-center mt-2 text-tertiary-text">
+    <div class="mr-6 my-2">
+        <i class="fas fa-calendar mr-1"></i>
+        <span>2020-09-12</span>
+    </div>
+    <div class="mr-6 my-2">
+        <i class="fas fa-clock mr-1"></i>
+        <span>3 min read</span>
+    </div>
+    
+    
+
+    
+</div>
+        
+        
+        
+
+        <div class="content">
+            <h1 id="操作系统概述">操作系统概述</h1>
+<h2 id="操作系统的一些概念">操作系统的一些概念</h2>
+<h3 id="操作系统的目标">操作系统的目标</h3>
+<p>方便些 有效性 可扩充性</p>
+<h3 id="操作系统的作用">操作系统的作用</h3>
+<p>提供用户与计算机硬件系统之间的接口、资源管理、资源抽象。</p>
+<h3 id="操作系统特征">操作系统特征</h3>
+<ol>
+<li>并发</li>
+<li>共享</li>
+<li>虚拟</li>
+<li>异步</li>
+</ol>
+<h2 id="操作系统的发展与分类">操作系统的发展与分类</h2>
+<h3 id="无操作系统计算机系统">无操作系统计算机系统</h3>
+<ol>
+<li>真·人工 智能。
+<ul>
+<li>用户独占全机</li>
+<li>CPU需要等待人工操作</li>
+</ul>
+</li>
+<li>脱机输入输出
+也就是把输入磁带的工作交给了外围机，多了一个速度稍快一点的中间商，CPU无意义的等待时间稍有减少。</li>
+</ol>
+<h3 id="批处理系统">批处理系统</h3>
+<ol>
+<li>
+<p>单道批处理系统
+也就是内存中只有一个作业，但系统对作业的处理是成批的。这样就不用人工也不用中间商去处理作业，解决了这两哥们速度都比较慢的问题。</p>
+<ul>
+<li>自动性。也就是处理完一个之后自动处理磁带后面的作业。</li>
+<li>顺序性。磁带里的作业是按顺序进入CPU，也就是FIFO。</li>
+<li>单道性。内存只有一个程序运行，完成这个程序后才换别的（while(1)大成功！）
+虽然但是，单道批处理系统还是很沙雕的，比如在进行IO处理的时候，CPU只能等慢吞吞的IO设备返回数据才能继续，导致CPU利用率并不高。
+同时，为了能运行比较大的作业，需要内存足够大，但实际上很多的任务都属于中小型，因此大部分的内存大多时候都是多余的。</li>
+</ul>
+</li>
+<li>
+<p>多道批处理系统
+既然IO的时候CPU闲得慌，那就让万恶的<del>资本主义</del>人类就让IO设备运作时，切换到别的程序运行，这样在提高了资源利用率的同时也能提高系统的吞吐量。同时还能在宏观上形成一种我能同时运行多个程序的错觉，实际在微观上还是串行处理的。
+但由于作业是排队处理的，因此作业的周转时间会比较长，而且缺少交互能力，用户一旦把作业提交给系统，就只能做着摸鱼到系统完成作业。不用debug的程序员资本主义是不喜欢滴！
+同时多道批处理系统需要解决的问题非常多：</p>
+<ul>
+<li>处理机争用问题</li>
+<li>内存分配和保护问题</li>
+<li>IO设备分配问题</li>
+<li>文件组织和管理问题</li>
+<li>作业管理问题</li>
+<li>接口问题</li>
+</ul>
+</li>
+</ol>
+<h3 id="分时系统">分时系统</h3>
+<p>分时系统将CPU的运行时间分成了许多个时间片，这样就可以让每个程序都公平的享受到计算资源，同时用户交互就有了可能性。分时系统有以下特征：</p>
+<ol>
+<li>同时性。也就是多路性，多个用户可以同时使用一台电脑。</li>
+<li>交互性。交互页面天下第一！</li>
+<li>独立性。进程之间可以不受影响独立操作。</li>
+<li>及时性。所有用户的请求都能够及时响应（虽然单个任务而言响应时间是变差了的）</li>
+</ol>
+<h3 id="实时系统">实时系统</h3>
+<p>就是牛逼的高级的 可以设置优先级的，避免了分时系统的无法处理紧急事件的情况。实时操作系统也分为软硬两种。硬一点的是严格要求在规定时刻内需要响应的，软的就是偶尔可以摸摸鱼。</p>
+<h2 id="操作系统的运行环境">操作系统的运行环境</h2>
+<h3 id="操作系统的运行机制">操作系统的运行机制</h3>
+<ol>
+<li>时钟管理
+提供标准时间，并且为时间片轮转等功能提供了可能性</li>
+<li>中断机制
+微机原理，懂的都懂</li>
+<li>原语
+底层可被调用的小程序，有以下特点：
+<ul>
+<li>处于操作系统底层，最接近硬件的部分</li>
+<li>具有原子性，一旦执行必须执行到底</li>
+<li>运行时间较短，且频繁被调用</li>
+</ul>
+</li>
+<li>系统控制的数据结构及处理
+常见的系统操作有如下
+<ul>
+<li>进程管理</li>
+<li>存储器管理</li>
+<li>设备管理</li>
+</ul>
+</li>
+</ol>
+<h2 id="易错点">易错点</h2>
+<ol>
+<li>现代操作系统的最基本两个特征是：<strong>并发</strong>和<strong>共享</strong>（没有虚拟）</li>
+<li>系统调用目的是<strong>请求系统服务</strong>，而不是申请系统资源。</li>
+<li>通道是一种<strong>硬件</strong>设备，独立于CPU工作，使得多道程序概念得以实现</li>
+<li>用户态到核心态这一步骤是由硬件实现的</li>
+<li>访管指令只能在用户态实现，作用是切换到核心态</li>
+<li>中断过程中，PC的值由中断隐指令保存，而操作系统保存通用寄存器的内容</li>
+<li>用户程序出现错误（除以0、中断等），也会切换为核心态</li>
+</ol>
+
+        </div>
+        
+        <div class="my-4">
+    
+    <a href="/tags/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/" class="inline-block bg-tertiary-bg text-sm rounded px-3 py-1 my-1 mr-2 hover:text-eureka">#操作系统</a>
+    
+    <a href="/tags/%E8%80%83%E7%A0%94/" class="inline-block bg-tertiary-bg text-sm rounded px-3 py-1 my-1 mr-2 hover:text-eureka">#考研</a>
+    
+</div>
+        
+        
+        
+
+
+        
+        
+        
+        
+<div class="flex flex-col md:flex-row md:justify-between -mx-2 mt-4 px-2 pt-4 border-t">
+    <div>
+        
+        <span class="block font-bold">Previous</span>
+        <a href="/context/848-os-2/" class="block">848操作系统(二) 进程管理</a>
+        
+    </div>
+    <div class="md:text-right mt-4 md:mt-0">
+        
+        <span class="block font-bold">Next</span>
+        <a href="/context/848-ds-2/" class="block">848数据结构(二) 线性表</a>
+        
+    </div>
+</div>
+
+        
+
+
+
+  <div id="valine-comments" class="mt-4"></div>
+<script defer src="https://cdn.jsdelivr.net/npm/valine@1.4.14/dist/Valine.min.js" 
+  integrity="sha256-fPqMAsW3FDt/rNyneSJ7HOpZNRs/O2rM016SU08JtCk="  crossorigin></script>
+<script>
+  document.addEventListener("DOMContentLoaded", function () {
+    new Valine({
+      el: "#valine-comments",appId:"V4MDFNfytHcoabcly1MENtAo-gzGzoHsz",appKey:"xyl895MDJ2Q6BRDKwyRPr6xL",visitor:"true",
+    })
+  });
+</script>
+
+    </div>
+    
+    <div class="col-span-2">
+        
+        
+        <div class="sticky top-16 z-10 hidden lg:block px-6 py-4  bg-primary-bg ">
+    <span class="text-lg font-semibold">On This Page</span>
+</div>
+<div class="sticky-toc hidden lg:block px-6 pb-6 ">
+    <nav id="TableOfContents">
+  <ul>
+    <li><a href="#操作系统的一些概念">操作系统的一些概念</a>
+      <ul>
+        <li><a href="#操作系统的目标">操作系统的目标</a></li>
+        <li><a href="#操作系统的作用">操作系统的作用</a></li>
+        <li><a href="#操作系统特征">操作系统特征</a></li>
+      </ul>
+    </li>
+    <li><a href="#操作系统的发展与分类">操作系统的发展与分类</a>
+      <ul>
+        <li><a href="#无操作系统计算机系统">无操作系统计算机系统</a></li>
+        <li><a href="#批处理系统">批处理系统</a></li>
+        <li><a href="#分时系统">分时系统</a></li>
+        <li><a href="#实时系统">实时系统</a></li>
+      </ul>
+    </li>
+    <li><a href="#操作系统的运行环境">操作系统的运行环境</a>
+      <ul>
+        <li><a href="#操作系统的运行机制">操作系统的运行机制</a></li>
+      </ul>
+    </li>
+    <li><a href="#易错点">易错点</a></li>
+  </ul>
+</nav>
+</div>
+<script>
+    window.addEventListener('DOMContentLoaded', () => {
+        enableStickyToc();
+    });
+</script>
+        
+    </div>
+    
+
+    
+    
+    <div
+        class="col-span-2  lg:col-span-6 bg-secondary-bg rounded p-6">
+        <h2 class="text-lg font-semibold mb-4">See Also</h2>
+        <div class="content">
+            
+            <a href="/context/848-ds-2/">848数据结构(二) 线性表</a>
+            <br />
+            
+            <a href="/context/848-ds-1/">848数据结构(一) 基本概念和术语</a>
+            <br />
+            
+            <a href="/posts/2021-848/">2021暨南大学848知识点总结</a>
+            <br />
+            
+        </div>
+    </div>
+    
+</div>
+<script>
+    document.addEventListener('DOMContentLoaded', ()=>{
+        hljs.initHighlightingOnLoad();
+    })
+</script>
+
+      </div>
+    </div>
+    
+  </main>
+  <footer class="pl-scrollbar">
+    <div class="w-full max-w-screen-xl mx-auto"><div class="text-center p-6 pin-b">
+    <p class="text-sm text-tertiary-text">&copy; 2021 <a href="https://0x2a.in/blog">0x2a</a>
+ &middot;  Powered by the <a href="https://github.com/wangchucheng/hugo-eureka" class="hover:text-eureka">Eureka</a> theme for <a href="https://gohugo.io" class="hover:text-eureka">Hugo</a></p>
+</div></div>
+  </footer>
+</body>
+
+</html>

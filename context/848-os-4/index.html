@@ -1,0 +1,526 @@
+<!DOCTYPE html>
+<html lang='en' ><meta charset="utf-8">
+<meta name="viewport" content="width=device-width">
+
+
+<title>848操作系统(四) 文件管理 | 0x2a&#39;s blog</title>
+
+<meta name="generator" content="Hugo Eureka 0.8.3-dev" />
+<link rel="stylesheet" href="/css/eureka.min.css">
+<script defer src="/js/eureka.min.js"></script>
+
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="preload"
+  href="https://fonts.googleapis.com/css2?family=Lora:wght@400;600;700&family=Noto+Serif+SC:wght@400;600;700&display=swap"
+  as="style" onload="this.onload=null;this.rel='stylesheet'">
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@10.1.0/build/styles/monokai.min.css"
+   media="print"
+  onload="this.media='all';this.onload=null" crossorigin>
+<script defer src="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@10.1.0/build/highlight.min.js"
+   crossorigin></script>
+
+  <script defer src="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@10.1.0/build/languages/[python%20c%20go%20c&#43;&#43;%20shell].min.js"
+     crossorigin></script>
+
+<script defer src="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.14.0/js/all.min.js"
+   integrity="sha256-uNYoXefWRqv&#43;PsIF/OflNmwtKM4lStn9yrz2gVl6ymo="  crossorigin></script>
+
+
+
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.css"
+   integrity="sha384-AfEj0r4/OFrOo5t7NnNe46zW/tFgW6x/bCJG8FqQCEo3&#43;Aro6EYUG4&#43;cU&#43;KJWu/X"  media="print"
+  onload="this.media='all';this.onload=null" crossorigin>
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.js" 
+  integrity="sha384-g7c&#43;Jr9ZivxKLnZTDUhnkOnsh30B4H0rpLUpJ4jAIKs4fnJI&#43;sEnkvrMWph2EDg4"  crossorigin></script>
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/contrib/auto-render.min.js"
+   integrity="sha384-mll67QQFJfxn0IYznZYonOWZ644AWYC&#43;Pt2cHqMaRhXVrursRwvLnLaebdGIlYNa"  crossorigin></script>
+<script>
+  document.addEventListener("DOMContentLoaded", function () {
+    renderMathInElement(document.body, {
+      delimiters: [
+        { left: "$$", right: "$$", display: true },
+        { left: "$", right: "$", display: false },
+        { left: "\\(", right: "\\)", display: false },
+        { left: "\\[", right: "\\]", display: true }
+      ],
+    });
+  });
+</script>
+
+
+<script defer src="https://cdn.jsdelivr.net/npm/mermaid@8.9.2/dist/mermaid.min.js" 
+  integrity="sha256-Zmpaaj&#43;GXFsPF5WdPArSrnW3b30dovldeKsW00xBVwE="  crossorigin></script>
+
+
+<link rel="icon" type="image/png" sizes="32x32" href="/images/icon_hudd51a6aca11f958e5ee26ffb845389b9_13185_32x32_fill_box_center_3.png">
+<link rel="apple-touch-icon" sizes="180x180" href="/images/icon_hudd51a6aca11f958e5ee26ffb845389b9_13185_180x180_fill_box_center_3.png">
+
+<meta name="description"
+  content="#文件管理 文件系统概念 心态崩了，一大节笔记没保存。不写这节了。 文件系统实现 上一节内容讨论的是逻辑结构的话，这节内容主要是在讨论存储结构 文件系统层次结构">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [{
+      "@type": "ListItem",
+      "position": 1 ,
+      "name":"Contexts",
+      "item":"/context/"},{
+      "@type": "ListItem",
+      "position": 2 ,
+      "name":"848操作系统(四) 文件管理",
+      "item":"/context/848-os-4/"}]
+}
+</script>
+
+
+
+<script type="application/ld+json">
+{
+    "@context": "https://schema.org",
+    "@type": "Article",
+    "mainEntityOfPage": {
+        "@type": "WebPage",
+        "@id": "/context/848-os-4/"
+    },
+    "headline": "848操作系统(四) 文件管理 | 0x2a\u0027s blog","datePublished": "2020-10-04T19:17:49+00:00",
+    "dateModified": "2020-10-04T19:17:49+00:00",
+    "wordCount":  1954 ,
+    "publisher": {
+        "@type": "Person",
+        "name":  42 ,
+        "logo": {
+            "@type": "ImageObject",
+            "url": "/images/icon.png"
+        }
+        },
+    "description": "#文件管理 文件系统概念 心态崩了，一大节笔记没保存。不写这节了。 文件系统实现 上一节内容讨论的是逻辑结构的话，这节内容主要是在讨论存储结构 文件系统层次结构"
+}
+</script><meta property="og:title" content="848操作系统(四) 文件管理 | 0x2a&#39;s blog" />
+<meta property="og:type" content="article" />
+
+
+<meta property="og:image" content="/images/icon.png">
+
+
+<meta property="og:url" content="/context/848-os-4/" />
+
+
+
+
+<meta property="og:description" content="#文件管理 文件系统概念 心态崩了，一大节笔记没保存。不写这节了。 文件系统实现 上一节内容讨论的是逻辑结构的话，这节内容主要是在讨论存储结构 文件系统层次结构" />
+
+
+
+
+<meta property="og:locale" content="en" />
+
+
+
+
+<meta property="og:site_name" content="0x2a&#39;s blog" />
+
+
+
+
+
+
+<meta property="article:published_time" content="2020-10-04T19:17:49&#43;00:00" />
+
+
+<meta property="article:modified_time" content="2020-10-04T19:17:49&#43;00:00" />
+
+
+
+<meta property="article:section" content="context" />
+
+
+<meta property="article:tag" content="操作系统" />
+
+<meta property="article:tag" content="考研" />
+
+
+
+
+
+<meta property="og:see_also" content="/context/848-os-3/" />
+
+<meta property="og:see_also" content="/context/848-os-2/" />
+
+<meta property="og:see_also" content="/context/848-os-1/" />
+
+<meta property="og:see_also" content="/context/848-ds-2/" />
+
+<meta property="og:see_also" content="/context/848-ds-1/" />
+
+<meta property="og:see_also" content="/posts/2021-848/" />
+
+
+
+<body class="flex flex-col min-h-screen">
+  <header class="fixed flex items-center w-full min-h-16 pl-scrollbar z-50 bg-secondary-bg shadow-sm">
+    <div class="w-full max-w-screen-xl mx-auto"><script>
+    let storageColorScheme = localStorage.getItem("lightDarkMode")
+    if (((storageColorScheme == 'Auto' || storageColorScheme == null) && window.matchMedia("(prefers-color-scheme: dark)").matches) || storageColorScheme == "Dark") {
+        document.getElementsByTagName('html')[0].classList.add('dark')
+    }
+</script>
+<nav class="flex items-center justify-between flex-wrap px-4 py-4 md:py-0">
+    <a href="/" class="mr-6 text-primary-text text-xl font-bold">0x2a&#39;s blog</a>
+    <button id="navbar-btn" class="md:hidden flex items-center px-3 py-2" aria-label="Open Navbar">
+        <i class="fas fa-bars"></i>
+    </button>
+
+    <div id="target"
+        class="hidden block md:flex md:flex-grow md:justify-between md:items-center w-full md:w-auto text-primary-text z-20">
+        <div class="md:flex md:h-16 text-sm md:flex-grow pb-4 md:pb-0 border-b md:border-b-0">
+            <a href="/about/" class="block mt-4 md:inline-block md:mt-0 md:h-(16-4px) md:leading-(16-4px) box-border md:border-t-2 md:border-b-2  border-transparent  mr-4">About</a>
+            <a href="/posts/" class="block mt-4 md:inline-block md:mt-0 md:h-(16-4px) md:leading-(16-4px) box-border md:border-t-2 md:border-b-2  border-transparent  mr-4">Posts</a>
+        </div>
+
+        <div class="flex">
+            <div class="relative pt-4 md:pt-0">
+                <div class="cursor-pointer hover:text-eureka" id="lightDarkMode">
+                    <i class="fas fa-adjust"></i>
+                </div>
+                <div class="fixed hidden inset-0 opacity-0 h-full w-full cursor-default z-30" id="is-open">
+                </div>
+                <div class="absolute flex flex-col left-0 md:left-auto right-auto md:right-0 hidden bg-secondary-bg w-48 rounded py-2 border border-tertiary-bg cursor-pointer z-40"
+                    id='lightDarkOptions'>
+                    <span class="px-4 py-1 hover:text-eureka" name="Light">Light</span>
+                    <span class="px-4 py-1 hover:text-eureka" name="Dark">Dark</span>
+                    <span class="px-4 py-1 hover:text-eureka" name="Auto">Auto</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="fixed hidden inset-0 opacity-0 h-full w-full cursor-default z-0" id="is-open-mobile">
+    </div>
+
+</nav>
+<script>
+    
+    let element = document.getElementById('lightDarkMode')
+    if (storageColorScheme == null || storageColorScheme == 'Auto') {
+        document.addEventListener('DOMContentLoaded', () => {
+            window.matchMedia("(prefers-color-scheme: dark)").addEventListener('change', switchDarkMode)
+        })
+    } else if (storageColorScheme == "Light") {
+        element.firstElementChild.classList.remove('fa-adjust')
+        element.firstElementChild.setAttribute("data-icon", 'sun')
+        element.firstElementChild.classList.add('fa-sun')
+    } else if (storageColorScheme == "Dark") {
+        element.firstElementChild.classList.remove('fa-adjust')
+        element.firstElementChild.setAttribute("data-icon", 'moon')
+        element.firstElementChild.classList.add('fa-moon')
+    }
+
+    document.addEventListener('DOMContentLoaded', () => {
+        getcolorscheme();
+        switchBurger();
+    });
+</script>
+</div>
+  </header>
+  <main class="flex-grow pt-16">
+    <div class="pl-scrollbar">
+      <div class="w-full max-w-screen-xl lg:px-4 xl:px-8 mx-auto">
+
+
+<div class="grid grid-cols-2 lg:grid-cols-8 gap-4 lg:pt-12">
+    <div
+        class="col-span-2  lg:col-span-6 bg-secondary-bg rounded px-6 py-8">
+        <h1 class="font-bold text-3xl text-primary-text">848操作系统(四) 文件管理</h1>
+        <div class="flex flex-wrap flex-row items-center mt-2 text-tertiary-text">
+    <div class="mr-6 my-2">
+        <i class="fas fa-calendar mr-1"></i>
+        <span>2020-10-04</span>
+    </div>
+    <div class="mr-6 my-2">
+        <i class="fas fa-clock mr-1"></i>
+        <span>4 min read</span>
+    </div>
+    
+    
+
+    
+</div>
+        
+        
+        
+
+        <div class="content">
+            <p>#文件管理</p>
+<h2 id="文件系统概念">文件系统概念</h2>
+<p>心态崩了，一大节笔记没保存。不写这节了。</p>
+<h2 id="文件系统实现">文件系统实现</h2>
+<p>上一节内容讨论的是逻辑结构的话，这节内容主要是在讨论存储结构</p>
+<h3 id="文件系统层次结构">文件系统层次结构</h3>
+<p>一般可以分成：“用户调用接口-文件目录系统-存取控制验证模块（软件验证合法性）- 逻辑文件系统与文件信息缓冲区（逻辑记录转逻辑块号）- 物理文件系统（逻辑块转物理地址）- 辅助分配模块（管理空闲空间和回收辅存） - 设备管理程序模块（分配设备等）”</p>
+<h3 id="目录实现">目录实现</h3>
+<p>目录的实现就是为了查找，因此可分为两种目录实现方式：线性列表和哈希表，分别对应线性查找和散列查找。</p>
+<h4 id="线性列表">线性列表</h4>
+<p>使用存储文件名和数据块的线性表。
+优点：实现简单
+缺点：查找费时</p>
+<h4 id="哈希表">哈希表</h4>
+<p>根据文件名得到一个值，并返回指向相信列表中元素的指针。
+优点：查找快速，插入删除简单。
+缺点：哈希表长度固定，拓展性差</p>
+<h3 id="文件实现">文件实现</h3>
+<h4 id="文件分配方式">文件分配方式</h4>
+<p>注意和逻辑结构区分</p>
+<h5 id="连续分配">连续分配</h5>
+<p>连续分配要求每个文件在磁盘上占有一组连续的块。这种方式访问磁盘时所需要的寻道数和寻道时间最小。
+优点：简单，存取速度快
+缺点：文件长度不易拓展，容易产生<strong>外部碎片</strong></p>
+<h5 id="链接分配">链接分配</h5>
+<p>采取离散分配的方式，显著提高了磁盘利用率。除了最后一个盘块，每个盘块都有指向下一个盘块的指针，这些指针对于用户透明，目录中包括了第一块的指针和最后一块的指针。
+优点：<strong>无外部碎片</strong>，磁盘利用率高
+缺点：只能顺序访问，并且稳定性不高，指针也会消耗空间。</p>
+<p>上述是隐式链接分配法，为了解决上述问题，使用显示链接分配法。显示存放各物理块指针，将他们都放到了一个叫做FAT的表中，每个表项存放下一块的指针。FAT表不仅记录了各块的先后关系，还记录了空闲的块位置。FAT表系统启动时会<strong>读入内存</strong>，这样也同时减少了访问磁盘的次数。</p>
+<h5 id="索引分配">索引分配</h5>
+<p>索引分配主要提供了直接访问的功能。他把所有的盘块号都放在了一个索引块中。<strong>每个文件都有索引块</strong>，索引块的第i个条目对应文件第i个块的指针。索引分配<strong>无外部碎片</strong>。
+索引块的大小适应个严重的问题，太小的索引块无法存放文件所有块指针，但过大会浪费空间。因此可以采用以下机制解决：</p>
+<ol>
+<li>链接方案  一个索引块为一个硬盘块，为了处理大文件，可以把多个索引块链接起来。</li>
+<li>多层索引  学习多级页表好榜样。</li>
+<li>混合索引  把多种索引分配方法结合，比如系统采用直接地址，又采用单级索引或两级索引。（多重套娃）</li>
+</ol>
+<h4 id="文件存储空间管理">文件存储空间管理</h4>
+<h5 id="空闲表法">空闲表法</h5>
+<p>类似于内存管理中的动态分配方式，同样也有最佳适应算法、循环首次适应算法等。</p>
+<h5 id="空闲链表法">空闲链表法</h5>
+<p>把所有空闲盘曲拉成一条空闲链。
+优点：分配回收简单
+缺点：分配需要多次</p>
+<h5 id="位示图法">位示图法</h5>
+<p>用一个二位图来表示表示磁盘中每一块的使用情况。
+标号从1开始，i行，j列，n表示一行的数量，b表示块号
+盘块分配公式：$b=n(i-1)+j$
+盘块回收公式：$i = (b-1)DIV n+1\quad j=(b-1)MOD n +1$</p>
+<p>标号从0开始
+盘块分配：$b=n*i+j$
+盘块回收：$i=b DIV n \quad j = b MOD n$</p>
+<h5 id="成组链接法">成组链接法</h5>
+<p>前两者不适合用于大文件系统，因此unix使用成组链接法。大概方法就是一个扇区大部分空间都用作与存储数据，留一个存储另一个扇区的地址，如此循环 套娃。</p>
+<p>Linux虚拟文件系统四大对象：</p>
+<ol>
+<li>超级块(super block)</li>
+<li>索引节点(inode)</li>
+<li>目录项(dentry)</li>
+<li>文件对象(file)</li>
+</ol>
+<p>一个超级块对于一个独立的文件系统。保存文件系统的类型、大小、状态等等。</p>
+<h2 id="磁盘组织与管理">磁盘组织与管理</h2>
+<h3 id="磁盘的结构">磁盘的结构</h3>
+<p>多个<strong>扇区</strong>围成一个圆，形成<strong>磁道</strong>，多个磁道和成一个圆面，形成<strong>盘片</strong>，多个圆面形成一个柱体。每个横切面称为<strong>柱面</strong>。</p>
+<h3 id="磁盘调度算法">磁盘调度算法</h3>
+<ul>
+<li>寻找时间$T_S$，读写信息时移动到相应磁道所需时间。包括了跨越n条磁道时间外，还包括启动磁臂时间s。后者耗时较长。</li>
+<li>延迟时间$T_r$，磁头定位到某扇区所需要时间。旋转速度r，则$T_r=\frac{1}{2r}$。</li>
+<li>传输时间$T_t$，每次读写字数b，每秒转速r，磁道上字节数N $T_t=\frac{b}{rN}$</li>
+</ul>
+<p>常见的算法有以下几种：</p>
+<h4 id="先来先服务">先来先服务</h4>
+<p>具有公平性。若有大量进程竞争使用，效率近似于随即调度。</p>
+<h4 id="最短寻找时间">最短寻找时间</h4>
+<p>优先处理与当前所在磁道最近的磁道。<strong>会产生饥饿现象</strong></p>
+<h4 id="scan算法">SCAN算法</h4>
+<p>电梯调度，循环进行。局部性性能不如前两者。</p>
+<h4 id="c-scan">C-SCAN</h4>
+<p>到尾部后回到首部重新开始，不像scan算法还是从尾部循环到首部。避免了偏向于处理最里或最外的请求。</p>
+<p>两种scan算法都可以用look算法优化，即如果前方没有要处理的请求，则立马回头是岸。</p>
+<p>为了减少寻道时间，可以采用交替编号的方法。</p>
+<h2 id="磁盘的管理">磁盘的管理</h2>
+<h3 id="磁盘初始化">磁盘初始化</h3>
+<ul>
+<li>低级格式化（物理分区） 也就是分磁道 扇区啥的</li>
+<li>分区 也就是分我们所谓的cde盘</li>
+<li>逻辑格式化 创建文件系统</li>
+</ul>
+<h3 id="引导快">引导快</h3>
+<p>计算机启动需要初始化程序，一般存在ROM中，为了避免代码需要修改，所以rom只存放很小的程序，完整功能程序放在了启动块上。</p>
+<h3 id="坏块">坏块</h3>
+<p>系统可以标记坏块，不再使用，但不能修复坏块。</p>
+<h2 id="易错点">易错点</h2>
+<ol>
+<li>读取数据时间中，影响最大的时<strong>寻找时间</strong></li>
+<li>校验码的确定是低级格式化完成的</li>
+<li>磁臂黏着：总是访问某个磁道而不响应其他磁道请求 FCFS不会导致这种现象</li>
+</ol>
+
+        </div>
+        
+        <div class="my-4">
+    
+    <a href="/tags/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/" class="inline-block bg-tertiary-bg text-sm rounded px-3 py-1 my-1 mr-2 hover:text-eureka">#操作系统</a>
+    
+    <a href="/tags/%E8%80%83%E7%A0%94/" class="inline-block bg-tertiary-bg text-sm rounded px-3 py-1 my-1 mr-2 hover:text-eureka">#考研</a>
+    
+</div>
+        
+        
+        
+
+
+        
+        
+        
+        
+<div class="flex flex-col md:flex-row md:justify-between -mx-2 mt-4 px-2 pt-4 border-t">
+    <div>
+        
+        <span class="block font-bold">Previous</span>
+        <a href="/context/848-os-5/" class="block">848操作系统(五) I/O管理</a>
+        
+    </div>
+    <div class="md:text-right mt-4 md:mt-0">
+        
+        <span class="block font-bold">Next</span>
+        <a href="/context/848-os-3/" class="block">848操作系统(三) 内存管理</a>
+        
+    </div>
+</div>
+
+        
+
+
+
+  <div id="valine-comments" class="mt-4"></div>
+<script defer src="https://cdn.jsdelivr.net/npm/valine@1.4.14/dist/Valine.min.js" 
+  integrity="sha256-fPqMAsW3FDt/rNyneSJ7HOpZNRs/O2rM016SU08JtCk="  crossorigin></script>
+<script>
+  document.addEventListener("DOMContentLoaded", function () {
+    new Valine({
+      el: "#valine-comments",appId:"V4MDFNfytHcoabcly1MENtAo-gzGzoHsz",appKey:"xyl895MDJ2Q6BRDKwyRPr6xL",visitor:"true",
+    })
+  });
+</script>
+
+    </div>
+    
+    <div class="col-span-2">
+        
+        
+        <div class="sticky top-16 z-10 hidden lg:block px-6 py-4  bg-primary-bg ">
+    <span class="text-lg font-semibold">On This Page</span>
+</div>
+<div class="sticky-toc hidden lg:block px-6 pb-6 ">
+    <nav id="TableOfContents">
+  <ul>
+    <li><a href="#文件系统概念">文件系统概念</a></li>
+    <li><a href="#文件系统实现">文件系统实现</a>
+      <ul>
+        <li><a href="#文件系统层次结构">文件系统层次结构</a></li>
+        <li><a href="#目录实现">目录实现</a>
+          <ul>
+            <li><a href="#线性列表">线性列表</a></li>
+            <li><a href="#哈希表">哈希表</a></li>
+          </ul>
+        </li>
+        <li><a href="#文件实现">文件实现</a>
+          <ul>
+            <li><a href="#文件分配方式">文件分配方式</a>
+              <ul>
+                <li><a href="#连续分配">连续分配</a></li>
+                <li><a href="#链接分配">链接分配</a></li>
+                <li><a href="#索引分配">索引分配</a></li>
+              </ul>
+            </li>
+            <li><a href="#文件存储空间管理">文件存储空间管理</a>
+              <ul>
+                <li><a href="#空闲表法">空闲表法</a></li>
+                <li><a href="#空闲链表法">空闲链表法</a></li>
+                <li><a href="#位示图法">位示图法</a></li>
+                <li><a href="#成组链接法">成组链接法</a></li>
+              </ul>
+            </li>
+          </ul>
+        </li>
+      </ul>
+    </li>
+    <li><a href="#磁盘组织与管理">磁盘组织与管理</a>
+      <ul>
+        <li><a href="#磁盘的结构">磁盘的结构</a></li>
+        <li><a href="#磁盘调度算法">磁盘调度算法</a>
+          <ul>
+            <li><a href="#先来先服务">先来先服务</a></li>
+            <li><a href="#最短寻找时间">最短寻找时间</a></li>
+            <li><a href="#scan算法">SCAN算法</a></li>
+            <li><a href="#c-scan">C-SCAN</a></li>
+          </ul>
+        </li>
+      </ul>
+    </li>
+    <li><a href="#磁盘的管理">磁盘的管理</a>
+      <ul>
+        <li><a href="#磁盘初始化">磁盘初始化</a></li>
+        <li><a href="#引导快">引导快</a></li>
+        <li><a href="#坏块">坏块</a></li>
+      </ul>
+    </li>
+    <li><a href="#易错点">易错点</a></li>
+  </ul>
+</nav>
+</div>
+<script>
+    window.addEventListener('DOMContentLoaded', () => {
+        enableStickyToc();
+    });
+</script>
+        
+    </div>
+    
+
+    
+    
+    <div
+        class="col-span-2  lg:col-span-6 bg-secondary-bg rounded p-6">
+        <h2 class="text-lg font-semibold mb-4">See Also</h2>
+        <div class="content">
+            
+            <a href="/context/848-os-3/">848操作系统(三) 内存管理</a>
+            <br />
+            
+            <a href="/context/848-os-2/">848操作系统(二) 进程管理</a>
+            <br />
+            
+            <a href="/context/848-os-1/">848操作系统(一) 操作系统概述</a>
+            <br />
+            
+            <a href="/context/848-ds-2/">848数据结构(二) 线性表</a>
+            <br />
+            
+            <a href="/context/848-ds-1/">848数据结构(一) 基本概念和术语</a>
+            <br />
+            
+            <a href="/posts/2021-848/">2021暨南大学848知识点总结</a>
+            <br />
+            
+        </div>
+    </div>
+    
+</div>
+<script>
+    document.addEventListener('DOMContentLoaded', ()=>{
+        hljs.initHighlightingOnLoad();
+    })
+</script>
+
+      </div>
+    </div>
+    
+  </main>
+  <footer class="pl-scrollbar">
+    <div class="w-full max-w-screen-xl mx-auto"><div class="text-center p-6 pin-b">
+    <p class="text-sm text-tertiary-text">&copy; 2021 <a href="https://0x2a.in/blog">0x2a</a>
+ &middot;  Powered by the <a href="https://github.com/wangchucheng/hugo-eureka" class="hover:text-eureka">Eureka</a> theme for <a href="https://gohugo.io" class="hover:text-eureka">Hugo</a></p>
+</div></div>
+  </footer>
+</body>
+
+</html>

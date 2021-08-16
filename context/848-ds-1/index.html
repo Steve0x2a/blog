@@ -1,0 +1,419 @@
+<!DOCTYPE html>
+<html lang='en' ><meta charset="utf-8">
+<meta name="viewport" content="width=device-width">
+
+
+<title>848数据结构(一) 基本概念和术语 | 0x2a&#39;s blog</title>
+
+<meta name="generator" content="Hugo Eureka 0.8.3-dev" />
+<link rel="stylesheet" href="/css/eureka.min.css">
+<script defer src="/js/eureka.min.js"></script>
+
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="preload"
+  href="https://fonts.googleapis.com/css2?family=Lora:wght@400;600;700&family=Noto+Serif+SC:wght@400;600;700&display=swap"
+  as="style" onload="this.onload=null;this.rel='stylesheet'">
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@10.1.0/build/styles/monokai.min.css"
+   media="print"
+  onload="this.media='all';this.onload=null" crossorigin>
+<script defer src="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@10.1.0/build/highlight.min.js"
+   crossorigin></script>
+
+  <script defer src="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@10.1.0/build/languages/[python%20c%20go%20c&#43;&#43;%20shell].min.js"
+     crossorigin></script>
+
+<script defer src="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.14.0/js/all.min.js"
+   integrity="sha256-uNYoXefWRqv&#43;PsIF/OflNmwtKM4lStn9yrz2gVl6ymo="  crossorigin></script>
+
+
+
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.css"
+   integrity="sha384-AfEj0r4/OFrOo5t7NnNe46zW/tFgW6x/bCJG8FqQCEo3&#43;Aro6EYUG4&#43;cU&#43;KJWu/X"  media="print"
+  onload="this.media='all';this.onload=null" crossorigin>
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.js" 
+  integrity="sha384-g7c&#43;Jr9ZivxKLnZTDUhnkOnsh30B4H0rpLUpJ4jAIKs4fnJI&#43;sEnkvrMWph2EDg4"  crossorigin></script>
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/contrib/auto-render.min.js"
+   integrity="sha384-mll67QQFJfxn0IYznZYonOWZ644AWYC&#43;Pt2cHqMaRhXVrursRwvLnLaebdGIlYNa"  crossorigin></script>
+<script>
+  document.addEventListener("DOMContentLoaded", function () {
+    renderMathInElement(document.body, {
+      delimiters: [
+        { left: "$$", right: "$$", display: true },
+        { left: "$", right: "$", display: false },
+        { left: "\\(", right: "\\)", display: false },
+        { left: "\\[", right: "\\]", display: true }
+      ],
+    });
+  });
+</script>
+
+
+<script defer src="https://cdn.jsdelivr.net/npm/mermaid@8.9.2/dist/mermaid.min.js" 
+  integrity="sha256-Zmpaaj&#43;GXFsPF5WdPArSrnW3b30dovldeKsW00xBVwE="  crossorigin></script>
+
+
+<link rel="icon" type="image/png" sizes="32x32" href="/images/icon_hudd51a6aca11f958e5ee26ffb845389b9_13185_32x32_fill_box_center_3.png">
+<link rel="apple-touch-icon" sizes="180x180" href="/images/icon_hudd51a6aca11f958e5ee26ffb845389b9_13185_180x180_fill_box_center_3.png">
+
+<meta name="description"
+  content="基本概念和术语 一些概念 数据元素 数据元素是数据的基本单位. 这里需要注意的是, 数据元素可能包含多个数据项. 比如一本书作为一个数据元素, 它可以由书名, 作者名">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [{
+      "@type": "ListItem",
+      "position": 1 ,
+      "name":"Contexts",
+      "item":"/context/"},{
+      "@type": "ListItem",
+      "position": 2 ,
+      "name":"848数据结构(一) 基本概念和术语",
+      "item":"/context/848-ds-1/"}]
+}
+</script>
+
+
+
+<script type="application/ld+json">
+{
+    "@context": "https://schema.org",
+    "@type": "Article",
+    "mainEntityOfPage": {
+        "@type": "WebPage",
+        "@id": "/context/848-ds-1/"
+    },
+    "headline": "848数据结构(一) 基本概念和术语 | 0x2a\u0027s blog","datePublished": "2020-09-01T18:37:41+00:00",
+    "dateModified": "2020-09-01T18:37:41+00:00",
+    "wordCount":  617 ,
+    "publisher": {
+        "@type": "Person",
+        "name":  42 ,
+        "logo": {
+            "@type": "ImageObject",
+            "url": "/images/icon.png"
+        }
+        },
+    "description": "基本概念和术语 一些概念 数据元素 数据元素是数据的基本单位. 这里需要注意的是, 数据元素可能包含多个数据项. 比如一本书作为一个数据元素, 它可以由书名, 作者名"
+}
+</script><meta property="og:title" content="848数据结构(一) 基本概念和术语 | 0x2a&#39;s blog" />
+<meta property="og:type" content="article" />
+
+
+<meta property="og:image" content="/images/icon.png">
+
+
+<meta property="og:url" content="/context/848-ds-1/" />
+
+
+
+
+<meta property="og:description" content="基本概念和术语 一些概念 数据元素 数据元素是数据的基本单位. 这里需要注意的是, 数据元素可能包含多个数据项. 比如一本书作为一个数据元素, 它可以由书名, 作者名" />
+
+
+
+
+<meta property="og:locale" content="en" />
+
+
+
+
+<meta property="og:site_name" content="0x2a&#39;s blog" />
+
+
+
+
+
+
+<meta property="article:published_time" content="2020-09-01T18:37:41&#43;00:00" />
+
+
+<meta property="article:modified_time" content="2020-09-01T18:37:41&#43;00:00" />
+
+
+
+<meta property="article:section" content="context" />
+
+
+<meta property="article:tag" content="数据结构" />
+
+<meta property="article:tag" content="考研" />
+
+
+
+
+
+<meta property="og:see_also" content="/posts/2021-848/" />
+
+
+
+<body class="flex flex-col min-h-screen">
+  <header class="fixed flex items-center w-full min-h-16 pl-scrollbar z-50 bg-secondary-bg shadow-sm">
+    <div class="w-full max-w-screen-xl mx-auto"><script>
+    let storageColorScheme = localStorage.getItem("lightDarkMode")
+    if (((storageColorScheme == 'Auto' || storageColorScheme == null) && window.matchMedia("(prefers-color-scheme: dark)").matches) || storageColorScheme == "Dark") {
+        document.getElementsByTagName('html')[0].classList.add('dark')
+    }
+</script>
+<nav class="flex items-center justify-between flex-wrap px-4 py-4 md:py-0">
+    <a href="/" class="mr-6 text-primary-text text-xl font-bold">0x2a&#39;s blog</a>
+    <button id="navbar-btn" class="md:hidden flex items-center px-3 py-2" aria-label="Open Navbar">
+        <i class="fas fa-bars"></i>
+    </button>
+
+    <div id="target"
+        class="hidden block md:flex md:flex-grow md:justify-between md:items-center w-full md:w-auto text-primary-text z-20">
+        <div class="md:flex md:h-16 text-sm md:flex-grow pb-4 md:pb-0 border-b md:border-b-0">
+            <a href="/about/" class="block mt-4 md:inline-block md:mt-0 md:h-(16-4px) md:leading-(16-4px) box-border md:border-t-2 md:border-b-2  border-transparent  mr-4">About</a>
+            <a href="/posts/" class="block mt-4 md:inline-block md:mt-0 md:h-(16-4px) md:leading-(16-4px) box-border md:border-t-2 md:border-b-2  border-transparent  mr-4">Posts</a>
+        </div>
+
+        <div class="flex">
+            <div class="relative pt-4 md:pt-0">
+                <div class="cursor-pointer hover:text-eureka" id="lightDarkMode">
+                    <i class="fas fa-adjust"></i>
+                </div>
+                <div class="fixed hidden inset-0 opacity-0 h-full w-full cursor-default z-30" id="is-open">
+                </div>
+                <div class="absolute flex flex-col left-0 md:left-auto right-auto md:right-0 hidden bg-secondary-bg w-48 rounded py-2 border border-tertiary-bg cursor-pointer z-40"
+                    id='lightDarkOptions'>
+                    <span class="px-4 py-1 hover:text-eureka" name="Light">Light</span>
+                    <span class="px-4 py-1 hover:text-eureka" name="Dark">Dark</span>
+                    <span class="px-4 py-1 hover:text-eureka" name="Auto">Auto</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="fixed hidden inset-0 opacity-0 h-full w-full cursor-default z-0" id="is-open-mobile">
+    </div>
+
+</nav>
+<script>
+    
+    let element = document.getElementById('lightDarkMode')
+    if (storageColorScheme == null || storageColorScheme == 'Auto') {
+        document.addEventListener('DOMContentLoaded', () => {
+            window.matchMedia("(prefers-color-scheme: dark)").addEventListener('change', switchDarkMode)
+        })
+    } else if (storageColorScheme == "Light") {
+        element.firstElementChild.classList.remove('fa-adjust')
+        element.firstElementChild.setAttribute("data-icon", 'sun')
+        element.firstElementChild.classList.add('fa-sun')
+    } else if (storageColorScheme == "Dark") {
+        element.firstElementChild.classList.remove('fa-adjust')
+        element.firstElementChild.setAttribute("data-icon", 'moon')
+        element.firstElementChild.classList.add('fa-moon')
+    }
+
+    document.addEventListener('DOMContentLoaded', () => {
+        getcolorscheme();
+        switchBurger();
+    });
+</script>
+</div>
+  </header>
+  <main class="flex-grow pt-16">
+    <div class="pl-scrollbar">
+      <div class="w-full max-w-screen-xl lg:px-4 xl:px-8 mx-auto">
+
+
+<div class="grid grid-cols-2 lg:grid-cols-8 gap-4 lg:pt-12">
+    <div
+        class="col-span-2  lg:col-span-6 bg-secondary-bg rounded px-6 py-8">
+        <h1 class="font-bold text-3xl text-primary-text">848数据结构(一) 基本概念和术语</h1>
+        <div class="flex flex-wrap flex-row items-center mt-2 text-tertiary-text">
+    <div class="mr-6 my-2">
+        <i class="fas fa-calendar mr-1"></i>
+        <span>2020-09-01</span>
+    </div>
+    <div class="mr-6 my-2">
+        <i class="fas fa-clock mr-1"></i>
+        <span>2 min read</span>
+    </div>
+    
+    
+
+    
+</div>
+        
+        
+        
+
+        <div class="content">
+            <h1 id="基本概念和术语">基本概念和术语</h1>
+<h2 id="一些概念">一些概念</h2>
+<h3 id="数据元素">数据元素</h3>
+<p>数据元素是数据的<strong>基本单位</strong>.
+这里需要注意的是, 数据元素可能包含多个数据项. 比如一本书作为一个数据元素, 它可以由书名, 作者名等数据项组成. 而数据项不再可分.</p>
+<h3 id="数据对象">数据对象</h3>
+<p>数据对象是<strong>性质相同</strong>的数据元素的集合, 是数据的子集.
+比如, 英文字母可以组成一个数据对象, 所有的整数可能组成一个数据对象.</p>
+<h3 id="数据结构">数据结构</h3>
+<p>相互之间存在一种或多种特定关系的数据元素集合.
+数据结构包含三方面:</p>
+<ol>
+<li>逻辑结构
+强调的是数据的<strong>逻辑</strong>关系, 和数据如何存储在计算机内部无关.
+常见的逻辑结构包含: 线性结构以及非线性结构
+线性结构主要指线性表(栈 队列 等)
+非线性结构包括：集合、树、图</li>
+<li>存储结构
+指在计算机<strong>内部</strong>存储的结构, 又称为物理结构.
+常见的存储结构: 顺序存储, 链式存储, 索引存储以及散列存储.</li>
+<li>数据的运算</li>
+</ol>
+<h3 id="数据类型">数据类型</h3>
+<ol>
+<li>原子类型
+指值<strong>不可再分</strong>的数据类型.</li>
+<li>结构类型
+其值可以再分解成若干类型</li>
+<li>抽象数据类型
+ADT. 抽象数据组织以及操作.</li>
+</ol>
+<h2 id="算法设计的基本要求">算法设计的基本要求</h2>
+<h3 id="算法重要特征">算法重要特征</h3>
+<ol>
+<li>有穷性
+算法必须在有穷个步骤内完成</li>
+<li>确定性
+同一个输入 会有相同的输出</li>
+<li>可行性</li>
+<li>输入
+可以有零个或多个输入</li>
+<li>输出</li>
+</ol>
+<h2 id="语句的频度和估算时间复杂度">语句的频度和估算时间复杂度</h2>
+<h3 id="时间复杂度">时间复杂度</h3>
+<h3 id="空间复杂度">空间复杂度</h3>
+<h2 id="易错点">易错点</h2>
+<ol>
+<li>链式存储不同节点存储空间不一定连续, 但是<strong>节点内</strong>存储空间肯定是连续的(这不是废话吗 读题啊啊啊)</li>
+<li>像顺序表 哈希表 单链表属于<strong>数据结构</strong> 同时包含了逻辑结构 物理结构以及运算, 不能单说他是逻辑结构或者物理结构</li>
+<li>逻辑结构可以独立于存储结构, 而存储结构是逻辑结构在计算机上的映射, 所以不能独立于逻辑结构.</li>
+</ol>
+
+        </div>
+        
+        <div class="my-4">
+    
+    <a href="/tags/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/" class="inline-block bg-tertiary-bg text-sm rounded px-3 py-1 my-1 mr-2 hover:text-eureka">#数据结构</a>
+    
+    <a href="/tags/%E8%80%83%E7%A0%94/" class="inline-block bg-tertiary-bg text-sm rounded px-3 py-1 my-1 mr-2 hover:text-eureka">#考研</a>
+    
+</div>
+        
+        
+        
+
+
+        
+        
+        
+        
+<div class="flex flex-col md:flex-row md:justify-between -mx-2 mt-4 px-2 pt-4 border-t">
+    <div>
+        
+        <span class="block font-bold">Previous</span>
+        <a href="/context/848-ds-2/" class="block">848数据结构(二) 线性表</a>
+        
+    </div>
+    <div class="md:text-right mt-4 md:mt-0">
+        
+    </div>
+</div>
+
+        
+
+
+
+  <div id="valine-comments" class="mt-4"></div>
+<script defer src="https://cdn.jsdelivr.net/npm/valine@1.4.14/dist/Valine.min.js" 
+  integrity="sha256-fPqMAsW3FDt/rNyneSJ7HOpZNRs/O2rM016SU08JtCk="  crossorigin></script>
+<script>
+  document.addEventListener("DOMContentLoaded", function () {
+    new Valine({
+      el: "#valine-comments",appId:"V4MDFNfytHcoabcly1MENtAo-gzGzoHsz",appKey:"xyl895MDJ2Q6BRDKwyRPr6xL",visitor:"true",
+    })
+  });
+</script>
+
+    </div>
+    
+    <div class="col-span-2">
+        
+        
+        <div class="sticky top-16 z-10 hidden lg:block px-6 py-4  bg-primary-bg ">
+    <span class="text-lg font-semibold">On This Page</span>
+</div>
+<div class="sticky-toc hidden lg:block px-6 pb-6 ">
+    <nav id="TableOfContents">
+  <ul>
+    <li><a href="#一些概念">一些概念</a>
+      <ul>
+        <li><a href="#数据元素">数据元素</a></li>
+        <li><a href="#数据对象">数据对象</a></li>
+        <li><a href="#数据结构">数据结构</a></li>
+        <li><a href="#数据类型">数据类型</a></li>
+      </ul>
+    </li>
+    <li><a href="#算法设计的基本要求">算法设计的基本要求</a>
+      <ul>
+        <li><a href="#算法重要特征">算法重要特征</a></li>
+      </ul>
+    </li>
+    <li><a href="#语句的频度和估算时间复杂度">语句的频度和估算时间复杂度</a>
+      <ul>
+        <li><a href="#时间复杂度">时间复杂度</a></li>
+        <li><a href="#空间复杂度">空间复杂度</a></li>
+      </ul>
+    </li>
+    <li><a href="#易错点">易错点</a></li>
+  </ul>
+</nav>
+</div>
+<script>
+    window.addEventListener('DOMContentLoaded', () => {
+        enableStickyToc();
+    });
+</script>
+        
+    </div>
+    
+
+    
+    
+    <div
+        class="col-span-2  lg:col-span-6 bg-secondary-bg rounded p-6">
+        <h2 class="text-lg font-semibold mb-4">See Also</h2>
+        <div class="content">
+            
+            <a href="/posts/2021-848/">2021暨南大学848知识点总结</a>
+            <br />
+            
+        </div>
+    </div>
+    
+</div>
+<script>
+    document.addEventListener('DOMContentLoaded', ()=>{
+        hljs.initHighlightingOnLoad();
+    })
+</script>
+
+      </div>
+    </div>
+    
+  </main>
+  <footer class="pl-scrollbar">
+    <div class="w-full max-w-screen-xl mx-auto"><div class="text-center p-6 pin-b">
+    <p class="text-sm text-tertiary-text">&copy; 2021 <a href="https://0x2a.in/blog">0x2a</a>
+ &middot;  Powered by the <a href="https://github.com/wangchucheng/hugo-eureka" class="hover:text-eureka">Eureka</a> theme for <a href="https://gohugo.io" class="hover:text-eureka">Hugo</a></p>
+</div></div>
+  </footer>
+</body>
+
+</html>

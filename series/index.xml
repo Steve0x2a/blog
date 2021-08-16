@@ -2,11 +2,11 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Series on 0x2a&#39;s blog</title>
-    <link>https://0x2a.in/blog/series/</link>
+    <link>/series/</link>
     <description>Recent content in Series on 0x2a&#39;s blog</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en</language>
     <copyright>&amp;copy; 2021 &lt;a href=&#34;https://0x2a.in/blog&#34;&gt;0x2a&lt;/a&gt;
-</copyright><atom:link href="https://0x2a.in/blog/series/index.xml" rel="self" type="application/rss+xml" />
+</copyright><atom:link href="/series/index.xml" rel="self" type="application/rss+xml" />
   </channel>
 </rss>

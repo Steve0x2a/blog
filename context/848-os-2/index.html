@@ -1,0 +1,856 @@
+<!DOCTYPE html>
+<html lang='en' ><meta charset="utf-8">
+<meta name="viewport" content="width=device-width">
+
+
+<title>848操作系统(二) 进程管理 | 0x2a&#39;s blog</title>
+
+<meta name="generator" content="Hugo Eureka 0.8.3-dev" />
+<link rel="stylesheet" href="/css/eureka.min.css">
+<script defer src="/js/eureka.min.js"></script>
+
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="preload"
+  href="https://fonts.googleapis.com/css2?family=Lora:wght@400;600;700&family=Noto+Serif+SC:wght@400;600;700&display=swap"
+  as="style" onload="this.onload=null;this.rel='stylesheet'">
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@10.1.0/build/styles/monokai.min.css"
+   media="print"
+  onload="this.media='all';this.onload=null" crossorigin>
+<script defer src="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@10.1.0/build/highlight.min.js"
+   crossorigin></script>
+
+  <script defer src="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@10.1.0/build/languages/[python%20c%20go%20c&#43;&#43;%20shell].min.js"
+     crossorigin></script>
+
+<script defer src="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.14.0/js/all.min.js"
+   integrity="sha256-uNYoXefWRqv&#43;PsIF/OflNmwtKM4lStn9yrz2gVl6ymo="  crossorigin></script>
+
+
+
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.css"
+   integrity="sha384-AfEj0r4/OFrOo5t7NnNe46zW/tFgW6x/bCJG8FqQCEo3&#43;Aro6EYUG4&#43;cU&#43;KJWu/X"  media="print"
+  onload="this.media='all';this.onload=null" crossorigin>
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.js" 
+  integrity="sha384-g7c&#43;Jr9ZivxKLnZTDUhnkOnsh30B4H0rpLUpJ4jAIKs4fnJI&#43;sEnkvrMWph2EDg4"  crossorigin></script>
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/contrib/auto-render.min.js"
+   integrity="sha384-mll67QQFJfxn0IYznZYonOWZ644AWYC&#43;Pt2cHqMaRhXVrursRwvLnLaebdGIlYNa"  crossorigin></script>
+<script>
+  document.addEventListener("DOMContentLoaded", function () {
+    renderMathInElement(document.body, {
+      delimiters: [
+        { left: "$$", right: "$$", display: true },
+        { left: "$", right: "$", display: false },
+        { left: "\\(", right: "\\)", display: false },
+        { left: "\\[", right: "\\]", display: true }
+      ],
+    });
+  });
+</script>
+
+
+<script defer src="https://cdn.jsdelivr.net/npm/mermaid@8.9.2/dist/mermaid.min.js" 
+  integrity="sha256-Zmpaaj&#43;GXFsPF5WdPArSrnW3b30dovldeKsW00xBVwE="  crossorigin></script>
+
+
+<link rel="icon" type="image/png" sizes="32x32" href="/images/icon_hudd51a6aca11f958e5ee26ffb845389b9_13185_32x32_fill_box_center_3.png">
+<link rel="apple-touch-icon" sizes="180x180" href="/images/icon_hudd51a6aca11f958e5ee26ffb845389b9_13185_180x180_fill_box_center_3.png">
+
+<meta name="description"
+  content="进程管理 进程与线程 进程概念 进程概念的引入是为了实现程序的并发执行，并对并发执行的程序加以描述和控制。 为了使参与并发执行的程序都可以独立运行，操作系统会">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [{
+      "@type": "ListItem",
+      "position": 1 ,
+      "name":"Contexts",
+      "item":"/context/"},{
+      "@type": "ListItem",
+      "position": 2 ,
+      "name":"848操作系统(二) 进程管理",
+      "item":"/context/848-os-2/"}]
+}
+</script>
+
+
+
+<script type="application/ld+json">
+{
+    "@context": "https://schema.org",
+    "@type": "Article",
+    "mainEntityOfPage": {
+        "@type": "WebPage",
+        "@id": "/context/848-os-2/"
+    },
+    "headline": "848操作系统(二) 进程管理 | 0x2a\u0027s blog","datePublished": "2020-09-15T19:17:07+00:00",
+    "dateModified": "2020-09-15T19:17:07+00:00",
+    "wordCount":  6182 ,
+    "publisher": {
+        "@type": "Person",
+        "name":  42 ,
+        "logo": {
+            "@type": "ImageObject",
+            "url": "/images/icon.png"
+        }
+        },
+    "description": "进程管理 进程与线程 进程概念 进程概念的引入是为了实现程序的并发执行，并对并发执行的程序加以描述和控制。 为了使参与并发执行的程序都可以独立运行，操作系统会"
+}
+</script><meta property="og:title" content="848操作系统(二) 进程管理 | 0x2a&#39;s blog" />
+<meta property="og:type" content="article" />
+
+
+<meta property="og:image" content="/images/icon.png">
+
+
+<meta property="og:url" content="/context/848-os-2/" />
+
+
+
+
+<meta property="og:description" content="进程管理 进程与线程 进程概念 进程概念的引入是为了实现程序的并发执行，并对并发执行的程序加以描述和控制。 为了使参与并发执行的程序都可以独立运行，操作系统会" />
+
+
+
+
+<meta property="og:locale" content="en" />
+
+
+
+
+<meta property="og:site_name" content="0x2a&#39;s blog" />
+
+
+
+
+
+
+<meta property="article:published_time" content="2020-09-15T19:17:07&#43;00:00" />
+
+
+<meta property="article:modified_time" content="2020-09-15T19:17:07&#43;00:00" />
+
+
+
+<meta property="article:section" content="context" />
+
+
+<meta property="article:tag" content="操作系统" />
+
+<meta property="article:tag" content="考研" />
+
+
+
+
+
+<meta property="og:see_also" content="/context/848-os-1/" />
+
+<meta property="og:see_also" content="/context/848-ds-2/" />
+
+<meta property="og:see_also" content="/context/848-ds-1/" />
+
+<meta property="og:see_also" content="/posts/2021-848/" />
+
+
+
+<body class="flex flex-col min-h-screen">
+  <header class="fixed flex items-center w-full min-h-16 pl-scrollbar z-50 bg-secondary-bg shadow-sm">
+    <div class="w-full max-w-screen-xl mx-auto"><script>
+    let storageColorScheme = localStorage.getItem("lightDarkMode")
+    if (((storageColorScheme == 'Auto' || storageColorScheme == null) && window.matchMedia("(prefers-color-scheme: dark)").matches) || storageColorScheme == "Dark") {
+        document.getElementsByTagName('html')[0].classList.add('dark')
+    }
+</script>
+<nav class="flex items-center justify-between flex-wrap px-4 py-4 md:py-0">
+    <a href="/" class="mr-6 text-primary-text text-xl font-bold">0x2a&#39;s blog</a>
+    <button id="navbar-btn" class="md:hidden flex items-center px-3 py-2" aria-label="Open Navbar">
+        <i class="fas fa-bars"></i>
+    </button>
+
+    <div id="target"
+        class="hidden block md:flex md:flex-grow md:justify-between md:items-center w-full md:w-auto text-primary-text z-20">
+        <div class="md:flex md:h-16 text-sm md:flex-grow pb-4 md:pb-0 border-b md:border-b-0">
+            <a href="/about/" class="block mt-4 md:inline-block md:mt-0 md:h-(16-4px) md:leading-(16-4px) box-border md:border-t-2 md:border-b-2  border-transparent  mr-4">About</a>
+            <a href="/posts/" class="block mt-4 md:inline-block md:mt-0 md:h-(16-4px) md:leading-(16-4px) box-border md:border-t-2 md:border-b-2  border-transparent  mr-4">Posts</a>
+        </div>
+
+        <div class="flex">
+            <div class="relative pt-4 md:pt-0">
+                <div class="cursor-pointer hover:text-eureka" id="lightDarkMode">
+                    <i class="fas fa-adjust"></i>
+                </div>
+                <div class="fixed hidden inset-0 opacity-0 h-full w-full cursor-default z-30" id="is-open">
+                </div>
+                <div class="absolute flex flex-col left-0 md:left-auto right-auto md:right-0 hidden bg-secondary-bg w-48 rounded py-2 border border-tertiary-bg cursor-pointer z-40"
+                    id='lightDarkOptions'>
+                    <span class="px-4 py-1 hover:text-eureka" name="Light">Light</span>
+                    <span class="px-4 py-1 hover:text-eureka" name="Dark">Dark</span>
+                    <span class="px-4 py-1 hover:text-eureka" name="Auto">Auto</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="fixed hidden inset-0 opacity-0 h-full w-full cursor-default z-0" id="is-open-mobile">
+    </div>
+
+</nav>
+<script>
+    
+    let element = document.getElementById('lightDarkMode')
+    if (storageColorScheme == null || storageColorScheme == 'Auto') {
+        document.addEventListener('DOMContentLoaded', () => {
+            window.matchMedia("(prefers-color-scheme: dark)").addEventListener('change', switchDarkMode)
+        })
+    } else if (storageColorScheme == "Light") {
+        element.firstElementChild.classList.remove('fa-adjust')
+        element.firstElementChild.setAttribute("data-icon", 'sun')
+        element.firstElementChild.classList.add('fa-sun')
+    } else if (storageColorScheme == "Dark") {
+        element.firstElementChild.classList.remove('fa-adjust')
+        element.firstElementChild.setAttribute("data-icon", 'moon')
+        element.firstElementChild.classList.add('fa-moon')
+    }
+
+    document.addEventListener('DOMContentLoaded', () => {
+        getcolorscheme();
+        switchBurger();
+    });
+</script>
+</div>
+  </header>
+  <main class="flex-grow pt-16">
+    <div class="pl-scrollbar">
+      <div class="w-full max-w-screen-xl lg:px-4 xl:px-8 mx-auto">
+
+
+<div class="grid grid-cols-2 lg:grid-cols-8 gap-4 lg:pt-12">
+    <div
+        class="col-span-2  lg:col-span-6 bg-secondary-bg rounded px-6 py-8">
+        <h1 class="font-bold text-3xl text-primary-text">848操作系统(二) 进程管理</h1>
+        <div class="flex flex-wrap flex-row items-center mt-2 text-tertiary-text">
+    <div class="mr-6 my-2">
+        <i class="fas fa-calendar mr-1"></i>
+        <span>2020-09-15</span>
+    </div>
+    <div class="mr-6 my-2">
+        <i class="fas fa-clock mr-1"></i>
+        <span>13 min read</span>
+    </div>
+    
+    
+
+    
+</div>
+        
+        
+        
+
+        <div class="content">
+            <h1 id="进程管理">进程管理</h1>
+<h2 id="进程与线程">进程与线程</h2>
+<h3 id="进程概念">进程概念</h3>
+<p>进程概念的引入是为了实现程序的并发执行，并对并发执行的程序加以描述和控制。
+为了使参与并发执行的程序都可以独立运行，操作系统会为每一个进程都配备一个<strong>进程控制块</strong>（PCB）。一个进程实体主要包括主要包括程序段、相关数据段、PCB。
+PCB是进程存在的唯一标志，也就是说，系统根据PCB来判断系统内部目前有多少个进程。
+相对于程序，进程更像是一个动态过程。一个不恰当的比喻，如果人作为一个生物体有一个大体类似的基因（程序），那具体的每一个人的一生，就是进程了。</p>
+<h3 id="进程的状态与转换">进程的状态与转换</h3>
+<p>程序一般拥有五个状态：创建、就绪、阻塞、执行、终止。一般理解什么情况下会从什么态转换到什么态即可。有些操作系统还会引入一个挂起态（会将进程信息移除内存）</p>
+<h3 id="进程控制">进程控制</h3>
+<h4 id="进程的创建">进程的创建</h4>
+<p>在操作系统中，允许一个进程创建另外一个进程。通常把创建进程的进程成为父进程。在UNIX系统中，用树状图的结构来表示进程之间的父子关系，在PCB中有专门的族谱（家族关系表项）记录相关信息。而在Windows系统中不存在进程层次，而是用句柄来替代一个操作的权限。句柄是可以传递的，获得句柄就可以获得拥有控制其他进程的权力，因此 进程之间的关系不再是层级，而是线性的，是否获得句柄的关系。
+引起进程创建的事件有几种：用户登录、作业调度、提供服务、应用请求。
+进程的创建一般有以下几个步骤：</p>
+<ol>
+<li>申请PCB</li>
+<li>分配资源（如果资源不足不会直接创建失败，而是进入阻塞态）</li>
+<li>初始化PCB</li>
+<li>如果就绪队列有空位，则放入就绪队列</li>
+</ol>
+<h4 id="进程的终止">进程的终止</h4>
+<p>引起进程结束的事件一般有：正常结束、异常结束、外部干预。
+进程结束的过程一般有以下步骤：</p>
+<ol>
+<li>根据要终止的标识符，从PCB集合中找到需要终止的进程PCB，读取进程状态</li>
+<li>若处于正在执行，则立即停止执行</li>
+<li>若还有子孙进程，则将子孙们也kill了</li>
+<li>进程原持有资源返还给父进程或操作系统</li>
+<li>将PCB移出所在队列</li>
+</ol>
+<h4 id="进程阻塞和唤醒">进程阻塞和唤醒</h4>
+<h4 id="进程的切换">进程的切换</h4>
+<p>步骤如下：</p>
+<ol>
+<li>保存处理机上下文，包括程序计数器和其他寄存器</li>
+<li>更新PCB</li>
+<li>将PCB移入相应队列</li>
+<li>选择另一个进程执行 并更新PCB</li>
+<li>更新内存管理数据结构</li>
+<li>回复处理机上下文</li>
+</ol>
+<p>要注意调度和切换的区别。调度是决定系统资源如何分配，属于<strong>决策</strong>，而切换属于实际分配行为，也就是<strong>执行</strong>。先有调度后有切换。</p>
+<h3 id="进程的组织">进程的组织</h3>
+<p>这一部分主要是了解进程实体所包含的内容</p>
+<h4 id="pcb">PCB</h4>
+<p>主要包括</p>
+<ol>
+<li>进程描述信息</li>
+<li>进程控制和管理信息</li>
+<li>资源分配清单</li>
+<li>处理机相关信息（主要是处理机寄存器的值）</li>
+</ol>
+<h4 id="程序段">程序段</h4>
+<p>代码段</p>
+<h4 id="数据段">数据段</h4>
+<p>数据段，有的会细分为数据堆段和数据栈段</p>
+<p>一般来说，C语言编写程序使用内存一般分喂三个段</p>
+<ol>
+<li>正文段：代码和已赋值数据段，存放二进制代码和常量</li>
+<li>数据堆段：动态内存分配在数据堆段</li>
+<li>数据栈段：未赋初值的局部变量、临时使用的变量 实参传递等在栈段</li>
+</ol>
+<h3 id="进程通信">进程通信</h3>
+<h4 id="共享存储">共享存储</h4>
+<p>共享存储一般可以分两种：低级方式的基于数据结构的共享；高级方式的基于存储区的共享。前者适用于量比较少的通信。对共享空间进行读写时，需要<strong>互斥</strong>进行。</p>
+<h4 id="消息传递">消息传递</h4>
+<p>消息传递的方式不依靠存储区或数据结构，而是将数据格式化，使用操作系统提供的通信指令在进程间通信。根据实现方式可以将消息传递的方式分为两类：直接通信方式以及间接通信方式。
+直接通信方式是手把手把信息交给进程，而间接通信方式可以理解为将信息暂存某处，接收进程需要时再去取。</p>
+<h4 id="管道通信">管道通信</h4>
+<p>管道通信比较适合于传送大量文件，Linux系统中的管道通信使用pipe文件，限制每一个缓冲区为4kb。有以下要求</p>
+<ol>
+<li>互斥。有一个进程对pipe进行操作时，另外的文件只能等待。</li>
+<li>同步。写够4kb就会阻塞等待，读进程取走数据后（取走一次即作废）再继续写。</li>
+<li>确定双方存在才会通信。</li>
+</ol>
+<p>因为有互斥同步的要求，管道通信必然是<strong>半双工通信</strong></p>
+<h3 id="线程概念与多线程模型">线程概念与多线程模型</h3>
+<h4 id="进程的基本属性">进程的基本属性</h4>
+<p>进程有两个基本属性</p>
+<ol>
+<li>可拥有资源的独立单位</li>
+<li>可独立调度和分派的基本单位</li>
+</ol>
+<h4 id="线程的基本概念">线程的基本概念</h4>
+<p>最基本的理解就是，轻量级进程。线程是一个基本的CPU<strong>执行单元</strong>，也是<strong>程序执行流</strong>的最小单元。
+线程由线程ID、程序计数器、寄存器组和、堆栈组成。线程是进程中的一个实体，是被独立调度、分配的<strong>基本单位</strong>，但线程共享同一进程下的线程资源。</p>
+<h4 id="线程进程的对比">线程进程的对比</h4>
+<ol>
+<li>
+<p>调度
+传统OS中，进程是拥有资源和独立调度的基本单位，但引入线程的系统中，线程才是独立调度的基本单位。</p>
+</li>
+<li>
+<p>并发性
+不仅进程可以并发运行，线程也可以并发运行。同一进程的线程切换不会引起进程切换。</p>
+</li>
+<li>
+<p>拥有资源
+进程是拥有资源的基本单位，而线程不拥有系统资源。但线程可以访问所属进程的资源。</p>
+</li>
+<li>
+<p>独立性
+线程独立性会比进程独立性差，这是因为线程可以访问所属进程资源。</p>
+</li>
+<li>
+<p>系统开销
+进程的操作相对系统开销会比线程的大。</p>
+</li>
+<li>
+<p>支持多处理机
+线程中的多线程可以运行在不同的处理器上，而单线程的进程只能运行在一个处理器上。</p>
+<h4 id="线程的实现方式">线程的实现方式</h4>
+<p>线程实现方式主要分为：<strong>用户级线程</strong>，<strong>内核级线程</strong>，分别对应了线程在哪部分实现。
+内核级线程的主要优点在于：</p>
+<ol>
+<li>多处理系统上，内核可以调度同一进程的多个线程并行执行。</li>
+<li>如果一个线程阻塞，内核可以调度同一进程的其他线程占用处理机，也可以运行其他进程</li>
+<li>内核支持线程具有的小数据结构以及堆栈，所以切换较快，开销小。</li>
+<li>内核本身可以作为多线程程序，可以提高系统效率
+缺点主要在于：</li>
+<li>对于用户线程而言，内核线程切换开销大，从一个线程切换到另一个线程，需要转为核心态</li>
+</ol>
+<p>用户级线程中，对于单个进程的调度是公平的（时间片），但是对于进程内的线程是不公平的。用户级线程有如下优点：</p>
+<ol>
+<li>切换不需要在核心态完成</li>
+<li>调度算法可以是进程专用的，不用受os调度影响</li>
+<li>用户级线程和os无关，易于跨平台</li>
+</ol>
+</li>
+</ol>
+<p>缺点在于：</p>
+<ol>
+<li>当进程内一个线程阻塞，其他线程也会被阻塞，而内核线程可以切换。</li>
+<li>用户级线程不能利用多处理机进行多重处理，每一个进程只会被分配一个CPU</li>
+</ol>
+<h2 id="处理机调度">处理机调度</h2>
+<h3 id="调度的基本概念">调度的基本概念</h3>
+<p>调度是操作系统设计的核心问题</p>
+<h4 id="调度的层次">调度的层次</h4>
+<ol>
+<li>高级调度
+高级调度也称<strong>作业调度</strong>，调度的对象是作业。主要功能就是根据某种算法，将后备队伍的作业调入内存，为他们创建进程，分配资源，并将他们放在就绪队列。一般只有多道批系统需要作业调度，其他系统无需配置。</li>
+<li>中级调度
+中级调度又称<strong>内存调度</strong>，作用是提高内存的使用效率和系统吞吐量。作用是将那些在内存里的，暂时无法运行的进程调到内存等待。把被这样调度后的进程称为挂起态。当系统已经具备运行他们的条件时，又将他们从外存调回来，并将状态改为就绪态。</li>
+<li>低级调度
+低级调度又称<strong>进程调度</strong>，其任务是根据一定策略，将进程交给处理机运行。基本所有的系统都要配置进程调度，进程调度频率很高，几十毫秒一次。</li>
+</ol>
+<h3 id="调度时机切换与过程">调度时机、切换与过程</h3>
+<p>进程调度和切换程序是操作系统<strong>内核程序</strong>。
+现代操作系统中，有以下不能进行调度和切换的情况：</p>
+<ol>
+<li>处理中断过程中</li>
+<li>进程在操作系统内核程序的临界区</li>
+<li>其他需要屏蔽中断的原子操作中</li>
+</ol>
+<h3 id="调度方式">调度方式</h3>
+<p>有两种调度方式：<strong>非剥夺调度方式</strong>和<strong>剥夺调度方式</strong>
+非剥夺调度方式特点在于，如果有更加紧急的任务进入，也必须让当前任务执行完才会切换。这种方式优点是实现简单，系统开销小，适用于批处理系统，但不适用于分时系统和大部分实时系统。
+剥夺调度方式和前者相反，更加紧急任务到来时，会停止当前任务，切换到紧急的任务。这种调度方式的优点在于可以提高吞吐量和处理效率，但是这种剥夺式行为，必须遵循一定原则。</p>
+<h3 id="调度的基本准则">调度的基本准则</h3>
+<p>不同的系统类型遵循的基本准则不完全一致，分开讨论：</p>
+<h4 id="处理机调度算法共同目标">处理机调度算法共同目标</h4>
+<p>这类目标是各类系统都会追求的目标。</p>
+<ol>
+<li>资源利用率，最为重要的是CPU利用率：
+$$CPU利用率=\frac{CPU有效工作时间}{CPU有效工作时间+CPU空闲等待时间}$$</li>
+<li>公平性
+每个进程都能合理得到CPU时间，避免发生饥饿现象。</li>
+<li>平衡性
+保证IO型、计算型进程资源使用的平衡性。</li>
+</ol>
+<h4 id="批处理系统目标">批处理系统目标</h4>
+<ol>
+<li>周转时间
+$$周转时间=作业完成时间-时间提交时间$$
+$$平均周转时间=\frac{总周转时间}{进程数}$$
+$$带权周转时间=\frac{作业周转时间}{作业实际运行时间}$$
+$$平均带权周转时间=\frac{总带权周转时间}{进程数}$$</li>
+<li>吞吐量高</li>
+<li>处理及利用率高</li>
+</ol>
+<h4 id="分时系统目标">分时系统目标</h4>
+<ol>
+<li>响应时间快</li>
+<li>均衡性
+指的是系统响应时间快慢和用户所请求服务复杂性相适应</li>
+</ol>
+<h4 id="实时系统目标">实时系统目标</h4>
+<ol>
+<li>截止时间保证
+即最晚开始时间需要保证</li>
+<li>可预测性</li>
+</ol>
+<h3 id="典型调度算法">典型调度算法</h3>
+<h4 id="先来先服务-fcfs">先来先服务 FCFS</h4>
+<p>可用于作业调度和进程调度。FCFS算法属于<strong>不可剥夺</strong>算法，从表面看对任意的进程都是公平的，但如果一个长时间作业先到达系统，后面的进程就会长时间等待。因此分时系统和实时系统不会将其作为主要调度策略，但常常会结合到其他策略中，例如有优先级的调度中，同一优先级的进程就会按FCFS来调度。</p>
+<h4 id="短作业优先-sjf">短作业优先 SJF</h4>
+<p>作业越短，优先级越高。
+短作业优先算法相对FCFS已经有所提升，但是依旧会有缺点：</p>
+<ol>
+<li>必须预先知道作业的运行时间</li>
+<li>对长时间作业非常不利。会出现<strong>饥饿</strong>现象</li>
+<li>无法实现人机交互</li>
+<li>无优先级处理，无法处理紧急任务
+SJF算法的<strong>平均等待时间、平均周转时间最少</strong></li>
+</ol>
+<h4 id="优先级调度算法">优先级调度算法</h4>
+<p>根据是否剥夺当前进程可以分为两种。
+根据优先级是否可以更改也分为<strong>静态优先级</strong>和<strong>动态优先级</strong>
+一般来说优先级设置可以根据以下原则进行：</p>
+<ol>
+<li>系统进程&gt;用户进程</li>
+<li>交互进程&gt;非交互进程</li>
+<li>IO进程&gt;计算型进程（让低速的IO设备今早开始黑奴）</li>
+</ol>
+<h4 id="高响应比优先调度算法hrrn">高响应比优先调度算法HRRN</h4>
+<p>$$响应比 = \frac{等待时间+要求服务时间}{要求服务时间} $$
+有以下特点：</p>
+<ol>
+<li>要求服务时间越短，响应比越高。故利于<strong>短作业</strong></li>
+<li>要求服务相同，则响应比取决于等待时间，则有利于<strong>先来的服务</strong></li>
+<li>克服了SJF的饥饿现象</li>
+</ol>
+<h4 id="时间片轮转调度rr">时间片轮转调度RR</h4>
+<p>时间片循环轮流上岗。时间片的选择很重要。</p>
+<h4 id="多级反馈队列调度">多级反馈队列调度</h4>
+<p><img src="https://upload.cc/i1/2020/09/21/DctgYw.png" alt="UTOOLS1600687464551.png">
+每一级优先级递减，时间片为上一级的两倍。每一个队列采用FCFS算法。直到最后一级使用时间片轮转算法。
+多级反馈队列的优点如下：</p>
+<ol>
+<li>对于终端型作业：短作业优先。（前面的队列就可以完成）</li>
+<li>短批处理作业：周转时间较短</li>
+<li>长批处理作业：不会饥饿。</li>
+</ol>
+<h2 id="同步与互斥">同步与互斥</h2>
+<h3 id="进程同步的基本概念">进程同步的基本概念</h3>
+<h4 id="临界资源">临界资源</h4>
+<p>一次仅允许一个进程使用的资源叫临界资源。临界资源访问必须互斥进行。</p>
+<h4 id="同步">同步</h4>
+<p>也叫直接制约关系。进程间的直接制约关系来源于他们的相互合作。</p>
+<h4 id="互斥">互斥</h4>
+<p>互斥也称间接制约关系。间接制约关系可以理解为来源于竞争。</p>
+<h4 id="同步互斥原则">同步互斥原则</h4>
+<ol>
+<li>空闲让进</li>
+<li>忙则等待</li>
+<li>有限等待</li>
+<li>让权等待</li>
+</ol>
+<h3 id="实现临界区互斥的基本方法">实现临界区互斥的基本方法</h3>
+<h4 id="软件方法">软件方法</h4>
+<ol>
+<li>单标志法
+用一个标志位表示轮到谁使用，严格次序轮流使用临界区
+优点：实现简单
+缺点：可能会违背空闲让进，浪费资源</li>
+<li>双标志优先检查
+进入临界区前像判定临界区是否被使用。但无法避免的是，检查和切换操作不是原子操作，可能会在两者之间出现其他进程进入临界区的情况。
+优点：不用交替进入，可连续使用
+缺点：可能违背忙则等待。</li>
+<li>双标志位后检查法
+上一算法先检测对方状态，再置自己的flag，因此这个算法先立flag，管他有没有人使用，立了之后再检查有没有人使用，没人使用我再使用。这个算法问题在于，可能两者同时都立了flag，然后检查对方的flag发现都立了flag，都以为对方进入了临界区，结果都没有进入临界区。因此可能造成<strong>饥饿</strong>现象。</li>
+<li>皮特森算法
+为了防止后检查法的饥饿现象，又设置了一个公共turn变量。每个进程先立flag，然后改turn，再检测对方的flag和公共的turn，以保证每次只有一个进程进入临界区。简单来说就是双重保证，flag保证不会有空闲，turn保证只会有一个进程进入。这个算法太过复杂。</li>
+</ol>
+<h4 id="硬件方法">硬件方法</h4>
+<ol>
+<li>中断屏蔽
+当一个进程进入临界区后，将禁止一切中断发生，这样就不会进行进程的调度，保证临界区访问。
+但这种方式限制了处理机交替执行的能力，并且如此高的权限交给蠢用户并不安全。同时这种方法也无法限制多处理器。</li>
+<li>硬件指令
+使用<code>Test and Set</code>指令。这条指令是原子操作，不会被中断，因此也不会有双标志先检查法的问题。为每一个临界资源设置一个lock变量，一旦有进程进入临界区，使用此原子指令将lock上锁。若有其他进程希望进入临界区，需要不停的查询lock状态，当lock是开锁状态时才允许进入。
+使用<code>Swap</code>指令。这条指令很好理解，就是将两个变量值交换，同样也是原子操作。为每个临界区设立lock和key变量，在进程进入临界区前，先使用Swap交换lock和key的值，然后检查key的状态。进程无法进入临界区时，则一直交换lock和key的值，直到key变成了flase。当进程退出临界区，则将lock设置为false。</li>
+</ol>
+<p>硬件方法优点：</p>
+<ol>
+<li>可以用作任意数量进程</li>
+<li>简单</li>
+<li>可以支持多个临界区</li>
+</ol>
+<p>硬件方法缺点：</p>
+<ol>
+<li>如果进入不了临界区会一直循环检测变量状态，无法做到<strong>让权等待</strong></li>
+<li>当临界区空闲时是随机选择一个进程进入，因此可能会有<strong>饥饿</strong>现象</li>
+</ol>
+<h3 id="信号量">信号量</h3>
+<h4 id="整形信号量">整形信号量</h4>
+<p>wait:资源-1
+signal:资源+1
+应用于PV操作
+缺点：没有遵循让权等待原则。</p>
+<h4 id="记录型信号量">记录型信号量</h4>
+<p>不存在忙等现象，除了需要代表资源数目的value外，还需要一个进程链表指针list，用于记录等待的进程链接。</p>
+<h3 id="管程">管程*</h3>
+<p>一组数据以及定义在这组数据之上的对这组数据的操作组成的软件模块,这组操作能初始化并改变管程中的数据和同步进程
+管程的组成:</p>
+<ol>
+<li>管程名称</li>
+<li>局部于管程的共享数据结构说明</li>
+<li>对该数据结构的一组过程</li>
+<li>对局部于管程的共享数据设置初始值语句</li>
+</ol>
+<p>可以理解为软件实现的PV操作</p>
+<h3 id="经典同步问题">经典同步问题</h3>
+<p>暂略</p>
+<h2 id="死锁">死锁</h2>
+<h3 id="死锁的概念">死锁的概念</h3>
+<p>所谓死锁，是指多个进程因为竞争资源导致陷入僵局，如果没有外力的作用，进程将永远无法向前推动。
+造成死锁的原因可以归结为：</p>
+<ol>
+<li>竞争资源</li>
+<li>进程推进顺序非法</li>
+</ol>
+<p>产生死锁的必要条件有四种：</p>
+<ol>
+<li>互斥条件</li>
+<li>请求和保护条件</li>
+<li>不剥夺条件</li>
+<li>循环等待条件</li>
+</ol>
+<h3 id="死锁处理策略">死锁处理策略</h3>
+<p>有四种处理死锁的方法：</p>
+<ol>
+<li>预防死锁</li>
+<li>避免死锁</li>
+<li>检测死锁</li>
+<li>解除死锁</li>
+</ol>
+<h3 id="死锁预防">死锁预防</h3>
+<p>死锁的预防一般是破坏产生死锁的四个必要条件：</p>
+<ol>
+<li>破坏互斥条件</li>
+<li>破坏不剥夺条件
+如果自己新申请的资源无法被满足，那就要把以前的也吐出来。这种方法是实现起来要负很大的代价。</li>
+<li>破坏请求并保持条件
+<ul>
+<li>开始运行之前，把他要的资源先全给他，如果给不了，那就不开始。这种方法破坏了“请求”这一特点。优点是简单易行安全，但是有浪费资源，会让进程饥饿等缺点。</li>
+<li>允许进程只获得运行初期的资源便开始运行，运行过程中释放使用完毕的资源，再申请新的资源。</li>
+</ul>
+</li>
+<li>破坏循环等待条件
+将资源排序，必须按编号从小到大申请资源。这样申请了较高序号资源的进程继续申请的资源必定是空闲的。这样的作法相对而言比较先进，但是序号是相对固定的，不好添加新的设备。以及使用资源顺序不同，可能会导致资源浪费。</li>
+</ol>
+<h3 id="避免死锁">避免死锁</h3>
+<p>####系统安全状态
+安全状态是指系统能按某种循序来为进程分配资源，使得每个资源都可以顺利完成。如果系统存在不安全序列，则称系统处于不安全状态。</p>
+<h4 id="银行家算法">银行家算法</h4>
+<p>实现银行家算法需要附加一些数据结构：</p>
+<ul>
+<li>可利用资源向量 <code>Available</code>;</li>
+<li>最大需求矩阵 <code>Max</code>;</li>
+<li>分配矩阵 <code>Allocation</code>;</li>
+<li>需求矩阵 <code>Need</code></li>
+</ul>
+<h3 id="死锁的检测和解除">死锁的检测和解除</h3>
+<h4 id="死锁的检测">死锁的检测</h4>
+<p>为了可以检测死锁，系统必须：</p>
+<ol>
+<li>保存有关资源的请求和分配信息</li>
+<li>提供一种算法检测是否进入了死锁</li>
+</ol>
+<h4 id="死锁的解除">死锁的解除</h4>
+<ol>
+<li>剥夺资源</li>
+<li>撤销进程
+<ul>
+<li>终止所有进程</li>
+<li>逐个终止</li>
+</ul>
+</li>
+</ol>
+<h2 id="易错点">易错点</h2>
+<ol>
+<li>一个系统资源准备好后，不会改变所有需求进程的状态， 只会改变一个需求进程状态。</li>
+<li>同一个系统的进程可以由系统调用方法被不同进程多次使用。</li>
+<li>就绪队列在不空的情况下的长度增加，不会影响CPU的运作效率</li>
+<li>操作系统对用户线程的线程控制块分配数量取决于使用的是哪有连接方式（一对一 一对多等）</li>
+<li>公用队列属于<strong>临界资源</strong></li>
+<li>如果使用互斥变量比如mutex，当前值如果为0，如果还有资源继续申请，数值会持续变小而不是一直保持0，所以如果一个进程使用V操作唤醒了一个进程后，mutex的值是小于等于0的。</li>
+<li>一个进程离开管程才会使用signal</li>
+</ol>
+
+        </div>
+        
+        <div class="my-4">
+    
+    <a href="/tags/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/" class="inline-block bg-tertiary-bg text-sm rounded px-3 py-1 my-1 mr-2 hover:text-eureka">#操作系统</a>
+    
+    <a href="/tags/%E8%80%83%E7%A0%94/" class="inline-block bg-tertiary-bg text-sm rounded px-3 py-1 my-1 mr-2 hover:text-eureka">#考研</a>
+    
+</div>
+        
+        
+        
+
+
+        
+        
+        
+        
+<div class="flex flex-col md:flex-row md:justify-between -mx-2 mt-4 px-2 pt-4 border-t">
+    <div>
+        
+        <span class="block font-bold">Previous</span>
+        <a href="/context/848-os-3/" class="block">848操作系统(三) 内存管理</a>
+        
+    </div>
+    <div class="md:text-right mt-4 md:mt-0">
+        
+        <span class="block font-bold">Next</span>
+        <a href="/context/848-os-1/" class="block">848操作系统(一) 操作系统概述</a>
+        
+    </div>
+</div>
+
+        
+
+
+
+  <div id="valine-comments" class="mt-4"></div>
+<script defer src="https://cdn.jsdelivr.net/npm/valine@1.4.14/dist/Valine.min.js" 
+  integrity="sha256-fPqMAsW3FDt/rNyneSJ7HOpZNRs/O2rM016SU08JtCk="  crossorigin></script>
+<script>
+  document.addEventListener("DOMContentLoaded", function () {
+    new Valine({
+      el: "#valine-comments",appId:"V4MDFNfytHcoabcly1MENtAo-gzGzoHsz",appKey:"xyl895MDJ2Q6BRDKwyRPr6xL",visitor:"true",
+    })
+  });
+</script>
+
+    </div>
+    
+    <div class="col-span-2">
+        
+        
+        <div class="sticky top-16 z-10 hidden lg:block px-6 py-4  bg-primary-bg ">
+    <span class="text-lg font-semibold">On This Page</span>
+</div>
+<div class="sticky-toc hidden lg:block px-6 pb-6 ">
+    <nav id="TableOfContents">
+  <ul>
+    <li><a href="#进程与线程">进程与线程</a>
+      <ul>
+        <li><a href="#进程概念">进程概念</a></li>
+        <li><a href="#进程的状态与转换">进程的状态与转换</a></li>
+        <li><a href="#进程控制">进程控制</a>
+          <ul>
+            <li><a href="#进程的创建">进程的创建</a></li>
+            <li><a href="#进程的终止">进程的终止</a></li>
+            <li><a href="#进程阻塞和唤醒">进程阻塞和唤醒</a></li>
+            <li><a href="#进程的切换">进程的切换</a></li>
+          </ul>
+        </li>
+        <li><a href="#进程的组织">进程的组织</a>
+          <ul>
+            <li><a href="#pcb">PCB</a></li>
+            <li><a href="#程序段">程序段</a></li>
+            <li><a href="#数据段">数据段</a></li>
+          </ul>
+        </li>
+        <li><a href="#进程通信">进程通信</a>
+          <ul>
+            <li><a href="#共享存储">共享存储</a></li>
+            <li><a href="#消息传递">消息传递</a></li>
+            <li><a href="#管道通信">管道通信</a></li>
+          </ul>
+        </li>
+        <li><a href="#线程概念与多线程模型">线程概念与多线程模型</a>
+          <ul>
+            <li><a href="#进程的基本属性">进程的基本属性</a></li>
+            <li><a href="#线程的基本概念">线程的基本概念</a></li>
+            <li><a href="#线程进程的对比">线程进程的对比</a></li>
+            <li><a href="#线程的实现方式">线程的实现方式</a></li>
+          </ul>
+        </li>
+      </ul>
+    </li>
+    <li><a href="#处理机调度">处理机调度</a>
+      <ul>
+        <li><a href="#调度的基本概念">调度的基本概念</a>
+          <ul>
+            <li><a href="#调度的层次">调度的层次</a></li>
+          </ul>
+        </li>
+        <li><a href="#调度时机切换与过程">调度时机、切换与过程</a></li>
+        <li><a href="#调度方式">调度方式</a></li>
+        <li><a href="#调度的基本准则">调度的基本准则</a>
+          <ul>
+            <li><a href="#处理机调度算法共同目标">处理机调度算法共同目标</a></li>
+            <li><a href="#批处理系统目标">批处理系统目标</a></li>
+            <li><a href="#分时系统目标">分时系统目标</a></li>
+            <li><a href="#实时系统目标">实时系统目标</a></li>
+          </ul>
+        </li>
+        <li><a href="#典型调度算法">典型调度算法</a>
+          <ul>
+            <li><a href="#先来先服务-fcfs">先来先服务 FCFS</a></li>
+            <li><a href="#短作业优先-sjf">短作业优先 SJF</a></li>
+            <li><a href="#优先级调度算法">优先级调度算法</a></li>
+            <li><a href="#高响应比优先调度算法hrrn">高响应比优先调度算法HRRN</a></li>
+            <li><a href="#时间片轮转调度rr">时间片轮转调度RR</a></li>
+            <li><a href="#多级反馈队列调度">多级反馈队列调度</a></li>
+          </ul>
+        </li>
+      </ul>
+    </li>
+    <li><a href="#同步与互斥">同步与互斥</a>
+      <ul>
+        <li><a href="#进程同步的基本概念">进程同步的基本概念</a>
+          <ul>
+            <li><a href="#临界资源">临界资源</a></li>
+            <li><a href="#同步">同步</a></li>
+            <li><a href="#互斥">互斥</a></li>
+            <li><a href="#同步互斥原则">同步互斥原则</a></li>
+          </ul>
+        </li>
+        <li><a href="#实现临界区互斥的基本方法">实现临界区互斥的基本方法</a>
+          <ul>
+            <li><a href="#软件方法">软件方法</a></li>
+            <li><a href="#硬件方法">硬件方法</a></li>
+          </ul>
+        </li>
+        <li><a href="#信号量">信号量</a>
+          <ul>
+            <li><a href="#整形信号量">整形信号量</a></li>
+            <li><a href="#记录型信号量">记录型信号量</a></li>
+          </ul>
+        </li>
+        <li><a href="#管程">管程*</a></li>
+        <li><a href="#经典同步问题">经典同步问题</a></li>
+      </ul>
+    </li>
+    <li><a href="#死锁">死锁</a>
+      <ul>
+        <li><a href="#死锁的概念">死锁的概念</a></li>
+        <li><a href="#死锁处理策略">死锁处理策略</a></li>
+        <li><a href="#死锁预防">死锁预防</a></li>
+        <li><a href="#避免死锁">避免死锁</a>
+          <ul>
+            <li><a href="#银行家算法">银行家算法</a></li>
+          </ul>
+        </li>
+        <li><a href="#死锁的检测和解除">死锁的检测和解除</a>
+          <ul>
+            <li><a href="#死锁的检测">死锁的检测</a></li>
+            <li><a href="#死锁的解除">死锁的解除</a></li>
+          </ul>
+        </li>
+      </ul>
+    </li>
+    <li><a href="#易错点">易错点</a></li>
+  </ul>
+</nav>
+</div>
+<script>
+    window.addEventListener('DOMContentLoaded', () => {
+        enableStickyToc();
+    });
+</script>
+        
+    </div>
+    
+
+    
+    
+    <div
+        class="col-span-2  lg:col-span-6 bg-secondary-bg rounded p-6">
+        <h2 class="text-lg font-semibold mb-4">See Also</h2>
+        <div class="content">
+            
+            <a href="/context/848-os-1/">848操作系统(一) 操作系统概述</a>
+            <br />
+            
+            <a href="/context/848-ds-2/">848数据结构(二) 线性表</a>
+            <br />
+            
+            <a href="/context/848-ds-1/">848数据结构(一) 基本概念和术语</a>
+            <br />
+            
+            <a href="/posts/2021-848/">2021暨南大学848知识点总结</a>
+            <br />
+            
+        </div>
+    </div>
+    
+</div>
+<script>
+    document.addEventListener('DOMContentLoaded', ()=>{
+        hljs.initHighlightingOnLoad();
+    })
+</script>
+
+      </div>
+    </div>
+    
+  </main>
+  <footer class="pl-scrollbar">
+    <div class="w-full max-w-screen-xl mx-auto"><div class="text-center p-6 pin-b">
+    <p class="text-sm text-tertiary-text">&copy; 2021 <a href="https://0x2a.in/blog">0x2a</a>
+ &middot;  Powered by the <a href="https://github.com/wangchucheng/hugo-eureka" class="hover:text-eureka">Eureka</a> theme for <a href="https://gohugo.io" class="hover:text-eureka">Hugo</a></p>
+</div></div>
+  </footer>
+</body>
+
+</html>

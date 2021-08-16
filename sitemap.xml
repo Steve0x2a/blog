@@ -2,76 +2,76 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   <url>
-    <loc>https://0x2a.in/blog/</loc>
+    <loc>/</loc>
     <lastmod>2020-10-21T18:19:46+00:00</lastmod>
   </url><url>
-    <loc>https://0x2a.in/blog/context/848-ds-7/</loc>
+    <loc>/context/848-ds-7/</loc>
     <lastmod>2020-10-21T18:19:46+00:00</lastmod>
   </url><url>
-    <loc>https://0x2a.in/blog/context/</loc>
+    <loc>/context/</loc>
     <lastmod>2020-10-21T18:19:46+00:00</lastmod>
   </url><url>
-    <loc>https://0x2a.in/blog/tags/</loc>
+    <loc>/tags/</loc>
     <lastmod>2020-10-21T18:19:46+00:00</lastmod>
   </url><url>
-    <loc>https://0x2a.in/blog/tags/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/</loc>
+    <loc>/tags/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/</loc>
     <lastmod>2020-10-21T18:19:46+00:00</lastmod>
   </url><url>
-    <loc>https://0x2a.in/blog/tags/%E8%80%83%E7%A0%94/</loc>
+    <loc>/tags/%E8%80%83%E7%A0%94/</loc>
     <lastmod>2020-10-21T18:19:46+00:00</lastmod>
   </url><url>
-    <loc>https://0x2a.in/blog/context/848-ds-6/</loc>
+    <loc>/context/848-ds-6/</loc>
     <lastmod>2020-10-20T18:02:37+00:00</lastmod>
   </url><url>
-    <loc>https://0x2a.in/blog/context/848-ds-5/</loc>
+    <loc>/context/848-ds-5/</loc>
     <lastmod>2020-10-19T18:43:48+00:00</lastmod>
   </url><url>
-    <loc>https://0x2a.in/blog/context/848-ds-4/</loc>
+    <loc>/context/848-ds-4/</loc>
     <lastmod>2020-10-13T20:00:33+00:00</lastmod>
   </url><url>
-    <loc>https://0x2a.in/blog/context/848-ds-3/</loc>
+    <loc>/context/848-ds-3/</loc>
     <lastmod>2020-10-09T19:51:41+00:00</lastmod>
   </url><url>
-    <loc>https://0x2a.in/blog/context/848-os-5/</loc>
+    <loc>/context/848-os-5/</loc>
     <lastmod>2020-10-05T18:12:18+00:00</lastmod>
   </url><url>
-    <loc>https://0x2a.in/blog/tags/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/</loc>
+    <loc>/tags/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/</loc>
     <lastmod>2020-10-05T18:12:18+00:00</lastmod>
   </url><url>
-    <loc>https://0x2a.in/blog/context/848-os-4/</loc>
+    <loc>/context/848-os-4/</loc>
     <lastmod>2020-10-04T19:17:49+00:00</lastmod>
   </url><url>
-    <loc>https://0x2a.in/blog/context/848-os-3/</loc>
+    <loc>/context/848-os-3/</loc>
     <lastmod>2020-09-25T20:39:15+00:00</lastmod>
   </url><url>
-    <loc>https://0x2a.in/blog/posts/</loc>
+    <loc>/posts/</loc>
     <lastmod>2020-09-21T21:10:11+00:00</lastmod>
   </url><url>
-    <loc>https://0x2a.in/blog/posts/ds-ky-code/</loc>
+    <loc>/posts/ds-ky-code/</loc>
     <lastmod>2020-09-21T21:10:11+00:00</lastmod>
   </url><url>
-    <loc>https://0x2a.in/blog/context/848-os-2/</loc>
+    <loc>/context/848-os-2/</loc>
     <lastmod>2020-09-15T19:17:07+00:00</lastmod>
   </url><url>
-    <loc>https://0x2a.in/blog/context/848-os-1/</loc>
+    <loc>/context/848-os-1/</loc>
     <lastmod>2020-09-12T18:30:59+00:00</lastmod>
   </url><url>
-    <loc>https://0x2a.in/blog/context/848-ds-2/</loc>
+    <loc>/context/848-ds-2/</loc>
     <lastmod>2020-09-01T19:39:39+00:00</lastmod>
   </url><url>
-    <loc>https://0x2a.in/blog/context/848-ds-1/</loc>
+    <loc>/context/848-ds-1/</loc>
     <lastmod>2020-09-01T18:37:41+00:00</lastmod>
   </url><url>
-    <loc>https://0x2a.in/blog/posts/2021-848/</loc>
+    <loc>/posts/2021-848/</loc>
     <lastmod>2020-09-01T18:14:12+00:00</lastmod>
   </url><url>
-    <loc>https://0x2a.in/blog/about/</loc>
+    <loc>/about/</loc>
     <lastmod>2018-12-29T20:24:28+08:00</lastmod>
   </url><url>
-    <loc>https://0x2a.in/blog/authors/</loc>
+    <loc>/authors/</loc>
   </url><url>
-    <loc>https://0x2a.in/blog/categories/</loc>
+    <loc>/categories/</loc>
   </url><url>
-    <loc>https://0x2a.in/blog/series/</loc>
+    <loc>/series/</loc>
   </url>
 </urlset>

@@ -1,0 +1,590 @@
+<!DOCTYPE html>
+<html lang='en' ><meta charset="utf-8">
+<meta name="viewport" content="width=device-width">
+
+
+<title>848操作系统(五) I/O管理 | 0x2a&#39;s blog</title>
+
+<meta name="generator" content="Hugo Eureka 0.8.3-dev" />
+<link rel="stylesheet" href="/css/eureka.min.css">
+<script defer src="/js/eureka.min.js"></script>
+
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="preload"
+  href="https://fonts.googleapis.com/css2?family=Lora:wght@400;600;700&family=Noto+Serif+SC:wght@400;600;700&display=swap"
+  as="style" onload="this.onload=null;this.rel='stylesheet'">
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@10.1.0/build/styles/monokai.min.css"
+   media="print"
+  onload="this.media='all';this.onload=null" crossorigin>
+<script defer src="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@10.1.0/build/highlight.min.js"
+   crossorigin></script>
+
+  <script defer src="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@10.1.0/build/languages/[python%20c%20go%20c&#43;&#43;%20shell].min.js"
+     crossorigin></script>
+
+<script defer src="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.14.0/js/all.min.js"
+   integrity="sha256-uNYoXefWRqv&#43;PsIF/OflNmwtKM4lStn9yrz2gVl6ymo="  crossorigin></script>
+
+
+
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.css"
+   integrity="sha384-AfEj0r4/OFrOo5t7NnNe46zW/tFgW6x/bCJG8FqQCEo3&#43;Aro6EYUG4&#43;cU&#43;KJWu/X"  media="print"
+  onload="this.media='all';this.onload=null" crossorigin>
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.js" 
+  integrity="sha384-g7c&#43;Jr9ZivxKLnZTDUhnkOnsh30B4H0rpLUpJ4jAIKs4fnJI&#43;sEnkvrMWph2EDg4"  crossorigin></script>
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/contrib/auto-render.min.js"
+   integrity="sha384-mll67QQFJfxn0IYznZYonOWZ644AWYC&#43;Pt2cHqMaRhXVrursRwvLnLaebdGIlYNa"  crossorigin></script>
+<script>
+  document.addEventListener("DOMContentLoaded", function () {
+    renderMathInElement(document.body, {
+      delimiters: [
+        { left: "$$", right: "$$", display: true },
+        { left: "$", right: "$", display: false },
+        { left: "\\(", right: "\\)", display: false },
+        { left: "\\[", right: "\\]", display: true }
+      ],
+    });
+  });
+</script>
+
+
+<script defer src="https://cdn.jsdelivr.net/npm/mermaid@8.9.2/dist/mermaid.min.js" 
+  integrity="sha256-Zmpaaj&#43;GXFsPF5WdPArSrnW3b30dovldeKsW00xBVwE="  crossorigin></script>
+
+
+<link rel="icon" type="image/png" sizes="32x32" href="/images/icon_hudd51a6aca11f958e5ee26ffb845389b9_13185_32x32_fill_box_center_3.png">
+<link rel="apple-touch-icon" sizes="180x180" href="/images/icon_hudd51a6aca11f958e5ee26ffb845389b9_13185_180x180_fill_box_center_3.png">
+
+<meta name="description"
+  content="I/O管理 I/O管理概述 I/O设备类型 根据IO设备的使用特性可以分为: 人机交互类外部设备 要和用户打交道的设备：打印机，键盘鼠标等。 存储设备 用于存储数据">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [{
+      "@type": "ListItem",
+      "position": 1 ,
+      "name":"Contexts",
+      "item":"/context/"},{
+      "@type": "ListItem",
+      "position": 2 ,
+      "name":"848操作系统(五) I/O管理",
+      "item":"/context/848-os-5/"}]
+}
+</script>
+
+
+
+<script type="application/ld+json">
+{
+    "@context": "https://schema.org",
+    "@type": "Article",
+    "mainEntityOfPage": {
+        "@type": "WebPage",
+        "@id": "/context/848-os-5/"
+    },
+    "headline": "848操作系统(五) I\/O管理 | 0x2a\u0027s blog","datePublished": "2020-10-05T18:12:18+00:00",
+    "dateModified": "2020-10-05T18:12:18+00:00",
+    "wordCount":  3124 ,
+    "publisher": {
+        "@type": "Person",
+        "name":  42 ,
+        "logo": {
+            "@type": "ImageObject",
+            "url": "/images/icon.png"
+        }
+        },
+    "description": "I\/O管理 I\/O管理概述 I\/O设备类型 根据IO设备的使用特性可以分为: 人机交互类外部设备 要和用户打交道的设备：打印机，键盘鼠标等。 存储设备 用于存储数据"
+}
+</script><meta property="og:title" content="848操作系统(五) I/O管理 | 0x2a&#39;s blog" />
+<meta property="og:type" content="article" />
+
+
+<meta property="og:image" content="/images/icon.png">
+
+
+<meta property="og:url" content="/context/848-os-5/" />
+
+
+
+
+<meta property="og:description" content="I/O管理 I/O管理概述 I/O设备类型 根据IO设备的使用特性可以分为: 人机交互类外部设备 要和用户打交道的设备：打印机，键盘鼠标等。 存储设备 用于存储数据" />
+
+
+
+
+<meta property="og:locale" content="en" />
+
+
+
+
+<meta property="og:site_name" content="0x2a&#39;s blog" />
+
+
+
+
+
+
+<meta property="article:published_time" content="2020-10-05T18:12:18&#43;00:00" />
+
+
+<meta property="article:modified_time" content="2020-10-05T18:12:18&#43;00:00" />
+
+
+
+<meta property="article:section" content="context" />
+
+
+<meta property="article:tag" content="操作系统" />
+
+<meta property="article:tag" content="考研" />
+
+
+
+
+
+<meta property="og:see_also" content="/context/848-os-4/" />
+
+<meta property="og:see_also" content="/context/848-os-3/" />
+
+<meta property="og:see_also" content="/context/848-os-2/" />
+
+<meta property="og:see_also" content="/context/848-os-1/" />
+
+<meta property="og:see_also" content="/context/848-ds-2/" />
+
+<meta property="og:see_also" content="/context/848-ds-1/" />
+
+
+
+<body class="flex flex-col min-h-screen">
+  <header class="fixed flex items-center w-full min-h-16 pl-scrollbar z-50 bg-secondary-bg shadow-sm">
+    <div class="w-full max-w-screen-xl mx-auto"><script>
+    let storageColorScheme = localStorage.getItem("lightDarkMode")
+    if (((storageColorScheme == 'Auto' || storageColorScheme == null) && window.matchMedia("(prefers-color-scheme: dark)").matches) || storageColorScheme == "Dark") {
+        document.getElementsByTagName('html')[0].classList.add('dark')
+    }
+</script>
+<nav class="flex items-center justify-between flex-wrap px-4 py-4 md:py-0">
+    <a href="/" class="mr-6 text-primary-text text-xl font-bold">0x2a&#39;s blog</a>
+    <button id="navbar-btn" class="md:hidden flex items-center px-3 py-2" aria-label="Open Navbar">
+        <i class="fas fa-bars"></i>
+    </button>
+
+    <div id="target"
+        class="hidden block md:flex md:flex-grow md:justify-between md:items-center w-full md:w-auto text-primary-text z-20">
+        <div class="md:flex md:h-16 text-sm md:flex-grow pb-4 md:pb-0 border-b md:border-b-0">
+            <a href="/about/" class="block mt-4 md:inline-block md:mt-0 md:h-(16-4px) md:leading-(16-4px) box-border md:border-t-2 md:border-b-2  border-transparent  mr-4">About</a>
+            <a href="/posts/" class="block mt-4 md:inline-block md:mt-0 md:h-(16-4px) md:leading-(16-4px) box-border md:border-t-2 md:border-b-2  border-transparent  mr-4">Posts</a>
+        </div>
+
+        <div class="flex">
+            <div class="relative pt-4 md:pt-0">
+                <div class="cursor-pointer hover:text-eureka" id="lightDarkMode">
+                    <i class="fas fa-adjust"></i>
+                </div>
+                <div class="fixed hidden inset-0 opacity-0 h-full w-full cursor-default z-30" id="is-open">
+                </div>
+                <div class="absolute flex flex-col left-0 md:left-auto right-auto md:right-0 hidden bg-secondary-bg w-48 rounded py-2 border border-tertiary-bg cursor-pointer z-40"
+                    id='lightDarkOptions'>
+                    <span class="px-4 py-1 hover:text-eureka" name="Light">Light</span>
+                    <span class="px-4 py-1 hover:text-eureka" name="Dark">Dark</span>
+                    <span class="px-4 py-1 hover:text-eureka" name="Auto">Auto</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="fixed hidden inset-0 opacity-0 h-full w-full cursor-default z-0" id="is-open-mobile">
+    </div>
+
+</nav>
+<script>
+    
+    let element = document.getElementById('lightDarkMode')
+    if (storageColorScheme == null || storageColorScheme == 'Auto') {
+        document.addEventListener('DOMContentLoaded', () => {
+            window.matchMedia("(prefers-color-scheme: dark)").addEventListener('change', switchDarkMode)
+        })
+    } else if (storageColorScheme == "Light") {
+        element.firstElementChild.classList.remove('fa-adjust')
+        element.firstElementChild.setAttribute("data-icon", 'sun')
+        element.firstElementChild.classList.add('fa-sun')
+    } else if (storageColorScheme == "Dark") {
+        element.firstElementChild.classList.remove('fa-adjust')
+        element.firstElementChild.setAttribute("data-icon", 'moon')
+        element.firstElementChild.classList.add('fa-moon')
+    }
+
+    document.addEventListener('DOMContentLoaded', () => {
+        getcolorscheme();
+        switchBurger();
+    });
+</script>
+</div>
+  </header>
+  <main class="flex-grow pt-16">
+    <div class="pl-scrollbar">
+      <div class="w-full max-w-screen-xl lg:px-4 xl:px-8 mx-auto">
+
+
+<div class="grid grid-cols-2 lg:grid-cols-8 gap-4 lg:pt-12">
+    <div
+        class="col-span-2  lg:col-span-6 bg-secondary-bg rounded px-6 py-8">
+        <h1 class="font-bold text-3xl text-primary-text">848操作系统(五) I/O管理</h1>
+        <div class="flex flex-wrap flex-row items-center mt-2 text-tertiary-text">
+    <div class="mr-6 my-2">
+        <i class="fas fa-calendar mr-1"></i>
+        <span>2020-10-05</span>
+    </div>
+    <div class="mr-6 my-2">
+        <i class="fas fa-clock mr-1"></i>
+        <span>7 min read</span>
+    </div>
+    
+    
+
+    
+</div>
+        
+        
+        
+
+        <div class="content">
+            <h1 id="io管理">I/O管理</h1>
+<h2 id="io管理概述">I/O管理概述</h2>
+<h3 id="io设备类型">I/O设备类型</h3>
+<p>根据IO设备的使用特性可以分为:</p>
+<ol>
+<li>人机交互类外部设备   要和用户打交道的设备：打印机，键盘鼠标等。</li>
+<li>存储设备  用于存储数据的设备</li>
+<li>网络通信设备  用于远程设备的设备</li>
+</ol>
+<p>根据传输速率分类：</p>
+<ol>
+<li>低速设备  传输速率仅为每秒几字节到数百字节的一类设备  键盘鼠标等</li>
+<li>中速设备  每秒千字节到万字节的一类设备  打印机类</li>
+<li>高速设备  每秒百千字节到千兆字节的设备  磁带机 光盘机等</li>
+</ol>
+<p>根据信息交换的单位分类：</p>
+<ol>
+<li>块设备</li>
+<li>字符设备</li>
+</ol>
+<h3 id="io控制方式">I/O控制方式</h3>
+<p>设备管理的主要任务之一是控制设备和内存或处理机之间的数据传送。外围设备和内存之间的IO控制方式有4种：</p>
+<h4 id="程序直接控制方式">程序直接控制方式</h4>
+<p>每次读一个字的数据。对读入的每个字，CPU需要对外设状态进行<strong>循环检查</strong>，指导确认该字在IO控制器在数据寄存器中。
+由于速度不匹配，导致CPU大部分时候都在空转，资源极大的浪费。</p>
+<h4 id="中断驱动方式">中断驱动方式</h4>
+<p>允许IO设备主动打断CPU并进行请求。中断驱动方式比程序直接控制有效，但由于数据中的<strong>每个字</strong>在存储器在IO控制间的传输都必须经过CPU，导致了中断驱动方式还是需要消耗很多的CPU时间。</p>
+<h4 id="dma">DMA</h4>
+<p>DMA为了解决中断驱动方式的缺点，采用了IO设备和内存之间开辟直接的数据交换通路，DMA方式的特点如下：</p>
+<ol>
+<li>基本单位是<strong>数据块</strong></li>
+<li>所传送的数据是从设备直接传送到内存，或相反。</li>
+<li>仅在传送一个或多个数据块的开始和结束，才需要CPU干预。整个数据传送在DMA控制器控制下完成。</li>
+</ol>
+<p>和中断方式的区别：
+中断方式每个数据需要传输时中断CPU，而DMA在所要求的一批数据都传输结束才中断CPU。同时，传送本身而言，中断是由CPU控制，而DMA在DMA控制器控制下完成。</p>
+<p>CPU === 内存 === DMA === 外存</p>
+<h4 id="通道控制方式">通道控制方式</h4>
+<p>通道方式是DMA方式的发展，可以进一步减少CPU干预，即从一个数据块进行干扰，变成一组数据快的干扰。同时实现CPU、通道以及IO设备的并行操作。</p>
+<p>DMA方式和通道方式的区别：
+DMA需要CPU干预，控制传输的数据大小，传输内容位置等，而通道方式是由通道控制的（小型CPU）。另外每个DMA对应一个设备传输，而一个通道可以控制<strong>多个</strong>设备和内存数据交换 。</p>
+<h3 id="io软件层次结构">I/O软件层次结构</h3>
+<p>比较合理的层次划分如下：</p>
+<ol>
+<li>用户层I/O软件
+用户交互接口。</li>
+<li>设备独立性软件
+用于实现用户程序和设备驱动器的统一接口、设备命令、设备保护、设备保护、设备分配释放等。逻辑名称转物理名称。
+系统调用参数翻译成设备操作指令由设备无关的操作软件完成
+设别独立性又称设备无关性。</li>
+<li>设备驱动程序
+与硬件相关，负责具体实现系统对设备发出操作的指令，驱动IO设备工作的驱动程序。</li>
+<li>中断处理程序
+用于保存被中断的CPU环境，处理完中断后恢复并返回中断进程。</li>
+<li>硬件设备</li>
+</ol>
+<p>设备控制的功能</p>
+<ol>
+<li>接收和识别CPU或通道发来的命令</li>
+<li>实现数据交换  数据和控制器之间 控制器和主存之间</li>
+<li>发现和记录设备及自身的状态信息</li>
+<li>设备地址是别</li>
+</ol>
+<p>设备管理器的组成</p>
+<ol>
+<li>设备控制器与CPU的接口
+信号线包括：
+<ul>
+<li>数据线</li>
+<li>地址线</li>
+<li>控制线</li>
+</ul>
+</li>
+<li>设备控制器与折别的接口</li>
+<li>IO控制逻辑</li>
+</ol>
+<h2 id="io-核心子系统">I/O 核心子系统</h2>
+<h3 id="io调度概念">IO调度概念</h3>
+<p>通过调度改善系统整体性能，使得进程之间公平共享设备访问 减少IO所需平均等待时间</p>
+<h3 id="高速缓存和缓存区">高速缓存和缓存区</h3>
+<h4 id="磁盘高速缓存">磁盘高速缓存</h4>
+<p>磁盘高速缓存逻辑上属于磁盘，物理上属于驻留在内存的盘块。
+在内存中有两种形式</p>
+<ol>
+<li>单独开辟一个存储空间作为高速缓存，大小固定</li>
+<li>将未利用的内存空间作为缓冲池</li>
+</ol>
+<h4 id="缓冲区">缓冲区</h4>
+<p>引用缓冲区的目的：</p>
+<ol>
+<li>减少CPU和IO设备的速度不匹配</li>
+<li>减少CPU中断频率</li>
+<li>解决基本数据单元大小不匹配</li>
+<li>提高CPU和IO设备并行性</li>
+</ol>
+<p>实现的方式：</p>
+<ol>
+<li>硬件缓冲器 （贵）</li>
+<li>缓冲区（内存中）</li>
+</ol>
+<p>缓冲区非空时不能存入数据，必须传出后再冲入数据，且必须充满数据后才能从缓冲区取出数据。（有点像pipe）</p>
+<p>缓冲可以分为几种：</p>
+<h5 id="单缓冲">单缓冲</h5>
+<p>CPU（C）===M===缓冲区===T===IO</p>
+<p>设备和处理机之间设置缓冲区,设备和处理机交换数据的时候,先把被交换的数据写入缓冲区,然后需要数据的设备或处理机从缓冲区中取走数据。
+容易理解的是，由于缓冲区是单工通信，因此处于M时间时，不可能同时处于T以及C时间，因此，单缓冲区处理每块数据的用时：$max(C,T)+M$</p>
+<h5 id="双缓冲">双缓冲</h5>
+<p>CPU(C) ====M===缓冲区（两个）===T===IO
+设置两个缓冲区,当缓冲区1满时,向缓冲区2中注入数据,只有缓冲区满才能取出数据
+由于有两个缓冲区，因此T是一直存在的，但C必须处于M后。
+因此双缓冲区处理每一块数据的用时$max(C+M,T)$</p>
+<h5 id="循环缓冲">循环缓冲</h5>
+<p>包含多个大小相等的缓冲区,每个缓冲区中有—个链接指针指向下一个缓冲区,最后一个缓冲区指针指向第一个缓冲区,多个缓冲区构成一个环形</p>
+<h5 id="缓冲池">缓冲池</h5>
+<p>缓冲区分为三个队列,空缓冲队列,装满输入数据的缓冲队列,装满输出数据的缓冲队列
+四种缓冲区:收容输入数据的工作缓冲区,提取输入数据的工作缓冲区,收容输出数据的工作缓冲区,提取输出数据的工作缓冲区
+<img src="https://upload.cc/i1/2020/10/05/fzoYH5.png" alt="UTOOLS1601904316459.png">
+1、 emq空缓冲队列：用于取出空缓冲区来进行读写等操作。
+2、 inq输入队列：用来记录输入设备输入的数据，以便用户程序读取。
+3、outq输出队列：用来记录用户程序输出到设备(显示屏或是文件等)的数据，以便用户程序读取</p>
+<p>我们的缓冲区主要是有inq，outq，enq三个缓冲队列。其他四种hin，sout，sin，hout工作缓冲区是在这三种缓冲队列上申请和取出缓冲区，用于数据的读取和存储。操作完成之后再把缓冲区放回到原来的队列。所以这四种缓冲区是抽象出来的缓冲区，实际上还是在这三种缓冲队列上进行操作。</p>
+<h3 id="设备分配与回收">设备分配与回收</h3>
+<p>从设备使用方式来分，可以分成：独占设备、共享设备、虚拟设备</p>
+<h4 id="设备分配数据结构">设备分配数据结构</h4>
+<p>设备分配依据的主要数据结构有设备控制表（DCT）、控制器控制表（COCT）、通道控制表（CHCT）、系统设备控制表（SDT）</p>
+<p>设备控制表（DCT）：
+一个设备控制表对应一个设备，表项就是设备的各个属性。
+控制器控制表（COCT）：
+DCT里有一个表项对应COCT的指针。因此COCT和DCT<strong>一一对应</strong>。
+通道控制表（CHCT）
+COCT有一个指针指向CHCT，但一个通道可以为多个设备控制器服务，因此CHCT和COCT是<strong>一对多</strong>关系
+系统设备表（SDT）：
+一个系统<strong>只有一张</strong>系统设备表。
+它记录了连接到系统的所有物理设备的情况。每个设备占一个表目。</p>
+<h4 id="设备分配策略">设备分配策略</h4>
+<p>设备分配的原则是既要充分发挥设备使用效率，也要尽量避免死锁，还要将用户和具体设备分开</p>
+<h4 id="设备分配方式">设备分配方式</h4>
+<ol>
+<li>静态分配
+主要用作独占设备的分配，作业开始前一次性分配所有的设备 <strong>不会死硕</strong>但是效率低</li>
+<li>动态分配
+执行过程中根据需要分配，有利于提高效率，但会造成死锁。</li>
+</ol>
+<h4 id="设备分配安全性">设备分配安全性</h4>
+<p>安全性指的是分配设备中应该防止产生死锁。</p>
+<ol>
+<li>安全分配方式
+进程IO使用设备时则阻塞，完成IO才唤醒，不保持任何资源，因此不会死锁。</li>
+<li>不安全分配方式
+IO操作时进程继续运行， 需要时则发出第二 第三个，只有所需要的设备被占用才阻塞，会产生死锁。</li>
+</ol>
+<h4 id="逻辑设备与物理设备">逻辑设备与物理设备</h4>
+<p>在系统设置一张（或者每个用户一张）逻辑设备表（LUT），用于映射逻辑设备名和物理设备名，当进程使用逻辑设备名访问设备时，系统为它分配物理设备并在LUT设置一个表项，以后再利用逻辑设备请求IO操作的时候则通过LUT表查询相应的物理设备和驱动程序。</p>
+<h3 id="spooling技术假脱机技术">SPOOLing技术（假脱机技术）</h3>
+<p>假脱机技术主要用于设备的共享访问。
+输出输出设备=====内存（输入输出缓冲区）===== 硬盘（输入输出井）</p>
+<h4 id="输入井和输出井">输入井和输出井</h4>
+<p>输入输出井位于硬盘（更为准确的说法是<strong>外存</strong>），输入井收容IO设备输入的数据，输出井容纳用户程序输出的数据。</p>
+<h4 id="输入输出缓冲区">输入输出缓冲区</h4>
+<p>暂存输入输出井的数据，等待设备可以接收数据再传输。</p>
+<p>以打印机为例，CPU首先将需要对打印的内容存放到<strong>输出井</strong>，然后做其他事情。
+假脱机技术系统由<strong>预输入程序、井管理程序、缓输出程序</strong>组成</p>
+<h2 id="易错点">易错点</h2>
+<ol>
+<li>设备分配不一定需要考虑<strong>及时性</strong></li>
+<li><strong>字节多路通道</strong>用作链接大量低速和中速IO设备</li>
+</ol>
+
+        </div>
+        
+        <div class="my-4">
+    
+    <a href="/tags/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/" class="inline-block bg-tertiary-bg text-sm rounded px-3 py-1 my-1 mr-2 hover:text-eureka">#操作系统</a>
+    
+    <a href="/tags/%E8%80%83%E7%A0%94/" class="inline-block bg-tertiary-bg text-sm rounded px-3 py-1 my-1 mr-2 hover:text-eureka">#考研</a>
+    
+</div>
+        
+        
+        
+
+
+        
+        
+        
+        
+<div class="flex flex-col md:flex-row md:justify-between -mx-2 mt-4 px-2 pt-4 border-t">
+    <div>
+        
+        <span class="block font-bold">Previous</span>
+        <a href="/context/848-ds-3/" class="block">848数据结构(三) 栈与队列</a>
+        
+    </div>
+    <div class="md:text-right mt-4 md:mt-0">
+        
+        <span class="block font-bold">Next</span>
+        <a href="/context/848-os-4/" class="block">848操作系统(四) 文件管理</a>
+        
+    </div>
+</div>
+
+        
+
+
+
+  <div id="valine-comments" class="mt-4"></div>
+<script defer src="https://cdn.jsdelivr.net/npm/valine@1.4.14/dist/Valine.min.js" 
+  integrity="sha256-fPqMAsW3FDt/rNyneSJ7HOpZNRs/O2rM016SU08JtCk="  crossorigin></script>
+<script>
+  document.addEventListener("DOMContentLoaded", function () {
+    new Valine({
+      el: "#valine-comments",appId:"V4MDFNfytHcoabcly1MENtAo-gzGzoHsz",appKey:"xyl895MDJ2Q6BRDKwyRPr6xL",visitor:"true",
+    })
+  });
+</script>
+
+    </div>
+    
+    <div class="col-span-2">
+        
+        
+        <div class="sticky top-16 z-10 hidden lg:block px-6 py-4  bg-primary-bg ">
+    <span class="text-lg font-semibold">On This Page</span>
+</div>
+<div class="sticky-toc hidden lg:block px-6 pb-6 ">
+    <nav id="TableOfContents">
+  <ul>
+    <li><a href="#io管理概述">I/O管理概述</a>
+      <ul>
+        <li><a href="#io设备类型">I/O设备类型</a></li>
+        <li><a href="#io控制方式">I/O控制方式</a>
+          <ul>
+            <li><a href="#程序直接控制方式">程序直接控制方式</a></li>
+            <li><a href="#中断驱动方式">中断驱动方式</a></li>
+            <li><a href="#dma">DMA</a></li>
+            <li><a href="#通道控制方式">通道控制方式</a></li>
+          </ul>
+        </li>
+        <li><a href="#io软件层次结构">I/O软件层次结构</a></li>
+      </ul>
+    </li>
+    <li><a href="#io-核心子系统">I/O 核心子系统</a>
+      <ul>
+        <li><a href="#io调度概念">IO调度概念</a></li>
+        <li><a href="#高速缓存和缓存区">高速缓存和缓存区</a>
+          <ul>
+            <li><a href="#磁盘高速缓存">磁盘高速缓存</a></li>
+            <li><a href="#缓冲区">缓冲区</a>
+              <ul>
+                <li><a href="#单缓冲">单缓冲</a></li>
+                <li><a href="#双缓冲">双缓冲</a></li>
+                <li><a href="#循环缓冲">循环缓冲</a></li>
+                <li><a href="#缓冲池">缓冲池</a></li>
+              </ul>
+            </li>
+          </ul>
+        </li>
+        <li><a href="#设备分配与回收">设备分配与回收</a>
+          <ul>
+            <li><a href="#设备分配数据结构">设备分配数据结构</a></li>
+            <li><a href="#设备分配策略">设备分配策略</a></li>
+            <li><a href="#设备分配方式">设备分配方式</a></li>
+            <li><a href="#设备分配安全性">设备分配安全性</a></li>
+            <li><a href="#逻辑设备与物理设备">逻辑设备与物理设备</a></li>
+          </ul>
+        </li>
+        <li><a href="#spooling技术假脱机技术">SPOOLing技术（假脱机技术）</a>
+          <ul>
+            <li><a href="#输入井和输出井">输入井和输出井</a></li>
+            <li><a href="#输入输出缓冲区">输入输出缓冲区</a></li>
+          </ul>
+        </li>
+      </ul>
+    </li>
+    <li><a href="#易错点">易错点</a></li>
+  </ul>
+</nav>
+</div>
+<script>
+    window.addEventListener('DOMContentLoaded', () => {
+        enableStickyToc();
+    });
+</script>
+        
+    </div>
+    
+
+    
+    
+    <div
+        class="col-span-2  lg:col-span-6 bg-secondary-bg rounded p-6">
+        <h2 class="text-lg font-semibold mb-4">See Also</h2>
+        <div class="content">
+            
+            <a href="/context/848-os-4/">848操作系统(四) 文件管理</a>
+            <br />
+            
+            <a href="/context/848-os-3/">848操作系统(三) 内存管理</a>
+            <br />
+            
+            <a href="/context/848-os-2/">848操作系统(二) 进程管理</a>
+            <br />
+            
+            <a href="/context/848-os-1/">848操作系统(一) 操作系统概述</a>
+            <br />
+            
+            <a href="/context/848-ds-2/">848数据结构(二) 线性表</a>
+            <br />
+            
+            <a href="/context/848-ds-1/">848数据结构(一) 基本概念和术语</a>
+            <br />
+            
+        </div>
+    </div>
+    
+</div>
+<script>
+    document.addEventListener('DOMContentLoaded', ()=>{
+        hljs.initHighlightingOnLoad();
+    })
+</script>
+
+      </div>
+    </div>
+    
+  </main>
+  <footer class="pl-scrollbar">
+    <div class="w-full max-w-screen-xl mx-auto"><div class="text-center p-6 pin-b">
+    <p class="text-sm text-tertiary-text">&copy; 2021 <a href="https://0x2a.in/blog">0x2a</a>
+ &middot;  Powered by the <a href="https://github.com/wangchucheng/hugo-eureka" class="hover:text-eureka">Eureka</a> theme for <a href="https://gohugo.io" class="hover:text-eureka">Hugo</a></p>
+</div></div>
+  </footer>
+</body>
+
+</html>
