@@ -24,9 +24,14 @@ highlight:
     # highlight.js doesn't bundle every language. So please specify additional languages you want here.
     # See https://github.com/highlightjs/cdn-release/tree/master/build/languages for available languages.
     languages:
-      - [python, c, go, c++, shell,js]
+      - python
+      - c
+      - cpp
+      - go
+      - javascript
+      - shell
     # See https://github.com/highlightjs/cdn-release/tree/master/build/styles for available styles.
-    style: atom-one-dark
+    style: obsidian
 
 math:
   handler: katex
