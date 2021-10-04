@@ -8,7 +8,16 @@
     <language>en</language>
     <copyright>&amp;copy; 2021 &lt;a href=&#34;https://0x2a.in/blog&#34;&gt;0x2a&lt;/a&gt;
 </copyright>
-    <lastBuildDate>Sat, 11 Sep 2021 15:19:56 +0800</lastBuildDate><atom:link href="https://0x2a.in/blog/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Mon, 04 Oct 2021 20:29:20 +0800</lastBuildDate><atom:link href="https://0x2a.in/blog/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>PointNet系列论文阅读与理解</title>
+      <link>https://0x2a.in/blog/posts/pointnet/</link>
+      <pubDate>Mon, 04 Oct 2021 20:29:20 +0800</pubDate>
+      
+      <guid>https://0x2a.in/blog/posts/pointnet/</guid>
+      <description>PointNet是斯坦福大学研究人员提出的一种点云处理网络，其可以直接输入无序点云集合进行处理，而不像基于投影的方法需要先对点云进行预处理再输入网络。</description>
+    </item>
+    
     <item>
       <title>暨南大学珠海校区有线网认证分析及Golang实现</title>
       <link>https://0x2a.in/blog/posts/jnu_network/</link>

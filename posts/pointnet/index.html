@@ -3,7 +3,7 @@
 <meta name="viewport" content="width=device-width">
 
 
-<title>暨南大学珠海校区有线网认证分析及Golang实现 | 0x2a&#39;s blog</title>
+<title>PointNet系列论文阅读与理解 | 0x2a&#39;s blog</title>
 
 <meta name="generator" content="Hugo Eureka 0.8.3-dev" />
 <link rel="stylesheet" href="https://0x2a.in/blog/css/eureka.min.css">
@@ -73,7 +73,7 @@
 <link rel="apple-touch-icon" sizes="180x180" href="https://0x2a.in/blog/images/icon_hudd51a6aca11f958e5ee26ffb845389b9_13185_180x180_fill_box_center_3.png">
 
 <meta name="description"
-  content="前言 暨南大学珠海校区有线网使用H3C的iMC Portal网页认证，每次使用网络前需要登录认证，并且要在整个上网过程保持认证网页存在，否则就会被断开连接">
+  content="PointNet是斯坦福大学研究人员提出的一种点云处理网络，其可以直接输入无序点云集合进行处理，而不像基于投影的方法需要先对点云进行预处理再输入网络。">
 <script type="application/ld+json">
 {
   "@context": "https://schema.org",
@@ -85,8 +85,8 @@
       "item":"https://0x2a.in/blog/posts/"},{
       "@type": "ListItem",
       "position": 2 ,
-      "name":"暨南大学珠海校区有线网认证分析及Golang实现",
-      "item":"https://0x2a.in/blog/posts/jnu_network/"}]
+      "name":"PointNet系列论文阅读与理解",
+      "item":"https://0x2a.in/blog/posts/pointnet/"}]
 }
 </script>
 
@@ -98,11 +98,11 @@
     "@type": "Article",
     "mainEntityOfPage": {
         "@type": "WebPage",
-        "@id": "https://0x2a.in/blog/posts/jnu_network/"
+        "@id": "https://0x2a.in/blog/posts/pointnet/"
     },
-    "headline": "暨南大学珠海校区有线网认证分析及Golang实现 | 0x2a\u0027s blog","datePublished": "2021-09-11T15:19:56+08:00",
-    "dateModified": "2021-09-11T15:19:56+08:00",
-    "wordCount":  1667 ,
+    "headline": "PointNet系列论文阅读与理解 | 0x2a\u0027s blog","datePublished": "2021-10-04T20:29:20+08:00",
+    "dateModified": "2021-10-04T20:29:20+08:00",
+    "wordCount":  1881 ,
     "publisher": {
         "@type": "Person",
         "name":  42 ,
@@ -111,21 +111,21 @@
             "url": "https://0x2a.in/blog/images/icon.png"
         }
         },
-    "description": "前言 暨南大学珠海校区有线网使用H3C的iMC Portal网页认证，每次使用网络前需要登录认证，并且要在整个上网过程保持认证网页存在，否则就会被断开连接"
+    "description": "PointNet是斯坦福大学研究人员提出的一种点云处理网络，其可以直接输入无序点云集合进行处理，而不像基于投影的方法需要先对点云进行预处理再输入网络。"
 }
-</script><meta property="og:title" content="暨南大学珠海校区有线网认证分析及Golang实现 | 0x2a&#39;s blog" />
+</script><meta property="og:title" content="PointNet系列论文阅读与理解 | 0x2a&#39;s blog" />
 <meta property="og:type" content="article" />
 
 
 <meta property="og:image" content="https://0x2a.in/blog/images/icon.png">
 
 
-<meta property="og:url" content="https://0x2a.in/blog/posts/jnu_network/" />
+<meta property="og:url" content="https://0x2a.in/blog/posts/pointnet/" />
 
 
 
 
-<meta property="og:description" content="前言 暨南大学珠海校区有线网使用H3C的iMC Portal网页认证，每次使用网络前需要登录认证，并且要在整个上网过程保持认证网页存在，否则就会被断开连接" />
+<meta property="og:description" content="PointNet是斯坦福大学研究人员提出的一种点云处理网络，其可以直接输入无序点云集合进行处理，而不像基于投影的方法需要先对点云进行预处理再输入网络。" />
 
 
 
@@ -142,10 +142,10 @@
 
 
 
-<meta property="article:published_time" content="2021-09-11T15:19:56&#43;08:00" />
+<meta property="article:published_time" content="2021-10-04T20:29:20&#43;08:00" />
 
 
-<meta property="article:modified_time" content="2021-09-11T15:19:56&#43;08:00" />
+<meta property="article:modified_time" content="2021-10-04T20:29:20&#43;08:00" />
 
 
 
@@ -229,11 +229,11 @@
 <div class="grid grid-cols-2 lg:grid-cols-8 gap-4 lg:pt-12">
     <div
         class="col-span-2 lg:col-start-2 lg:col-span-6 bg-secondary-bg rounded px-6 py-8">
-        <h1 class="font-bold text-3xl text-primary-text">暨南大学珠海校区有线网认证分析及Golang实现</h1>
+        <h1 class="font-bold text-3xl text-primary-text">PointNet系列论文阅读与理解</h1>
         <div class="flex flex-wrap flex-row items-center mt-2 text-tertiary-text">
     <div class="mr-6 my-2">
         <i class="fas fa-calendar mr-1"></i>
-        <span>2021-09-11</span>
+        <span>2021-10-04</span>
     </div>
     <div class="mr-6 my-2">
         <i class="fas fa-clock mr-1"></i>
@@ -249,145 +249,67 @@
         
 
         <div class="content">
-            <h2 id="前言">前言</h2>
-<p>暨南大学珠海校区有线网使用H3C的<strong>iMC Portal</strong>网页认证，每次使用网络前需要登录认证，并且要在整个上网过程保持认证网页存在，否则就会被断开连接。并且在电脑睡眠、网络中断的情况下也会被断开连接，需要重新认证，突出一个麻烦。因此希望通过抓包分析其认证原理，并且编写脚本实现认证以及自动保活（这也给使用路由器带来了可能性）。</p>
-<p><strong>懒人版总结：</strong></p>
-<p>到<a href="https://github.com/Steve0x2a/JNU_ZH_Network">GitHub仓库</a>处下载Releases对应版本，使用教程参考仓库的文档直接使用。</p>
-<p>以下请求仅在教学区有线网络通过测试，其他地方尚未测试。</p>
-<h2 id="登录请求分析">登录请求分析</h2>
-<p>通过抓包发现，校园网验证的登录接口为<code>portal/pws?t=li</code>，请求方式为<code>post</code>，发送的具体FormData如下所示：</p>
-<pre><code>userName: 学号
-userPwd: base64编码的密码
-userDynamicPwd: 
-userDynamicPwdd: 
-serviceType: 
-isSavePwd: on
-userurl: 
-userip: 
-basip: 
-language: Chinese
-usermac: null
-wlannasid: 
-wlanssid: 
-entrance: null
-loginVerifyCode: 
-userDynamicPwddd: 
-customPageId: 1
-pwdMode: 0
-portalProxyIP: 192.168.11.34
-portalProxyPort: 50200
-dcPwdNeedEncrypt: 1
-assignIpType: 0
-appRootUrl: https://xx:xx:xx:xx:xxxx/portal/
-manualUrl: 
-manualUrlEncryptKey: 
-</code></pre>
-<p>以上参数能改变的只有<code>userName</code>和<code>userPwd</code>两个参数， 其中<code>userName</code>是学号，<code>userPwd</code>是认证密码经过base64后的数值。</p>
-<p>如果你的校园网当前是在线的，再次发送认证请求可能会返回以下内容：</p>
-<pre><code>JTdCJTIycG9ydFNlcnZFcnJvckNvZGUlMjIlM0ElMjIxJTIyJTJDJTIycG9ydFNlcnZFcnJvckNvZGVEZXNjJTIyJTNBJTIyJUU4JUFFJUJFJUU1JUE0JTg3JUU2JThCJTkyJUU3JUJCJTlEJUU4JUFGJUI3JUU2JUIxJTgyJTIyJTJDJTIyZV9jJTIyJTNBJTIycG9ydFNlcnZFcnJvckNvZGUlMjIlMkMlMjJlX2QlMjIlM0ElMjJwb3J0U2VydkVycm9yQ29kZURlc2MlMjIlMkMlMjJlcnJvck51bWJlciUyMiUzQSUyMjclMjIlN0Q
-</code></pre>
-<p>同样是base64编码后的内容，经过解码后可以得到如下内容：</p>
-<pre><code class="language-json">{
-    &quot;portServErrorCode&quot;: &quot;1&quot;,
-    &quot;portServErrorCodeDesc&quot;: &quot;设备拒绝请求&quot;,
-    &quot;e_c&quot;: &quot;portServErrorCode&quot;,
-    &quot;e_d&quot;: &quot;portServErrorCodeDesc&quot;,
-    &quot;errorNumber&quot;: &quot;7&quot;
-}
-</code></pre>
-<p>经过不同的尝试，可以得到几种不同的返回：</p>
+            <p><strong>PointNet</strong>是斯坦福大学研究人员提出的一种点云处理网络，其可以直接输入无序点云集合进行处理，而不像基于投影的方法需要先对点云进行预处理再输入网络。其可以用作与点云分类和点云分割。由于其可以直接输入无序点云，因此对深度学习点云处理产生了巨大的影响。而同一个作者的进阶版网络**PointNet++**则解决了PointNet局部特征使用不足的问题，提高了其局部特征的处理能力。</p>
+<h2 id="点云的特征">点云的特征</h2>
+<p>点云往往是欧几里德空间点的子集，往往拥有以下三个主要特征：</p>
 <ol>
 <li>
-<p>已经登录</p>
-<pre><code class="language-json">{
-    &quot;portServErrorCode&quot;: &quot;1&quot;,
-    &quot;portServErrorCodeDesc&quot;: &quot;设备拒绝请求&quot;,
-    &quot;e_c&quot;: &quot;portServErrorCode&quot;,
-    &quot;e_d&quot;: &quot;portServErrorCodeDesc&quot;,
-    &quot;errorNumber&quot;: &quot;7&quot;
-}
-</code></pre>
+<p>无序性</p>
+<p>与图像的像素矩阵或体积栅格中的体素阵列不同，点云是一组没有特定顺序的点，也就是说，$N$个3D点集会有$N!$种排列。</p>
 </li>
 <li>
-<p>用户名错误或无权限</p>
-<pre><code class="language-json"> {
-     &quot;portServIncludeFailedCode&quot;: &quot;63018&quot;,
-     &quot;portServIncludeFailedReason&quot;: &quot;E63018:用户不存在或者用户没有申请该服务。&quot;,
-     &quot;e_c&quot;: &quot;portServIncludeFailedCode&quot;,
-     &quot;e_d&quot;: &quot;portServIncludeFailedReason&quot;,
-     &quot;errorNumber&quot;: &quot;7&quot;
- }
-</code></pre>
+<p>点之间相互作用</p>
+<p>这些点来自具有距离度量的空间，这就意味着点与点之间不是鼓励的，相邻点可能形成一个有意义的子集。因此，模型应该捕获局部结构以及局部结构互相之间的特征。</p>
 </li>
 <li>
-<p>密码错误</p>
-<pre><code class="language-json"> {
-     &quot;portServIncludeFailedCode&quot;: &quot;63032&quot;,
-     &quot;portServIncludeFailedReason&quot;: &quot;E63032:密码错误，您还可以重试x次。&quot;,
-     &quot;e_c&quot;: &quot;portServIncludeFailedCode&quot;,
-     &quot;e_d&quot;: &quot;portServIncludeFailedReason&quot;,
-     &quot;errorNumber&quot;: &quot;7&quot;
- }
-</code></pre>
-</li>
-<li>
-<p>登录成功</p>
-<pre><code class="language-json">{
-    &quot;errorNumber&quot;: &quot;1&quot;,
-    &quot;heartBeatCyc&quot;: 60000,
-    &quot;heartBeatTimeoutMaxTime&quot;: 5,
-    &quot;userDevPort&quot;: &quot;ZH-Campus-Core_SW-vlan-00-0409@vlan&quot;,
-    &quot;userStatus&quot;: 99,
-    &quot;serialNo&quot;: 11328,
-    &quot;ifNeedModifyPwd&quot;: false,
-    &quot;browserUrl&quot;: &quot;&quot;,
-    &quot;clientPrivateIp&quot;: &quot;&quot;,
-    &quot;userurl&quot;: &quot;&quot;,
-    &quot;usermac&quot;: null,
-    &quot;nasIp&quot;: &quot;&quot;,
-    &quot;clientLanguage&quot;: &quot;Chinese&quot;,
-    &quot;ifTryUsePopupWindow&quot;: false,
-    &quot;triggerRedirectUrl&quot;: &quot;&quot;,
-    &quot;portalLink&quot;: &quot;xxx&quot;
-}
-</code></pre>
+<p>变换不变性</p>
+<p>对点云全集进行刚性变换，点之间的相对位置是不变的。</p>
 </li>
 </ol>
-<p>如果能得到上面的返回， 基本上认证已经成功， 但是由于还需要保活，因此还需要继续抓包。</p>
-<p>这里需要注意一下登陆返回成功的几个数值，后续会用得到：<code>userDevPort</code>, <code>userDevPort</code>,<code>userStatus</code>, <code>serialNo</code>,<code>portalLink</code>。其中<code>portalLink</code>内容我进行了删减， 其一样是一个json字符串的base64编码后的内容。具体内容是什么不重要，但后续保活需要用到这些内容。</p>
-<h2 id="心跳包分析">心跳包分析</h2>
-<p>在成功登录之后，我们需要一直保持认证网页的原因是因为，网页会每隔一分钟向<code>/portal/page/doHeartBeat.jsp</code>使用<code>post</code>方法发送心跳包，因此我们的程序也要隔一定时间进行心跳包的模拟。根据登录成功返回的数据<code>heartBeatTimeoutMaxTime</code>我们大概可以得知，心跳包最大的间隔不能超过五分钟。</p>
-<p>知道其原理后看一下心跳包的数据。</p>
-<p>首先关注一下请求头，有两个数据需要重点关注一下：</p>
-<p>第一个是<code>Cookie</code>，其需要带着两个值：</p>
-<pre><code>hello1=学号; hello2=false;
-</code></pre>
-<p>第二个是<code>Referer</code>，这里就需要用到我们第一步登陆成功返回<code>portalLink</code>了。其值为：</p>
-<pre><code>https://登陆网址/portal/page/online_heartBeat.jsp?pl=pl值&amp;custompath=&amp;uamInitCustom=0&amp;uamInitLogo=H3C
-</code></pre>
-<p>然后是FormData：</p>
-<pre><code>userip: 
-basip: 
-userDevPort: ZH-Campus-Core_SW-vlan-00-0409@vlan
-userStatus: 99
-serialNo: 11226
-language: Chinese
-e_d: 
-t: hb
-</code></pre>
-<p>这里的<code>userDevPort</code>, <code>userDevPort</code>,<code>userStatus</code>, <code>serialNo</code>都是第一步登陆成功返回的内容，但观察后发现其实只需要更改<code> serialNo</code>即可。</p>
-<h2 id="其他问题">其他问题</h2>
-<p>至此，登录请求已经分析完毕，剩下的就是用自己喜欢的程序编写相关的程序了。</p>
-<p>不过还有一点小问题，比如我使用Go语言的resty包进行http请求的时候，由于坑爹的认证网页倔强地使用https协议，但是证书又是非权威的，因此无法通过tls校验。因此需要大家在编写程序的时候手动跳过tls检查。比如我是用的resty包：</p>
-<pre><code class="language-go">client := resty.New()
-client.SetTLSClientConfig(&amp;tls.Config{InsecureSkipVerify: true})
-</code></pre>
-<p>目前我已经将我编写的Go版本开源在GitHub上，有需要的朋友可以自取：<a href="https://github.com/Steve0x2a/JNU_ZH_Network">传送门</a></p>
-<p>有一些功能没有实现，但对于我来说没什么用处，就懒得写了，如果需要的话可以在GitHub提issue。</p>
-<ol>
-<li>退出功能（不需要）</li>
-<li>验证被顶出自动重连（可以实现，但是无法暂停导致实在需要登出的时候无法登出）</li>
-</ol>
+<h2 id="pointnet">PointNet</h2>
+<p>PointNet的整体架构如下图所示：</p>
+<p><img src="https://0x2a-1254351943.cos.ap-guangzhou.myqcloud.com/img/image-20211004210924008.png" alt="PointNet结构"></p>
+<p>下面将分解PointNet的每一部分。</p>
+<h3 id="mlp">MLP</h3>
+<p>共享多层感知机在PointNet的max pool前用了两次，其为共享MLP，第一次是在对原始点云transform后的点将特征升到64维，第二次是在对64维特征transform后再次升维到1024维度，本质上就是使用MLP对输入的点进行两次特征升维提取。</p>
+<p>在进行max pool后，根据网络功能的不同，使用的MLP次数也不同。对于分类网络，对池化后的特征进行MLP，最终输出分类分数矩阵。而对于分割网络，通过了两次shared MLP，最后输出一个$n*m$的分数矩阵。</p>
+<h3 id="max-pool">Max Pool</h3>
+<p>Max Pool 可以说是PointNet的核心思想了，但细究原理其实很简单。由于PointNet 是直接将点云集合输入到网络中，因此要求点云输入顺序不同，提取出来的特征也是不能改变的，即需要找到一个函数，可以使得输入的顺序改变，结果也不改变。自然而然的可以找到一些可选选项：<strong>取最大值</strong>、取平均值，取和等方法。而PointNet使用的就是取最大值这个方法，也做了相关实验，这些方法都是可行的，并且取最大值这个方法取得了最好的效果。Max Pool方法示意图如下：</p>
+<p><img src="https://0x2a-1254351943.cos.ap-guangzhou.myqcloud.com/img/image-20211004213709574.png" alt="MaxPool原理"></p>
+<p>在进行特征升维后，我们分别取各个维度中每个点最大的一个值，将他们组成最后的特征矩阵，就是Max Pool的做法。易得，这种方法不管输入点的顺序是什么，得到的特征矩阵都是一致的。</p>
+<h3 id="t-net">T-Net</h3>
+<p>T-Net用在input transform和feature transform中，其本质也是一个微型的PointNet，作用是将原始点矩阵或特征矩阵转换为标准的朝向，这样的话就可以适应不同朝向的点云了，对应点云特征第三点。</p>
+<p>但实际作用并不是太大，可以略微改善效果，聊胜于无。但其也添加了相应的计算量。因此在PointNet++中就完全删除了T-Net。</p>
+<h3 id="segmentation-network">Segmentation Network</h3>
+<p>PointNet用作于分割相对于用于分类稍复杂一些，其结构如下：</p>
+<p><img src="https://0x2a-1254351943.cos.ap-guangzhou.myqcloud.com/img/image-20211004214341179.png" alt="分割网络结构"></p>
+<p>由于分割任务需要把每个点都考虑进去，因此最后用于MLP的矩阵不能只含有全局特征（global feature），还需要包含每个点的特征。最左边的矩阵白色部分是经过特征第一次升维和transform的矩阵，右边灰色部分是将全局特征重复n次，将这两个部分拼接到一起，最后再经过两层MLP，最后得到每一个点的分类，以完成分割任务。</p>
+<p>以上三个部分是作者认为的PointNet核心的三个思想。下面来谈一下我觉得PointNet比较有意思的点。</p>
+<h3 id="critical-point-sets">Critical Point Sets</h3>
+<p>在Max Pool中我们提到了其作用是提取各个点的每个维度中的最大值，如果只保留对最后全局特征有起到作用的点，将他们集合起来，这就称之为Critical Point Sets。</p>
+<p><img src="https://0x2a-1254351943.cos.ap-guangzhou.myqcloud.com/img/image-20211004215456290.png" alt="image-20211004215456290"></p>
+<p>可以看到，Critical Point Sets往往是点云的边界，这些点往往定义了点云的形状。网络的鲁棒性就来源于此处，只要保留了关键点，及时点云有变换和扰动结果也不会受到影响。</p>
+<p><img src="https://0x2a-1254351943.cos.ap-guangzhou.myqcloud.com/img/image-20211004215229468.png" alt="image-20211004215229468"></p>
+<h3 id="voxel-feature-encoding">Voxel Feature Encoding</h3>
+<p>目前来说有一种比较好用的特征提取方法，如图所示：</p>
+<p><img src="https://0x2a-1254351943.cos.ap-guangzhou.myqcloud.com/img/image-20211004220027494.png" alt="image-20211004220027494"></p>
+<p>其先进行一次PointNet特征提取，然后将获得的全局特征拼接到原有的特征上，在进行一次PointNet特征提取，最后获得一个新的全局特征，这样的取样方式会获得兼具局部和全局的特征，PointNet++也是用了类似的思想进行特征提取。</p>
+<h3 id="总结">总结</h3>
+<p>PointNet的创新点如下：</p>
+<ul>
+<li>直接用点数据进行操作，不损失精度</li>
+<li>对无序数据的效果比较好</li>
+<li>证明了PointNet也可以和正常神经网络一样，可以拟合任何函数</li>
+</ul>
+<p>同时，局限性如下：</p>
+<p>缺陷：</p>
+<ul>
+<li>缺少了逐层特征提取</li>
+<li>仅仅是对每个点表征，对局部结构信息整合能力太弱</li>
+<li>分割任务的全局特征global feature是直接复制与local feature拼接</li>
+</ul>
+<h2 id="pointnet-1">PointNet++</h2>
+<p>未完待续。</p>
 
         </div>
         
@@ -402,14 +324,11 @@ client.SetTLSClientConfig(&amp;tls.Config{InsecureSkipVerify: true})
 <div class="flex flex-col md:flex-row md:justify-between -mx-2 mt-4 px-2 pt-4 border-t">
     <div>
         
-        <span class="block font-bold">Previous</span>
-        <a href="https://0x2a.in/blog/posts/pointnet/" class="block">PointNet系列论文阅读与理解</a>
-        
     </div>
     <div class="md:text-right mt-4 md:mt-0">
         
         <span class="block font-bold">Next</span>
-        <a href="https://0x2a.in/blog/posts/jnu_health_crawler/" class="block">暨南大学健康打卡请求分析及脚本</a>
+        <a href="https://0x2a.in/blog/posts/jnu_network/" class="block">暨南大学珠海校区有线网认证分析及Golang实现</a>
         
     </div>
 </div>
