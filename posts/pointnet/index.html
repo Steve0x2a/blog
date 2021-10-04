@@ -102,7 +102,7 @@
     },
     "headline": "PointNet系列论文阅读与理解 | 0x2a\u0027s blog","datePublished": "2021-10-04T20:29:20+08:00",
     "dateModified": "2021-10-04T20:29:20+08:00",
-    "wordCount":  1881 ,
+    "wordCount":  1877 ,
     "publisher": {
         "@type": "Person",
         "name":  42 ,
@@ -228,7 +228,7 @@
 
 <div class="grid grid-cols-2 lg:grid-cols-8 gap-4 lg:pt-12">
     <div
-        class="col-span-2 lg:col-start-2 lg:col-span-6 bg-secondary-bg rounded px-6 py-8">
+        class="col-span-2  lg:col-span-6 bg-secondary-bg rounded px-6 py-8">
         <h1 class="font-bold text-3xl text-primary-text">PointNet系列论文阅读与理解</h1>
         <div class="flex flex-wrap flex-row items-center mt-2 text-tertiary-text">
     <div class="mr-6 my-2">
@@ -249,7 +249,7 @@
         
 
         <div class="content">
-            <p><strong>PointNet</strong>是斯坦福大学研究人员提出的一种点云处理网络，其可以直接输入无序点云集合进行处理，而不像基于投影的方法需要先对点云进行预处理再输入网络。其可以用作与点云分类和点云分割。由于其可以直接输入无序点云，因此对深度学习点云处理产生了巨大的影响。而同一个作者的进阶版网络**PointNet++**则解决了PointNet局部特征使用不足的问题，提高了其局部特征的处理能力。</p>
+            <p><strong>PointNet</strong>是斯坦福大学研究人员提出的一种点云处理网络，其可以直接输入无序点云集合进行处理，而不像基于投影的方法需要先对点云进行预处理再输入网络。其可以用作与点云分类和点云分割。由于其可以直接输入无序点云，因此对深度学习点云处理产生了巨大的影响。而同一个作者的进阶版网络<strong>PointNet++</strong> 则解决了PointNet局部特征使用不足的问题，提高了其局部特征的处理能力。</p>
 <h2 id="点云的特征">点云的特征</h2>
 <p>点云往往是欧几里德空间点的子集，往往拥有以下三个主要特征：</p>
 <ol>
@@ -348,6 +348,39 @@
   });
 </script>
 
+    </div>
+    
+    <div class="col-span-2">
+        
+        
+        <div class="sticky top-16 z-10 hidden lg:block px-6 py-4  bg-primary-bg ">
+    <span class="text-lg font-semibold">On This Page</span>
+</div>
+<div class="sticky-toc hidden lg:block px-6 pb-6 ">
+    <nav id="TableOfContents">
+  <ul>
+    <li><a href="#点云的特征">点云的特征</a></li>
+    <li><a href="#pointnet">PointNet</a>
+      <ul>
+        <li><a href="#mlp">MLP</a></li>
+        <li><a href="#max-pool">Max Pool</a></li>
+        <li><a href="#t-net">T-Net</a></li>
+        <li><a href="#segmentation-network">Segmentation Network</a></li>
+        <li><a href="#critical-point-sets">Critical Point Sets</a></li>
+        <li><a href="#voxel-feature-encoding">Voxel Feature Encoding</a></li>
+        <li><a href="#总结">总结</a></li>
+      </ul>
+    </li>
+    <li><a href="#pointnet-1">PointNet++</a></li>
+  </ul>
+</nav>
+</div>
+<script>
+    window.addEventListener('DOMContentLoaded', () => {
+        enableStickyToc();
+    });
+</script>
+        
     </div>
     
 
