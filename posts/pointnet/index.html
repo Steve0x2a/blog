@@ -102,7 +102,7 @@
     },
     "headline": "PointNet系列论文阅读与理解 | 0x2a\u0027s blog","datePublished": "2021-10-04T20:29:20+08:00",
     "dateModified": "2021-10-04T20:29:20+08:00",
-    "wordCount":  1877 ,
+    "wordCount":  4069 ,
     "publisher": {
         "@type": "Person",
         "name":  42 ,
@@ -237,7 +237,7 @@
     </div>
     <div class="mr-6 my-2">
         <i class="fas fa-clock mr-1"></i>
-        <span>4 min read</span>
+        <span>9 min read</span>
     </div>
     
     
@@ -309,7 +309,62 @@
 <li>分割任务的全局特征global feature是直接复制与local feature拼接</li>
 </ul>
 <h2 id="pointnet-1">PointNet++</h2>
-<p>未完待续。</p>
+<p>PointNet的一个比较突出的不足就是无法获取局部特征，因为在PointNet中，只存在对点进行1*1的卷积操作，或者全局点进行最大池化操作，因此获得的特征严重损失了大量珍贵的局部特征。这就导致了PointNet在分割，特别是部分分割场景下的效果并不好。</p>
+<p>因此，PointNet的作者借鉴了CNN的思想，通过先把点云划分为具有重叠部分的局部区域，再局部区域中使用PointNet提取局部特征，再扩大范围，再局部特征的范围上再次提取更高层次的特征，直到最后提取点云的全局特征。基于这种思想，提出了PointNet++。PointNet++的整体结构如下：</p>
+<p><img src="https://0x2a-1254351943.cos.ap-guangzhou.myqcloud.com/img/image-20211005094052197.png" alt="PointNet++结构"></p>
+<p>整个网络可以看作为encoder-decoder的结构，encoder是一个采样的过程，通过多层set abstraction将数据进行局部到全局的采样。decoder分为分类和分割，分类decoder比较简单，将encoder获得的全局特征经过一个PointNet降维，再通过多层感知机获得分类分数。分割decoder相对较复杂，需要通过反向插值的方法实现采样回复点云，再通过一个unit PointNet获得每个点的分类。</p>
+<h3 id="set-abstraction">Set abstraction</h3>
+<p>每个set abstraction包括sampling、grouping和一个PointNet。</p>
+<ul>
+<li>
+<p>sampling：</p>
+<p>使用farthest point sampling（FPS）选择$N$个点，作者使用FPS而不是随机取样的原因是，FPS更容易囊括整个点云。</p>
+</li>
+<li>
+<p>grouping：</p>
+<p>使用Ball Query或KNN的方法，生成在sampling的邻域中选择$K$个点。这一步使用具体哪个方法差别不太大：<img src="https://0x2a-1254351943.cos.ap-guangzhou.myqcloud.com/img/20210118212956787.png" alt="bq and knn"></p>
+</li>
+<li>
+<p>PointNet：</p>
+<p>对Sampling+Grouping以后的点云进行<strong>局部的全局特征</strong>提取</p>
+</li>
+</ul>
+<p>整体的流程如图所示：</p>
+<p><img src="https://0x2a-1254351943.cos.ap-guangzhou.myqcloud.com/img/image-20211005095828299.png" alt="set abstraction"></p>
+<p>经过多个set abstraction后，可以获得一个兼具局部和全局的特征。</p>
+<p><img src="https://0x2a-1254351943.cos.ap-guangzhou.myqcloud.com/img/image-20211005095908192.png" alt="encouder层"></p>
+<h3 id="msgmrg">MSG&amp;MRG</h3>
+<p>通过多层的特征提取，可以使得点云分类和分割性能都有所提升，但是也损失了其鲁棒性。激光所收集的点云中，总是有近处密度高，远处密度低的特性，而PointNet对于不均匀点云的处理性能不佳。</p>
+<p>在论文中，作者给出了对比试验，在密度不均匀的点云中使用原始PointNet++，其效果甚至不如PointNet。PointNet++提出了两个解决方案：多尺度分组(MSG)和多分辨率分组(MRG)。</p>
+<p><img src="https://0x2a-1254351943.cos.ap-guangzhou.myqcloud.com/img/image-20211005101801592.png" alt="image-20211005101801592"></p>
+<ul>
+<li>
+<p>MSG</p>
+<p>MSG在每一个分组层都使用多个尺度（半径）来确定领域范围，每一个范围经过PointNet特征提取后再整合起来得到一个多尺度的新特征。</p>
+</li>
+<li>
+<p>MRG</p>
+<p>MRG的每一个特征都由两部分组成：本层领域范围经过PointNet获得的的特征，以及上一层领域范围经过PointNet获得的特征。当点云密度不均时，可以通过判断当前patch的点云密度给予左右两个特征向量不同的权重。例如，当patch中密度过小，左边特征向量中包含的点更稀疏，容易受到抽样不足的影响，因此提高右边特征向量的权重。</p>
+</li>
+</ul>
+<p>MSG效果较好，但相对的计算量也较大（经过三次PointNet）。作者在论文中给出了分类实验结果对比图，可以看出多尺度(MSG, MRG)和单一尺度(SSG)相比分类准确率没有什么提升，但当点云很稀疏的时候，使用MSG可以保持很好的鲁棒性。random input dropout(DP)对于鲁棒性提升也很大。</p>
+<p><img src="https://0x2a-1254351943.cos.ap-guangzhou.myqcloud.com/img/20210119152938826.png" alt="实验对比"></p>
+<p>random input dropout(DP)指的是输入的时候随机选择原输入点的一部分进行最终输入，也就是随机抛弃掉一些点，在原文中，保留了95%的点。</p>
+<h3 id="classification">Classification</h3>
+<p>分类网络比较简单，用Encoder层获得的全局特征经过一次PointNet在提取一次全局特征，然后通过全连接网络就可以获得分类结果了，分类网络的结构图如下：</p>
+<p><img src="https://0x2a-1254351943.cos.ap-guangzhou.myqcloud.com/img/image-20211005101355519.png" alt="Classification"></p>
+<h3 id="segmentation">Segmentation</h3>
+<p>经过Encoder部分，我们获得的是一个全局的特征，而如果我们需要做分割，需要的是逐点特征（point-wise feature）。PointNet的解决方法很简单除暴，将全局特征copy了和local feature进行拼接，这样获得的特征具有一定的邻域信息，但是辨别性（discriminative）并不好。</p>
+<p>而PointNet++使用反向插值+skip connection的方法获得一个兼具全局和局部的特征。分割网络的结构图如下：</p>
+<p><img src="https://0x2a-1254351943.cos.ap-guangzhou.myqcloud.com/img/image-20211005103222387.png" alt="image-20211005103222387"></p>
+<p>我们以红框那一层为例，红框内蓝色矩阵的大小为$(N_1,d+C_2+C_1)$，其中$(N_1,d+C_1)$部分是直接使用encoder部分蓝色矩阵，这一步叫做skip connection，那还有$(N_1,C_2)$的部分怎么获得呢，这就要用到反向插值的方法了。</p>
+<p>红框内的橘色矩阵是encoder部分获得的最终特征，大小为$(N_1,d+C_2)$，将skip connection获得的每一个点都投影到橘色矩阵中，再使用KNN的方法获得离他最近的$N$个点，作加权平均，其中这个权重是与x距离成反向相关的，意思就是距离越远的点，对x特征的贡献程度越小。用这个方法就可以获得$C_2$大小的特征，具体公式如下：
+$$
+f^{(j)}(x)=\frac{\sum_{i=1}^{k} w_{i}(x) f_{i}^{(j)}}{\sum_{i=1}^{k} w_{i}(x)} \quad \text { where } \quad w_{i}(x)=\frac{1}{d\left(x, x_{i}\right)^{p}}, j=1, \ldots, C
+$$
+依次进行采样后，恢复每一个点特征，也就是decoder。</p>
+<h3 id="总结-1">总结</h3>
+<p>PointNet++是PointNet的延续，一定程度上弥补了PointNet的一些缺陷。PointNet++提供了比较好的表征网络，后序的点云处理发展很多论文都是用到了这种表征方式。不过PointNet++相对于PointNet不管是分类还是分割任务，总体的准确率大概只提升了2-4个点。</p>
 
         </div>
         
@@ -371,7 +426,15 @@
         <li><a href="#总结">总结</a></li>
       </ul>
     </li>
-    <li><a href="#pointnet-1">PointNet++</a></li>
+    <li><a href="#pointnet-1">PointNet++</a>
+      <ul>
+        <li><a href="#set-abstraction">Set abstraction</a></li>
+        <li><a href="#msgmrg">MSG&amp;MRG</a></li>
+        <li><a href="#classification">Classification</a></li>
+        <li><a href="#segmentation">Segmentation</a></li>
+        <li><a href="#总结-1">总结</a></li>
+      </ul>
+    </li>
   </ul>
 </nav>
 </div>
