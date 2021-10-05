@@ -204,3 +204,11 @@ $$
 ### 总结
 
 PointNet++是PointNet的延续，一定程度上弥补了PointNet的一些缺陷。PointNet++提供了比较好的表征网络，后序的点云处理发展很多论文都是用到了这种表征方式。不过PointNet++相对于PointNet不管是分类还是分割任务，总体的准确率大概只提升了2-4个点。
+
+## 参考资料
+- [PointNet论文](https://arxiv.org/abs/1612.00593)
+- [PointNet++论文](https://arxiv.org/abs/1706.02413)
+- [PointNet作者演讲](https://www.bilibili.com/video/BV1As411377S)
+- [三维点云网络——PointNet论文解读](https://blog.csdn.net/u014636245/article/details/82755966)
+- [PointNet++论文解读以及代码分析](https://blog.csdn.net/weixin_41317766/article/details/112770272)
+- [搞懂PointNet++，这篇文章就够了！](https://zhuanlan.zhihu.com/p/266324173)
